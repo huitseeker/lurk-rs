@@ -1571,14 +1571,9 @@ fn apply_continuation<F: LurkField>(
                             let scalar_ptr = store
                                 .get_expr_hash(result)
                                 .ok_or_else(|| LurkError::Store("expr hash missing".into()))?;
-                            store.get_char(
-                                char::from_u32(
-                                    scalar_ptr.value().to_u32().ok_or_else(|| {
-                                        LurkError::Eval("Ptr is invalid u32".into())
-                                    })?,
-                                )
-                                .ok_or_else(|| LurkError::Eval("u32 is invalid char".into()))?,
-                            )
+
+                            let res = scalar_ptr.value().to_u32_unchecked();
+                            store.get_char(char::from_u32(res).unwrap())
                         }
                         _ => return Ok(Control::Return(*result, *env, store.intern_cont_error())),
                     },
@@ -3454,6 +3449,15 @@ mod test {
         let expected_a = s.read(r#"#\a"#).unwrap();
         let terminal = s.get_cont_terminal();
         test_aux(s, expr, Some(expected_a), None, Some(terminal), None, 2);
+    }
+
+    #[test]
+    fn char_coercion() {
+        let s = &mut Store::<Fr>::default();
+        let expr = r#"(char (- 0 4294967200))"#;
+        let expected_a = s.read(r#"#\a"#).unwrap();
+        let terminal = s.get_cont_terminal();
+        test_aux(s, expr, Some(expected_a), None, Some(terminal), None, 5);
     }
 
     #[test]
