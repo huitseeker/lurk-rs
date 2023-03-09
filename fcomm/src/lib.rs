@@ -19,10 +19,7 @@ use lurk::{
     circuit::ToInputs,
     eval::{empty_sym_env, Evaluable, Evaluator, Status, IO},
     field::LurkField,
-    proof::{
-        self,
-        nova::{NovaProver, PublicParams},
-    },
+    proof::nova::{self, NovaProver, PublicParams},
     scalar_store::ScalarStore,
     store::{Pointer, Ptr, ScalarPointer, ScalarPtr, Store},
     tag::ExprTag,
@@ -66,6 +63,23 @@ fn nova_proof_cache() -> FileMap<Cid, Proof<'static, S1>> {
 
 pub fn committed_function_store() -> FileMap<Commitment<S1>, Function<S1>> {
     FileMap::<Commitment<S1>, Function<S1>>::new("functions").unwrap()
+}
+
+fn public_param_cache() -> FileMap<String, PublicParams<'static>> {
+    FileMap::new("public_params").unwrap()
+}
+
+pub fn public_params(rc: usize) -> PublicParams<'static> {
+    let cache = public_param_cache();
+    let key = format!("public-params-rc-{rc}");
+
+    if let Some(pp) = cache.get(&key) {
+        pp
+    } else {
+        let pp = nova::public_params(rc);
+        cache.set(key, &pp).unwrap();
+        pp
+    }
 }
 
 // Number of circuit reductions per step, equivalent to `chunk_frame_count`
@@ -204,7 +218,7 @@ pub struct VerificationResult {
 #[derive(Serialize, Deserialize)]
 pub struct Proof<'a, F: LurkField> {
     pub claim: Claim<F>,
-    pub proof: proof::nova::Proof<'a>,
+    pub proof: nova::Proof<'a>,
     pub num_steps: usize,
     pub reduction_count: ReductionCount,
 }
@@ -301,13 +315,6 @@ where
     fn id(&self) -> String;
     fn cid(&self) -> Cid;
     fn has_id(&self, id: String) -> bool;
-}
-
-pub trait Key<T: ToString>
-where
-    Self: Sized,
-{
-    fn key(&self) -> T;
 }
 
 impl<T: Serialize> Id for T
@@ -572,7 +579,7 @@ impl<'a> Opening<S1> {
 
         let function_map = committed_function_store();
         let function = function_map
-            .get(commitment)
+            .get(&commitment)
             .ok_or(Error::UnknownCommitment)?;
 
         Self::apply_and_prove(
@@ -598,7 +605,7 @@ impl<'a> Opening<S1> {
 
         let function_map = committed_function_store();
         let function = function_map
-            .get(commitment)
+            .get(&commitment)
             .ok_or(Error::UnknownCommitment)?;
 
         Self::apply(s, input, function, limit, chain)
@@ -741,7 +748,9 @@ impl<'a> Proof<'a, S1> {
         let proof_map = nova_proof_cache();
         let function_map = committed_function_store();
 
-        if let Some(proof) = proof_map.get(claim.cid()) {
+        let cid = claim.cid();
+
+        if let Some(proof) = proof_map.get(&cid) {
             return Ok(proof);
         }
 
@@ -764,7 +773,7 @@ impl<'a> Proof<'a, S1> {
 
                 // In order to prove the opening, we need access to the original function.
                 let function = function_map
-                    .get(commitment)
+                    .get(&commitment)
                     .expect("function for commitment missing");
 
                 let input = s.read(&o.input).expect("bad expression");
@@ -802,28 +811,54 @@ impl<'a> Proof<'a, S1> {
 
         proof.verify(pp).expect("Nova verification failed");
 
-        proof_map.set(claim.cid(), &proof).unwrap();
+        proof_map.set(cid, &proof).unwrap();
 
         Ok(proof)
     }
 
     pub fn verify(&self, pp: &PublicParams) -> Result<VerificationResult, Error> {
-        let (public_inputs, public_outputs) = match self.claim {
-            Claim::Evaluation(_) => self.verify_evaluation(),
-            Claim::Opening(_) => self.verify_opening(),
+        let (public_inputs, public_outputs) = match &self.claim {
+            Claim::Evaluation(_) => self.evaluation_io(),
+            Claim::Opening(_) => self.opening_io(),
         }?;
 
-        let verified = self
-            .proof
-            .verify(pp, self.num_steps, public_inputs, &public_outputs)
-            .expect("error verifying");
+        let claim_iterations_and_num_steps_are_consistent = if let Claim::Evaluation(Evaluation {
+            iterations: Some(iterations),
+            ..
+        }) = self.claim
+        {
+            // Currently, claims created by fcomm don't include the iteration count. If they do, then it should be
+            // possible to verify correctness. This may require making the iteration count explicit in the public
+            // output. That will allow maintaining iteration count without incrementing during frames added as
+            // padding; and it will also allow explicitly masking the count when desired for zero-knowledge.
+            // Meanwhile, since Nova currently requires the number of steps to be provided by the verifier, we have
+            // to provide it. For now, we should at least be able to calculate this value based on number of real
+            // iterations and number of frames per circuit. This is untested and mostly a placeholder to remind us
+            // that all of this will need to be handled in a more principled way eventually. (#282)
+
+            let num_steps = self.num_steps;
+
+            let chunk_frame_count = self.reduction_count.count();
+            let expected_steps =
+                (iterations / chunk_frame_count) + (iterations % chunk_frame_count != 0) as usize;
+
+            expected_steps == num_steps
+        } else {
+            true
+        };
+
+        let verified = claim_iterations_and_num_steps_are_consistent
+            && self
+                .proof
+                .verify(pp, self.num_steps, public_inputs, &public_outputs)
+                .expect("error verifying");
 
         let result = VerificationResult::new(verified);
 
         Ok(result)
     }
 
-    pub fn verify_evaluation(&self) -> Result<(Vec<S1>, Vec<S1>), Error> {
+    pub fn evaluation_io(&self) -> Result<(Vec<S1>, Vec<S1>), Error> {
         let mut s = Store::<S1>::default();
 
         let evaluation = &self.claim.evaluation().expect("expected evaluation claim");
@@ -866,7 +901,7 @@ impl<'a> Proof<'a, S1> {
         Ok((public_inputs, public_outputs))
     }
 
-    pub fn verify_opening(&self) -> Result<(Vec<S1>, Vec<S1>), Error> {
+    pub fn opening_io(&self) -> Result<(Vec<S1>, Vec<S1>), Error> {
         let mut s = Store::<S1>::default();
 
         assert!(self.claim.is_opening());
@@ -904,18 +939,6 @@ impl<'a> Proof<'a, S1> {
         let public_outputs = output_io.to_inputs(&s);
 
         Ok((public_inputs, public_outputs))
-    }
-}
-
-impl Key<Commitment<S1>> for Function<S1> {
-    fn key(&self) -> Commitment<S1> {
-        self.commitment.expect("commitment missing")
-    }
-}
-
-impl Key<Cid> for Proof<'_, S1> {
-    fn key(&self) -> Cid {
-        self.claim.cid()
     }
 }
 
