@@ -7,8 +7,6 @@ use crate::field::FWrap;
 use proptest::prelude::*;
 #[cfg(not(target_arch = "wasm32"))]
 use proptest_derive::Arbitrary;
-#[cfg(not(target_arch = "wasm32"))]
-use rand::{rngs::StdRng, SeedableRng};
 
 use std::collections::BTreeMap;
 
@@ -31,7 +29,7 @@ impl<F: LurkField> Encodable for LightStore<F> {
     fn ser(&self) -> LightData {
         todo!()
     }
-    fn de(ld: &LightData) -> Result<Self, String> {
+    fn de(_ld: &LightData) -> Result<Self, String> {
         todo!()
     }
 }
@@ -99,7 +97,7 @@ impl<F: LurkField> LightStore<F> {
                     store.insert_scalar_expression(*ptr, Some(ScalarExpression::Comm(*f, *x)));
                 }
                 Some(LightExpr::Num(f)) => {
-                    store.insert_scalar_expression(*ptr, Some(ScalarExpression::Num((*f).into())));
+                    store.insert_scalar_expression(*ptr, Some(ScalarExpression::Num(*f)));
                 }
                 // TODO: malformed non-unicode Chars breaks this
                 Some(LightExpr::Char(f)) => {
@@ -128,17 +126,13 @@ impl<F: LurkField> LightStore<F> {
                 Some(LightExpr::SymCons(_, _)) => {
                     self.insert_scalar_symbol(*ptr, &mut store);
                 }
-                _ => todo!(),
             }
         }
         store
     }
 
     pub fn get(&self, ptr: &ScalarPtr<F>) -> Option<Option<LightExpr<F>>> {
-        match self.scalar_map.get(&ptr) {
-            None => None,
-            Some(x) => Some(x.clone()),
-        }
+        self.scalar_map.get(ptr).cloned()
     }
 }
 
@@ -175,7 +169,7 @@ impl<F: LurkField> Encodable for LightExpr<F> {
     fn ser(&self) -> LightData {
         todo!()
     }
-    fn de(ld: &LightData) -> Result<Self, String> {
+    fn de(_ld: &LightData) -> Result<Self, String> {
         todo!()
     }
 }
@@ -194,5 +188,6 @@ pub mod tests {
         println!("ser {:?}", ser);
         assert_eq!(x, de)
     }
+
     }
 }
