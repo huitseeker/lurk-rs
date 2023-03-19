@@ -1053,14 +1053,13 @@ impl<F: LurkField> Store<F> {
     }
 
     pub fn lurk_sym<T: AsRef<str>>(&mut self, name: T) -> Ptr<F> {
-        let package = self.lurk_package.clone(); // This clone is annoying.
-
-        self.intern_sym_with_case_conversion(name, &package)
+        let package_name = self.lurk_package.name.clone();
+        self.intern_sym_with_case_conversion(name, &package_name)
     }
 
     pub fn sym<T: AsRef<str>>(&mut self, name: T) -> Ptr<F> {
-        let package = Default::default();
-        self.intern_sym_with_case_conversion(name, &package)
+        let package: Package = Default::default();
+        self.intern_sym_with_case_conversion(name, &package.name)
     }
 
     pub fn key<T: AsRef<str>>(&mut self, name: T) -> Ptr<F> {
@@ -1077,7 +1076,7 @@ impl<F: LurkField> Store<F> {
         } else {
             name.as_ref().into()
         };
-        self.intern_sym_with_case_conversion(name, &package)
+        self.intern_sym_with_case_conversion(name, &package.name)
     }
 
     pub fn car(&self, expr: &Ptr<F>) -> Result<Ptr<F>, Error> {
@@ -1413,13 +1412,13 @@ impl<F: LurkField> Store<F> {
     pub fn intern_sym_with_case_conversion<T: AsRef<str>>(
         &mut self,
         name: T,
-        package: &Package,
+        package_name: &Sym,
     ) -> Ptr<F> {
         let mut name = name.as_ref().to_string();
         convert_sym_case(&mut name);
         let sym = Sym::new_absolute(name);
 
-        self.intern_sym_in_package(sym, package)
+        self.intern_sym_in_package(sym, package_name)
     }
 
     pub fn intern_sym(&mut self, sym: &Sym) -> Ptr<F> {

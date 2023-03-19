@@ -17,15 +17,15 @@ pub enum Error {
 
 impl<F: LurkField> Store<F> {
     pub fn read(&mut self, input: &str) -> Result<Ptr<F>, Error> {
-        let package = Default::default();
+        let package: Package = Default::default();
 
-        self.read_in_package(input, &package)
+        self.read_in_package(input, &package.name)
     }
 
-    pub fn read_in_package(&mut self, input: &str, package: &Package) -> Result<Ptr<F>, Error> {
+    pub fn read_in_package(&mut self, input: &str, package_name: &Sym) -> Result<Ptr<F>, Error> {
         let mut chars = input.chars().peekmore();
         if skip_whitespace_and_peek(&mut chars).is_some() {
-            self.read_next(&mut chars, package)
+            self.read_next(&mut chars, package_name)
         } else {
             Err(Error::NoInput)
         }
@@ -62,7 +62,7 @@ impl<F: LurkField> Store<F> {
     pub fn read_maybe_meta<T: Iterator<Item = char>>(
         &mut self,
         chars: &mut PeekMoreIterator<T>,
-        package: &Package,
+        package_name: &Sym,
     ) -> Result<(Ptr<F>, bool), Error> {
         if let Some(c) = skip_whitespace_and_peek(chars) {
             match c {
@@ -70,14 +70,16 @@ impl<F: LurkField> Store<F> {
                     chars.next();
                     if let Ok(s) = self.read_string(chars) {
                         Ok((s, true))
-                    } else if let Ok((e, is_meta)) = self.read_maybe_meta(chars, package) {
+                    } else if let Ok((e, is_meta)) = self.read_maybe_meta(chars, package_name) {
                         assert!(!is_meta);
                         Ok((e, true))
                     } else {
                         Err(Error::Syntax("Could not read meta".into()))
                     }
                 }
-                _ => self.read_next(chars, package).map(|expr| (expr, false)),
+                _ => self
+                    .read_next(chars, package_name)
+                    .map(|expr| (expr, false)),
             }
         } else {
             Err(Error::NoInput)
@@ -87,11 +89,11 @@ impl<F: LurkField> Store<F> {
     pub fn read_next<T: Iterator<Item = char>>(
         &mut self,
         chars: &mut PeekMoreIterator<T>,
-        package: &Package,
+        package_name: &Sym,
     ) -> Result<Ptr<F>, Error> {
         while let Some(&c) = chars.peek() {
             return match c {
-                '(' => self.read_list(chars, package),
+                '(' => self.read_list(chars, package_name),
                 '0'..='9' => self.read_number(chars, true),
                 ' ' | '\t' | '\n' | '\r' => {
                     // Skip whitespace.
@@ -101,12 +103,12 @@ impl<F: LurkField> Store<F> {
                 '\'' => {
                     chars.next();
                     let quote = self.lurk_sym("quote");
-                    let quoted = self.read_next(chars, package)?;
+                    let quoted = self.read_next(chars, package_name)?;
                     let inner = self.intern_list(&[quoted]);
                     Ok(self.cons(quote, inner))
                 }
                 '\"' => self.read_string(chars),
-                '|' => self.read_symbol(chars, package),
+                '|' => self.read_symbol(chars, package_name),
                 '#' => self.read_pound(chars),
                 ';' => {
                     chars.next();
@@ -116,8 +118,8 @@ impl<F: LurkField> Store<F> {
                         Err(Error::Syntax("Bad comment syntax".into()))
                     }
                 }
-                '-' => self.read_negative_number_or_symbol(chars, package),
-                x if is_symbol_char(&x, true) => self.read_symbol(chars, package),
+                '-' => self.read_negative_number_or_symbol(chars, package_name),
+                x if is_symbol_char(&x, true) => self.read_symbol(chars, package_name),
                 _ => Err(Error::Syntax(format!("bad input character: {c}"))),
             };
         }
@@ -128,13 +130,13 @@ impl<F: LurkField> Store<F> {
     fn read_list<T: Iterator<Item = char>>(
         &mut self,
         chars: &mut PeekMoreIterator<T>,
-        package: &Package,
+        package_name: &Sym,
     ) -> Result<Ptr<F>, Error> {
         if let Some(&c) = chars.peek() {
             match c {
                 '(' => {
                     chars.next(); // Discard.
-                    self.read_tail(true, chars, package)
+                    self.read_tail(true, chars, package_name)
                 }
                 _ => Err(Error::Syntax("Could not read list".into())),
             }
@@ -148,7 +150,7 @@ impl<F: LurkField> Store<F> {
         &mut self,
         first: bool,
         chars: &mut PeekMoreIterator<T>,
-        package: &Package,
+        package_name: &Sym,
     ) -> Result<Ptr<F>, Error> {
         if let Some(c) = skip_whitespace_and_peek(chars) {
             match c {
@@ -158,18 +160,18 @@ impl<F: LurkField> Store<F> {
                 }
                 '.' if !first => {
                     if is_symbol_char(chars.peek_nth(1).unwrap(), false) {
-                        self.read_tail(true, chars, package)
+                        self.read_tail(true, chars, package_name)
                     } else {
                         chars.next();
-                        let cdr = self.read_next(chars, package)?;
-                        let remaining_tail = self.read_tail(false, chars, package)?;
+                        let cdr = self.read_next(chars, package_name)?;
+                        let remaining_tail = self.read_tail(false, chars, package_name)?;
                         assert!(remaining_tail.is_nil());
 
                         Ok(cdr)
                     }
                 }
                 _ => {
-                    let res = self.read_next(chars, package);
+                    let res = self.read_next(chars, package_name);
                     match res {
                         Err(Error::NoInput) if c == '.' => {
                             Err(Error::Syntax("nothing appears before . in list.".into()))?;
@@ -177,7 +179,7 @@ impl<F: LurkField> Store<F> {
                         _ => (),
                     };
                     let car = res?;
-                    let rest = self.read_tail(false, chars, package)?;
+                    let rest = self.read_tail(false, chars, package_name)?;
                     Ok(self.cons(car, rest))
                 }
             }
@@ -190,7 +192,7 @@ impl<F: LurkField> Store<F> {
     fn read_negative_number_or_symbol<T: Iterator<Item = char>>(
         &mut self,
         chars: &mut PeekMoreIterator<T>,
-        package: &Package,
+        package_name: &Sym,
     ) -> Result<Ptr<F>, Error> {
         if let Some(&c) = chars.peek() {
             match c {
@@ -210,14 +212,15 @@ impl<F: LurkField> Store<F> {
                             }
                             _ => {
                                 if let Some(sym) = read_sym(chars)? {
-                                    Ok(self.intern_sym_in_package(sym, package))
+                                    Ok(self.intern_sym_in_package(sym, package_name))
                                 } else {
-                                    Ok(self.intern_sym_in_package(Sym::new("-".into()), package))
+                                    Ok(self
+                                        .intern_sym_in_package(Sym::new("-".into()), package_name))
                                 }
                             }
                         }
                     } else {
-                        Ok(self.intern_sym_in_package(Sym::new("-".into()), package))
+                        Ok(self.intern_sym_in_package(Sym::new("-".into()), package_name))
                     }
                 }
                 _ => Err(Error::Syntax("Could not read nagative number".into())),
@@ -434,11 +437,11 @@ impl<F: LurkField> Store<F> {
         }
     }
 
-    pub(crate) fn intern_sym_in_package(&mut self, sym: Sym, package: &Package) -> Ptr<F> {
+    pub(crate) fn intern_sym_in_package(&mut self, sym: Sym, package_name: &Sym) -> Ptr<F> {
         if sym.is_toplevel() {
             self.intern_sym(&sym)
         } else {
-            let parent_sym = package.name();
+            let parent_sym = package_name;
             let new_sym = parent_sym.extend(sym.path());
 
             self.intern_sym(&new_sym)
@@ -448,14 +451,14 @@ impl<F: LurkField> Store<F> {
     pub(crate) fn read_symbol<T: Iterator<Item = char>>(
         &mut self,
         chars: &mut PeekMoreIterator<T>,
-        package: &Package,
+        package_name: &Sym,
     ) -> Result<Ptr<F>, Error> {
         if let Some(sym) = read_sym(chars)? {
             if sym.is_root() {
                 // The root symbol cannot (currently) be read. A naked dot is an error except in the context of a list tail.
                 Err(Error::Syntax("Misplaced dot".into()))
             } else {
-                Ok(self.intern_sym_in_package(sym, package))
+                Ok(self.intern_sym_in_package(sym, package_name))
             }
         } else {
             Err(Error::NoInput)
@@ -1092,7 +1095,7 @@ mod test {
             |store: &mut Store<Fr>, input: &str, expected_ptr: Ptr<Fr>, expected_meta: bool| {
                 let mut chars = input.chars().peekmore();
 
-                let (ptr, meta) = store.read_maybe_meta(&mut chars, &package).unwrap();
+                let (ptr, meta) = store.read_maybe_meta(&mut chars, &package.name).unwrap();
                 {
                     assert_eq!(expected_ptr, ptr);
                     assert_eq!(expected_meta, meta);

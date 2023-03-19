@@ -213,7 +213,7 @@ pub fn run_repl<P: AsRef<Path>, F: LurkField, T: ReplTrait<F>>(
 
                 let mut chars = line.chars().peekmore();
 
-                match s.read_maybe_meta(&mut chars, &package) {
+                match s.read_maybe_meta(&mut chars, &package.name) {
                     Ok((expr, is_meta)) => {
                         if is_meta {
                             if let Err(e) = repl.state.handle_meta(s, expr, &package, p) {
@@ -285,7 +285,7 @@ impl<F: LurkField> ReplState<F> {
         package: &Package,
     ) -> Result<(bool, bool)> {
         let mut chars = line.chars().peekmore();
-        let maybe_command = store.read_next(&mut chars, package);
+        let maybe_command = store.read_next(&mut chars, &package.name);
 
         let result = match &maybe_command {
             Ok(maybe_command) => match maybe_command.tag() {
@@ -395,7 +395,7 @@ impl<F: LurkField> ReplState<F> {
         pwd: P,
         update_env: bool,
     ) -> Result<()> {
-        let (ptr, is_meta) = store.read_maybe_meta(chars, package)?;
+        let (ptr, is_meta) = store.read_maybe_meta(chars, &package.name)?;
 
         if is_meta {
             let pwd: &Path = pwd.as_ref();
@@ -463,7 +463,7 @@ impl<F: LurkField> ReplTrait<F> for ReplState<F> {
         package: &Package,
     ) -> Result<(bool, bool)> {
         let mut chars = line.chars().peekmore();
-        let maybe_command = store.read_next(&mut chars, package);
+        let maybe_command = store.read_next(&mut chars, &package.name);
 
         let result = match &maybe_command {
             Ok(maybe_command) => match maybe_command.tag() {
