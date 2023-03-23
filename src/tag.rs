@@ -10,6 +10,12 @@ use crate::store::TypePredicates;
 pub trait Tag: Into<u16> + TryFrom<u16> + Copy + Sized + Eq + fmt::Debug {
     fn from_field<F: LurkField>(f: &F) -> Option<Self>;
     fn to_field<F: LurkField>(&self) -> F;
+    fn to_field_bytes(&self) -> [u8; 32] {
+        let u: u16 = (*self).into();
+        let mut res = [0u8; 32];
+        res[..2].copy_from_slice(&u.to_le_bytes());
+        res
+    }
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize_repr, Deserialize_repr)]
