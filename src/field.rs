@@ -198,19 +198,56 @@ pub trait LurkField: PrimeField + PrimeFieldBits {
     fn get_field(&self) -> LanguageField {
         Self::FIELD
     }
+
+    /// Converts to cache bytes
+    fn to_cache_bytes(self) -> Vec<u8> {
+        self.to_bytes()
+    }
 }
 
 impl LurkField for blstrs::Scalar {
     const FIELD: LanguageField = LanguageField::BLS12_381;
+
+    //////////////////////////////////////////////////
+    // Highly experimental, do NOT commit in master //
+    //////////////////////////////////////////////////
+    fn to_cache_bytes(self) -> Vec<u8> {
+        let inner_u64s = unsafe { std::mem::transmute::<Self, InnerU64s>(self) };
+        let inner_bytes =
+            unsafe { core::slice::from_raw_parts(inner_u64s.0.as_ptr() as *const u8, 32) };
+        inner_bytes.to_vec()
+    }
 }
 
 impl LurkField for pasta_curves::Fp {
     const FIELD: LanguageField = LanguageField::Pallas;
+
+    //////////////////////////////////////////////////
+    // Highly experimental, do NOT commit in master //
+    //////////////////////////////////////////////////
+    fn to_cache_bytes(self) -> Vec<u8> {
+        let inner_u64s = unsafe { std::mem::transmute::<Self, InnerU64s>(self) };
+        let inner_bytes =
+            unsafe { core::slice::from_raw_parts(inner_u64s.0.as_ptr() as *const u8, 32) };
+        inner_bytes.to_vec()
+    }
 }
 
 impl LurkField for pasta_curves::Fq {
     const FIELD: LanguageField = LanguageField::Vesta;
+
+    //////////////////////////////////////////////////
+    // Highly experimental, do NOT commit in master //
+    //////////////////////////////////////////////////
+    fn to_cache_bytes(self) -> Vec<u8> {
+        let inner_u64s = unsafe { std::mem::transmute::<Self, InnerU64s>(self) };
+        let inner_bytes =
+            unsafe { core::slice::from_raw_parts(inner_u64s.0.as_ptr() as *const u8, 32) };
+        inner_bytes.to_vec()
+    }
 }
+
+struct InnerU64s([u64; 4]);
 
 // For working around the orphan trait impl rule
 /// Wrapper struct around a field element that implements additional traits

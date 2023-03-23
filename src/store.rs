@@ -193,7 +193,7 @@ struct CacheKey<F: LurkField, const N: usize>([F; N]);
 impl<F: LurkField, const N: usize> Hash for CacheKey<F, N> {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         for el in &self.0 {
-            el.to_repr().as_ref().hash(state);
+            el.to_cache_bytes().hash(state);
         }
     }
 }
@@ -341,12 +341,12 @@ impl<E: Tag, F: LurkField> Display for SPtr<E, F> {
 impl<E: Tag, F: LurkField> PartialOrd for SPtr<E, F> {
     fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
         (
-            self.0.to_field::<F>().to_repr().as_ref(),
-            self.1.to_repr().as_ref(),
+            self.0.to_field::<F>().to_cache_bytes(),
+            self.1.to_cache_bytes(),
         )
             .partial_cmp(&(
-                other.0.to_field::<F>().to_repr().as_ref(),
-                other.1.to_repr().as_ref(),
+                other.0.to_field::<F>().to_cache_bytes(),
+                other.1.to_cache_bytes(),
             ))
     }
 }
@@ -376,8 +376,8 @@ impl<E: Tag, F: LurkField> Encodable for SPtr<E, F> {
 #[allow(clippy::derive_hash_xor_eq)]
 impl<E: Tag, F: LurkField> Hash for SPtr<E, F> {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        self.0.to_field::<F>().to_repr().as_ref().hash(state);
-        self.1.to_repr().as_ref().hash(state);
+        self.0.to_field::<F>().to_cache_bytes().hash(state);
+        self.1.to_cache_bytes().hash(state);
     }
 }
 
