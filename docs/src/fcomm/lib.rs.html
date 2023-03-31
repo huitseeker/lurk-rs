@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `fcomm/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../fcomm/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `fcomm/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fbd14db5c88ed452.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="fcomm" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (ec2f40c6b 2023-03-30)" data-search-js="search-bc5a112813b5d712.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" data-theme-light-css="light-db279b6232be9c13.css" data-theme-dark-css="dark-cf923f49f397b216.css" data-theme-ayu-css="ayu-be46fdc453a55015.css" ></div><script src="../../static.files/storage-d4a1a279bad1a0c0.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-9ade54abd4bd73c8.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../fcomm/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -967,12 +967,53 @@
 <a href="#967" id="967">967</a>
 <a href="#968" id="968">968</a>
 <a href="#969" id="969">969</a>
+<a href="#970" id="970">970</a>
+<a href="#971" id="971">971</a>
+<a href="#972" id="972">972</a>
+<a href="#973" id="973">973</a>
+<a href="#974" id="974">974</a>
+<a href="#975" id="975">975</a>
+<a href="#976" id="976">976</a>
+<a href="#977" id="977">977</a>
+<a href="#978" id="978">978</a>
+<a href="#979" id="979">979</a>
+<a href="#980" id="980">980</a>
+<a href="#981" id="981">981</a>
+<a href="#982" id="982">982</a>
+<a href="#983" id="983">983</a>
+<a href="#984" id="984">984</a>
+<a href="#985" id="985">985</a>
+<a href="#986" id="986">986</a>
+<a href="#987" id="987">987</a>
+<a href="#988" id="988">988</a>
+<a href="#989" id="989">989</a>
+<a href="#990" id="990">990</a>
+<a href="#991" id="991">991</a>
+<a href="#992" id="992">992</a>
+<a href="#993" id="993">993</a>
+<a href="#994" id="994">994</a>
+<a href="#995" id="995">995</a>
+<a href="#996" id="996">996</a>
+<a href="#997" id="997">997</a>
+<a href="#998" id="998">998</a>
+<a href="#999" id="999">999</a>
+<a href="#1000" id="1000">1000</a>
+<a href="#1001" id="1001">1001</a>
+<a href="#1002" id="1002">1002</a>
+<a href="#1003" id="1003">1003</a>
+<a href="#1004" id="1004">1004</a>
+<a href="#1005" id="1005">1005</a>
+<a href="#1006" id="1006">1006</a>
+<a href="#1007" id="1007">1007</a>
+<a href="#1008" id="1008">1008</a>
 </pre><pre class="rust"><code><span class="kw">use </span>log::info;
+<span class="kw">use </span>std::collections::HashMap;
 <span class="kw">use </span>std::convert::TryFrom;
 <span class="kw">use </span>std::fs::File;
 <span class="kw">use </span>std::io::{<span class="self">self</span>, BufReader, BufWriter};
 <span class="kw">use </span>std::path::Path;
 <span class="kw">use </span>std::str::FromStr;
+<span class="kw">use </span>std::sync::{Arc, Mutex};
 
 <span class="kw">use </span>ff::PrimeField;
 <span class="kw">use </span>hex::FromHex;
@@ -988,12 +1029,10 @@
     circuit::ToInputs,
     eval::{empty_sym_env, Evaluable, Evaluator, Status, IO},
     field::LurkField,
-    proof::{
-        <span class="self">self</span>,
-        nova::{NovaProver, PublicParams},
-    },
+    proof::nova::{<span class="self">self</span>, NovaProver, PublicParams},
+    proof::Prover,
     scalar_store::ScalarStore,
-    store::{Pointer, Ptr, ScalarPointer, ScalarPtr, Store},
+    store::{Pointer, Ptr, ScalarPtr, Store},
     tag::ExprTag,
     writer::Write,
 };
@@ -1009,7 +1048,7 @@
 <span class="kw">use </span>error::Error;
 <span class="kw">use </span>file_map::FileMap;
 
-<span class="kw">pub const </span>DEFAULT_REDUCTION_COUNT: ReductionCount = ReductionCount::One;
+<span class="kw">pub const </span>DEFAULT_REDUCTION_COUNT: ReductionCount = ReductionCount::Ten;
 <span class="kw">pub static </span>VERBOSE: OnceCell&lt;bool&gt; = OnceCell::new();
 
 <span class="kw">pub type </span>S1 = pallas::Scalar;
@@ -1029,12 +1068,49 @@
     }
 }
 
-<span class="kw">fn </span>nova_proof_cache() -&gt; FileMap&lt;Cid, Proof&lt;<span class="lifetime">&#39;static</span>, S1&gt;&gt; {
-    FileMap::&lt;Cid, Proof&lt;S1&gt;&gt;::new(<span class="string">&quot;nova_proofs&quot;</span>).unwrap()
+<span class="kw">pub type </span>NovaProofCache = FileMap&lt;Cid, Proof&lt;<span class="lifetime">&#39;static</span>, S1&gt;&gt;;
+<span class="kw">pub fn </span>nova_proof_cache(reduction_count: usize) -&gt; NovaProofCache {
+    FileMap::&lt;Cid, Proof&lt;S1&gt;&gt;::new(<span class="macro">format!</span>(<span class="string">&quot;nova_proofs.{}&quot;</span>, reduction_count)).unwrap()
 }
 
-<span class="kw">pub fn </span>committed_function_store() -&gt; FileMap&lt;Commitment&lt;S1&gt;, Function&lt;S1&gt;&gt; {
-    FileMap::&lt;Commitment&lt;S1&gt;, Function&lt;S1&gt;&gt;::new(<span class="string">&quot;functions&quot;</span>).unwrap()
+<span class="kw">pub type </span>CommittedExpressionMap = FileMap&lt;Commitment&lt;S1&gt;, CommittedExpression&lt;S1&gt;&gt;;
+<span class="kw">pub fn </span>committed_expression_store() -&gt; CommittedExpressionMap {
+    FileMap::&lt;Commitment&lt;S1&gt;, CommittedExpression&lt;S1&gt;&gt;::new(<span class="string">&quot;committed_expressions&quot;</span>).unwrap()
+}
+
+<span class="kw">pub type </span>PublicParamMemCache = Mutex&lt;HashMap&lt;usize, Arc&lt;PublicParams&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt;&gt;;
+<span class="kw">fn </span>public_param_mem_cache() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>PublicParamMemCache {
+    <span class="kw">static </span>CACHE: OnceCell&lt;PublicParamMemCache&gt; = OnceCell::new();
+    CACHE.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
+<span class="kw">pub type </span>PublicParamDiskCache = FileMap&lt;String, PublicParams&lt;<span class="lifetime">&#39;static</span>&gt;&gt;;
+<span class="kw">fn </span>public_param_disk_cache() -&gt; PublicParamDiskCache {
+    FileMap::new(<span class="string">&quot;public_params&quot;</span>).unwrap()
+}
+
+<span class="kw">pub fn </span>public_params(rc: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;PublicParams&lt;<span class="lifetime">&#39;static</span>&gt;&gt;, Error&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>mem_cache = public_param_mem_cache().lock().unwrap();
+    <span class="kw">match </span>mem_cache.get(<span class="kw-2">&amp;</span>rc) {
+        <span class="prelude-val">Some</span>(pp) =&gt; <span class="prelude-val">Ok</span>(pp.clone()),
+        <span class="prelude-val">None </span>=&gt; {
+            <span class="kw">let </span>disk_cache = public_param_disk_cache();
+            <span class="comment">// TODO: Add versioning to cache key
+            </span><span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;public-params-rc-{rc}&quot;</span>);
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(pp) = disk_cache.get(<span class="kw-2">&amp;</span>key) {
+                <span class="kw">let </span>pp = Arc::new(pp);
+                mem_cache.insert(rc, pp.clone());
+                <span class="prelude-val">Ok</span>(pp)
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>pp = Arc::new(nova::public_params(rc));
+                mem_cache.insert(rc, pp.clone());
+                disk_cache
+                    .set(key, <span class="kw-2">&amp;</span>pp)
+                    .map_err(|e| Error::CacheError(<span class="macro">format!</span>(<span class="string">&quot;Disk write error: {e}&quot;</span>)))<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(pp)
+            }
+        }
+    }
 }
 
 <span class="comment">// Number of circuit reductions per step, equivalent to `chunk_frame_count`
@@ -1043,6 +1119,7 @@
     One,
     Five,
     Ten,
+    OneHundred,
 }
 
 <span class="attr">#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq, Eq)]
@@ -1159,8 +1236,8 @@
 }
 
 <span class="attr">#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-</span><span class="kw">pub struct </span>Function&lt;F: LurkField + Serialize&gt; {
-    <span class="kw">pub </span>fun: LurkPtr,
+</span><span class="kw">pub struct </span>CommittedExpression&lt;F: LurkField + Serialize&gt; {
+    <span class="kw">pub </span>expr: LurkPtr,
     <span class="kw">pub </span>secret: <span class="prelude-ty">Option</span>&lt;F&gt;,
     <span class="kw">pub </span>commitment: <span class="prelude-ty">Option</span>&lt;Commitment&lt;F&gt;&gt;,
 }
@@ -1173,7 +1250,7 @@
 <span class="attr">#[derive(Serialize, Deserialize)]
 </span><span class="kw">pub struct </span>Proof&lt;<span class="lifetime">&#39;a</span>, F: LurkField&gt; {
     <span class="kw">pub </span>claim: Claim&lt;F&gt;,
-    <span class="kw">pub </span>proof: proof::nova::Proof&lt;<span class="lifetime">&#39;a</span>&gt;,
+    <span class="kw">pub </span>proof: nova::Proof&lt;<span class="lifetime">&#39;a</span>&gt;,
     <span class="kw">pub </span>num_steps: usize,
     <span class="kw">pub </span>reduction_count: ReductionCount,
 }
@@ -1207,7 +1284,7 @@
     s.serialize_str(<span class="kw-2">&amp;</span>c.to_string())
 }
 
-<span class="kw">fn </span>string_cid&lt;<span class="lifetime">&#39;de</span>, D&gt;(d: D) -&gt; <span class="prelude-ty">Result</span>&lt;Cid, D::Error&gt;
+<span class="kw">pub fn </span>string_cid&lt;<span class="lifetime">&#39;de</span>, D&gt;(d: D) -&gt; <span class="prelude-ty">Result</span>&lt;Cid, D::Error&gt;
 <span class="kw">where
     </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
 {
@@ -1216,6 +1293,10 @@
     <span class="kw">let </span>string = String::deserialize(d)<span class="question-mark">?</span>;
 
     Cid::from_str(<span class="kw-2">&amp;</span>string).map_err(|e| D::Error::custom(e.to_string()))
+}
+
+<span class="kw">pub fn </span>cid_from_string(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Cid, libipld::cid::Error&gt; {
+    Cid::from_str(s)
 }
 
 <span class="attr">#[allow(dead_code)]
@@ -1249,6 +1330,7 @@
             <span class="number">1 </span>=&gt; <span class="prelude-val">Ok</span>(ReductionCount::One),
             <span class="number">5 </span>=&gt; <span class="prelude-val">Ok</span>(ReductionCount::Five),
             <span class="number">10 </span>=&gt; <span class="prelude-val">Ok</span>(ReductionCount::Ten),
+            <span class="number">100 </span>=&gt; <span class="prelude-val">Ok</span>(ReductionCount::OneHundred),
             c =&gt; <span class="prelude-val">Err</span>(Error::UnsupportedReductionCount(c)),
         }
     }
@@ -1259,6 +1341,7 @@
             <span class="self">Self</span>::One =&gt; <span class="number">1</span>,
             <span class="self">Self</span>::Five =&gt; <span class="number">5</span>,
             <span class="self">Self</span>::Ten =&gt; <span class="number">10</span>,
+            <span class="self">Self</span>::OneHundred =&gt; <span class="number">100</span>,
         }
     }
 }
@@ -1270,13 +1353,6 @@
     <span class="kw">fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String;
     <span class="kw">fn </span>cid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Cid;
     <span class="kw">fn </span>has_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: String) -&gt; bool;
-}
-
-<span class="kw">pub trait </span>Key&lt;T: ToString&gt;
-<span class="kw">where
-    </span><span class="self">Self</span>: Sized,
-{
-    <span class="kw">fn </span>key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; T;
 }
 
 <span class="kw">impl</span>&lt;T: Serialize&gt; Id <span class="kw">for </span>T
@@ -1405,16 +1481,16 @@
         s.intern_opaque_comm(<span class="self">self</span>.comm)
     }
 
-    <span class="kw">pub fn </span>from_ptr_with_hiding(s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, function_ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; (<span class="self">Self</span>, F) {
+    <span class="kw">pub fn </span>from_ptr_with_hiding(s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; (<span class="self">Self</span>, F) {
         <span class="kw">let </span>secret = F::random(OsRng);
 
-        <span class="kw">let </span>commitment = <span class="self">Self</span>::from_ptr_and_secret(s, function_ptr, secret);
+        <span class="kw">let </span>commitment = <span class="self">Self</span>::from_ptr_and_secret(s, ptr, secret);
 
         (commitment, secret)
     }
 
-    <span class="kw">pub fn </span>from_ptr_and_secret(s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, function_ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;, secret: F) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>hidden = s.hide(secret, <span class="kw-2">*</span>function_ptr);
+    <span class="kw">pub fn </span>from_ptr_and_secret(s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;, secret: F) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>hidden = s.hide(secret, <span class="kw-2">*</span>ptr);
 
         <span class="self">Self</span>::from_comm(s, <span class="kw-2">&amp;</span>hidden)
     }
@@ -1422,12 +1498,12 @@
     <span class="comment">// Importantly, this ensures the function and secret are in the Store, s.
     </span><span class="kw">fn </span>construct_with_fun_application(
         s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
-        function: Function&lt;F&gt;,
+        function: CommittedExpression&lt;F&gt;,
         input: Ptr&lt;F&gt;,
         limit: usize,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, Ptr&lt;F&gt;), Error&gt; {
-        <span class="kw">let </span>fun_ptr = function.fun_ptr(s, limit)<span class="question-mark">?</span>;
-        <span class="kw">let </span>secret = function.secret.expect(<span class="string">&quot;Function secret missing&quot;</span>);
+        <span class="kw">let </span>fun_ptr = function.expr_ptr(s, limit)<span class="question-mark">?</span>;
+        <span class="kw">let </span>secret = function.secret.expect(<span class="string">&quot;CommittedExpression secret missing&quot;</span>);
 
         <span class="kw">let </span>commitment = <span class="self">Self</span>::from_ptr_and_secret(s, <span class="kw-2">&amp;</span>fun_ptr, secret);
 
@@ -1455,22 +1531,27 @@
     }
 }
 
-<span class="kw">impl</span>&lt;F: LurkField + Serialize + DeserializeOwned&gt; Function&lt;F&gt; {
-    <span class="kw">pub fn </span>fun_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, limit: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;, Error&gt; {
-        <span class="kw">let </span>source_ptr = <span class="self">self</span>.fun.ptr(s);
+<span class="kw">impl</span>&lt;F: LurkField + Serialize + DeserializeOwned&gt; CommittedExpression&lt;F&gt; {
+    <span class="kw">pub fn </span>expr_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, limit: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;, Error&gt; {
+        <span class="kw">let </span>source_ptr = <span class="self">self</span>.expr.ptr(s, limit);
 
-        <span class="comment">// Evaluate the source to get an actual function.
-        </span><span class="kw">let </span>(output, _iterations) = evaluate(s, source_ptr, limit)<span class="question-mark">?</span>;
-        <span class="comment">// TODO: Verify that result actually is a function.
-
-        </span><span class="prelude-val">Ok</span>(output.expr)
+        <span class="prelude-val">Ok</span>(source_ptr)
     }
 }
 
 <span class="kw">impl </span>LurkPtr {
-    <span class="kw">pub fn </span>ptr&lt;F: LurkField + Serialize + DeserializeOwned&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;) -&gt; Ptr&lt;F&gt; {
+    <span class="kw">pub fn </span>ptr&lt;F: LurkField + Serialize + DeserializeOwned&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
+        limit: usize,
+    ) -&gt; Ptr&lt;F&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            LurkPtr::Source(source) =&gt; s.read(source).expect(<span class="string">&quot;could not read source&quot;</span>),
+            LurkPtr::Source(source) =&gt; {
+                <span class="kw">let </span>ptr = s.read(source).expect(<span class="string">&quot;could not read source&quot;</span>);
+                <span class="kw">let </span>(out, <span class="kw">_</span>) = evaluate(s, ptr, limit).unwrap();
+
+                out.expr
+            }
             LurkPtr::ScalarBytes(lurk_scalar_bytes) =&gt; {
                 <span class="kw">let </span>scalar_store: Ipld = DagCborCodec
                     .decode(<span class="kw-2">&amp;</span>lurk_scalar_bytes.scalar_store)
@@ -1484,7 +1565,7 @@
                     scalar_ptr,
                 });
 
-                lurk_ptr.ptr(s)
+                lurk_ptr.ptr(s, limit)
             }
             LurkPtr::Ipld(lurk_scalar_ipld) =&gt; {
                 <span class="comment">// FIXME: put the scalar_store in a new field for the store.
@@ -1497,6 +1578,25 @@
             }
         }
     }
+
+    <span class="kw">pub fn </span>from_ptr&lt;F: LurkField + Serialize&gt;(s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>(scalar_store, scalar_ptr) = ScalarStore::new_with_expr(s, ptr);
+        <span class="kw">let </span>scalar_ptr = scalar_ptr.unwrap();
+
+        <span class="kw">let </span>scalar_store_ipld = to_ipld(scalar_store).unwrap();
+        <span class="kw">let </span>new_fun_ipld = to_ipld(scalar_ptr).unwrap();
+
+        <span class="kw">let </span>scalar_store_bytes = DagCborCodec.encode(<span class="kw-2">&amp;</span>scalar_store_ipld).unwrap();
+        <span class="kw">let </span>new_fun_bytes = DagCborCodec.encode(<span class="kw-2">&amp;</span>new_fun_ipld).unwrap();
+
+        <span class="kw">let </span>again = from_ipld(new_fun_ipld).unwrap();
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>scalar_ptr, <span class="kw-2">&amp;</span>again);
+
+        <span class="self">Self</span>::ScalarBytes(LurkScalarBytes {
+            scalar_store: scalar_store_bytes,
+            scalar_ptr: new_fun_bytes,
+        })
+    }
 }
 
 <span class="kw">impl </span>Expression {
@@ -1505,7 +1605,7 @@
         s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
         limit: usize,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;, Error&gt; {
-        <span class="kw">let </span>expr = <span class="self">self</span>.expr.ptr(s);
+        <span class="kw">let </span>expr = <span class="self">self</span>.expr.ptr(s, limit);
         <span class="kw">let </span>(io, _iterations) = evaluate(s, expr, limit)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(io.expr)
@@ -1517,7 +1617,7 @@
     </span><span class="kw">pub fn </span>apply_and_prove(
         s: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;S1&gt;,
         input: Ptr&lt;S1&gt;,
-        function: Function&lt;S1&gt;,
+        function: CommittedExpression&lt;S1&gt;,
         limit: usize,
         chain: bool,
         only_use_cached_proofs: bool,
@@ -1525,7 +1625,7 @@
         pp: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PublicParams,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Proof&lt;<span class="lifetime">&#39;a</span>, S1&gt;, Error&gt; {
         <span class="kw">let </span>claim = <span class="self">Self</span>::apply(s, input, function, limit, chain)<span class="question-mark">?</span>;
-        Proof::prove_claim(s, claim, limit, only_use_cached_proofs, nova_prover, pp)
+        Proof::prove_claim(s, <span class="kw-2">&amp;</span>claim, limit, only_use_cached_proofs, nova_prover, pp)
     }
 
     <span class="kw">pub fn </span>open_and_prove(
@@ -1536,12 +1636,12 @@
         nova_prover: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>NovaProver&lt;S1&gt;,
         pp: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PublicParams,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Proof&lt;<span class="lifetime">&#39;a</span>, S1&gt;, Error&gt; {
-        <span class="kw">let </span>input = request.input.expr.ptr(s);
+        <span class="kw">let </span>input = request.input.expr.ptr(s, limit);
         <span class="kw">let </span>commitment = request.commitment;
 
-        <span class="kw">let </span>function_map = committed_function_store();
+        <span class="kw">let </span>function_map = committed_expression_store();
         <span class="kw">let </span>function = function_map
-            .get(commitment)
+            .get(<span class="kw-2">&amp;</span>commitment)
             .ok_or(Error::UnknownCommitment)<span class="question-mark">?</span>;
 
         <span class="self">Self</span>::apply_and_prove(
@@ -1562,12 +1662,12 @@
         limit: usize,
         chain: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Claim&lt;S1&gt;, Error&gt; {
-        <span class="kw">let </span>input = request.input.expr.ptr(s);
+        <span class="kw">let </span>input = request.input.expr.ptr(s, limit);
         <span class="kw">let </span>commitment = request.commitment;
 
-        <span class="kw">let </span>function_map = committed_function_store();
+        <span class="kw">let </span>function_map = committed_expression_store();
         <span class="kw">let </span>function = function_map
-            .get(commitment)
+            .get(<span class="kw-2">&amp;</span>commitment)
             .ok_or(Error::UnknownCommitment)<span class="question-mark">?</span>;
 
         <span class="self">Self</span>::apply(s, input, function, limit, chain)
@@ -1592,21 +1692,16 @@
     <span class="kw">pub fn </span>apply(
         s: <span class="kw-2">&amp;mut </span>Store&lt;S1&gt;,
         input: Ptr&lt;S1&gt;,
-        function: Function&lt;S1&gt;,
+        function: CommittedExpression&lt;S1&gt;,
         limit: usize,
         chain: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Claim&lt;S1&gt;, Error&gt; {
-        <span class="kw">let </span>function_map = committed_function_store();
-
         <span class="kw">let </span>(commitment, expression) =
             Commitment::construct_with_fun_application(s, function, input, limit)<span class="question-mark">?</span>;
         <span class="kw">let </span>(public_output, _iterations) = evaluate(s, expression, limit)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>(new_commitment, output_expr) = <span class="kw">if </span>chain {
-            <span class="comment">// FIXME: update for explicit commitments.
-
-            // public_output = (result_expr (secret . new_fun))
-            </span><span class="kw">let </span>cons = public_output.expr;
+            <span class="kw">let </span>cons = public_output.expr;
             <span class="kw">let </span>result_expr = s.car(<span class="kw-2">&amp;</span>cons)<span class="question-mark">?</span>;
             <span class="kw">let </span>new_comm = s.cdr(<span class="kw-2">&amp;</span>cons)<span class="question-mark">?</span>;
 
@@ -1617,37 +1712,16 @@
             <span class="kw">let </span>new_commitment = Commitment::from_comm(s, <span class="kw-2">&amp;</span>new_comm);
 
             s.hydrate_scalar_cache();
-            <span class="kw">let </span>(scalar_store, scalar_ptr) = ScalarStore::new_with_expr(s, <span class="kw-2">&amp;</span>new_fun);
-            <span class="kw">let </span>scalar_ptr = scalar_ptr.unwrap();
 
-            <span class="kw">let </span>scalar_store_ipld = to_ipld(scalar_store).unwrap();
-            <span class="kw">let </span>new_fun_ipld = to_ipld(scalar_ptr).unwrap();
+            <span class="kw">let </span>expr = LurkPtr::from_ptr(s, <span class="kw-2">&amp;</span>new_fun);
 
-            <span class="kw">let </span>scalar_store_bytes = DagCborCodec.encode(<span class="kw-2">&amp;</span>scalar_store_ipld).unwrap();
-            <span class="kw">let </span>new_fun_bytes = DagCborCodec.encode(<span class="kw-2">&amp;</span>new_fun_ipld).unwrap();
-
-            <span class="kw">let </span>again = from_ipld(new_fun_ipld).unwrap();
-            <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>scalar_ptr, <span class="kw-2">&amp;</span>again);
-
-            <span class="comment">// TODO: Can this be made to work?
-            // let new_function = Function::&lt;S1&gt; {
-            //     fun: LurkPtr::Ipld(LurkScalarIpld {
-            //         scalar_store: scalar_store_ipld,
-            //         scalar_ptr: new_fun_ipld,
-            //     }),
-            //     secret: Some(new_secret),
-            //     commitment: Some(new_commitment),
-            // };
-
-            </span><span class="kw">let </span>new_function = Function::&lt;S1&gt; {
-                fun: LurkPtr::ScalarBytes(LurkScalarBytes {
-                    scalar_store: scalar_store_bytes,
-                    scalar_ptr: new_fun_bytes,
-                }),
+            <span class="kw">let </span>new_function = CommittedExpression::&lt;S1&gt; {
+                expr,
                 secret: <span class="prelude-val">Some</span>(new_secret),
                 commitment: <span class="prelude-val">Some</span>(new_commitment),
             };
 
+            <span class="kw">let </span>function_map = committed_expression_store();
             function_map.set(new_commitment, <span class="kw-2">&amp;</span>new_function)<span class="question-mark">?</span>;
 
             (<span class="prelude-val">Some</span>(new_commitment), result_expr)
@@ -1696,21 +1770,25 @@
         <span class="kw">let </span>evaluation = Evaluation::new(s, input, public_output, <span class="prelude-val">None</span>);
         <span class="kw">let </span>claim = Claim::Evaluation(evaluation);
 
-        <span class="self">Self</span>::prove_claim(s, claim, limit, only_use_cached_proofs, nova_prover, pp)
+        <span class="self">Self</span>::prove_claim(s, <span class="kw-2">&amp;</span>claim, limit, only_use_cached_proofs, nova_prover, pp)
     }
 
     <span class="kw">pub fn </span>prove_claim(
         s: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;S1&gt;,
-        claim: Claim&lt;S1&gt;,
+        claim: <span class="kw-2">&amp;</span>Claim&lt;S1&gt;,
         limit: usize,
         only_use_cached_proofs: bool,
         nova_prover: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>NovaProver&lt;S1&gt;,
         pp: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PublicParams,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
-        <span class="kw">let </span>proof_map = nova_proof_cache();
-        <span class="kw">let </span>function_map = committed_function_store();
+        <span class="kw">let </span>reduction_count = nova_prover.reduction_count();
 
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(proof) = proof_map.get(claim.cid()) {
+        <span class="kw">let </span>proof_map = nova_proof_cache(reduction_count);
+        <span class="kw">let </span>function_map = committed_expression_store();
+
+        <span class="kw">let </span>cid = claim.cid();
+
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(proof) = proof_map.get(<span class="kw-2">&amp;</span>cid) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(proof);
         }
 
@@ -1718,8 +1796,6 @@
             <span class="comment">// FIXME: Error handling.
             </span><span class="macro">panic!</span>(<span class="string">&quot;no cached proof&quot;</span>);
         }
-
-        <span class="kw">let </span>reduction_count = DEFAULT_REDUCTION_COUNT;
 
         <span class="macro">info!</span>(<span class="string">&quot;Starting Proving&quot;</span>);
 
@@ -1733,7 +1809,7 @@
 
                 <span class="comment">// In order to prove the opening, we need access to the original function.
                 </span><span class="kw">let </span>function = function_map
-                    .get(commitment)
+                    .get(<span class="kw-2">&amp;</span>commitment)
                     .expect(<span class="string">&quot;function for commitment missing&quot;</span>);
 
                 <span class="kw">let </span>input = s.read(<span class="kw-2">&amp;</span>o.input).expect(<span class="string">&quot;bad expression&quot;</span>);
@@ -1753,7 +1829,7 @@
             claim: claim.clone(),
             proof,
             num_steps,
-            reduction_count,
+            reduction_count: ReductionCount::try_from(reduction_count)<span class="question-mark">?</span>,
         };
 
         <span class="kw">match </span><span class="kw-2">&amp;</span>claim {
@@ -1771,30 +1847,51 @@
 
         proof.verify(pp).expect(<span class="string">&quot;Nova verification failed&quot;</span>);
 
-        proof_map.set(claim.cid(), <span class="kw-2">&amp;</span>proof).unwrap();
+        proof_map.set(cid, <span class="kw-2">&amp;</span>proof).unwrap();
 
         <span class="prelude-val">Ok</span>(proof)
     }
 
     <span class="kw">pub fn </span>verify(<span class="kw-2">&amp;</span><span class="self">self</span>, pp: <span class="kw-2">&amp;</span>PublicParams) -&gt; <span class="prelude-ty">Result</span>&lt;VerificationResult, Error&gt; {
-        <span class="kw">let </span>(public_inputs, public_outputs) = <span class="kw">match </span><span class="self">self</span>.claim {
-            Claim::Evaluation(<span class="kw">_</span>) =&gt; <span class="self">self</span>.verify_evaluation(),
-            Claim::Opening(<span class="kw">_</span>) =&gt; <span class="self">self</span>.verify_opening(),
-        }<span class="question-mark">?</span>;
+        <span class="kw">let </span>(public_inputs, public_outputs) = <span class="self">self</span>.io_vecs()<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>verified = <span class="self">self
-            </span>.proof
-            .verify(pp, <span class="self">self</span>.num_steps, public_inputs, <span class="kw-2">&amp;</span>public_outputs)
-            .expect(<span class="string">&quot;error verifying&quot;</span>);
+        <span class="kw">let </span>claim_iterations_and_num_steps_are_consistent = <span class="kw">if let </span>Claim::Evaluation(Evaluation {
+            iterations: <span class="prelude-val">Some</span>(iterations),
+            ..
+        }) = <span class="self">self</span>.claim
+        {
+            <span class="comment">// Currently, claims created by fcomm don&#39;t include the iteration count. If they do, then it should be
+            // possible to verify correctness. This may require making the iteration count explicit in the public
+            // output. That will allow maintaining iteration count without incrementing during frames added as
+            // padding; and it will also allow explicitly masking the count when desired for zero-knowledge.
+            // Meanwhile, since Nova currently requires the number of steps to be provided by the verifier, we have
+            // to provide it. For now, we should at least be able to calculate this value based on number of real
+            // iterations and number of frames per circuit. This is untested and mostly a placeholder to remind us
+            // that all of this will need to be handled in a more principled way eventually. (#282)
+
+            </span><span class="kw">let </span>num_steps = <span class="self">self</span>.num_steps;
+
+            <span class="kw">let </span>chunk_frame_count = <span class="self">self</span>.reduction_count.count();
+            <span class="kw">let </span>expected_steps =
+                (iterations / chunk_frame_count) + (iterations % chunk_frame_count != <span class="number">0</span>) <span class="kw">as </span>usize;
+
+            expected_steps == num_steps
+        } <span class="kw">else </span>{
+            <span class="bool-val">true
+        </span>};
+
+        <span class="kw">let </span>verified = claim_iterations_and_num_steps_are_consistent
+            &amp;&amp; <span class="self">self
+                </span>.proof
+                .verify(pp, <span class="self">self</span>.num_steps, public_inputs, <span class="kw-2">&amp;</span>public_outputs)
+                .expect(<span class="string">&quot;error verifying&quot;</span>);
 
         <span class="kw">let </span>result = VerificationResult::new(verified);
 
         <span class="prelude-val">Ok</span>(result)
     }
 
-    <span class="kw">pub fn </span>verify_evaluation(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;S1&gt;, Vec&lt;S1&gt;), Error&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>s = Store::&lt;S1&gt;::default();
-
+    <span class="kw">pub fn </span>evaluation_io(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;mut </span>Store&lt;S1&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(IO&lt;S1&gt;, IO&lt;S1&gt;), Error&gt; {
         <span class="kw">let </span>evaluation = <span class="kw-2">&amp;</span><span class="self">self</span>.claim.evaluation().expect(<span class="string">&quot;expected evaluation claim&quot;</span>);
 
         <span class="kw">let </span>input_io = {
@@ -1812,8 +1909,6 @@
             IO::&lt;S1&gt; { expr, env, cont }
         };
 
-        <span class="kw">let </span>public_inputs = input_io.to_inputs(<span class="kw-2">&amp;</span>s);
-
         <span class="kw">let </span>output_io = {
             <span class="kw">let </span>expr = s
                 .read(<span class="kw-2">&amp;</span>evaluation.expr_out)
@@ -1824,67 +1919,50 @@
                 .map_err(|<span class="kw">_</span>| Error::VerificationError(<span class="string">&quot;failed to read env out&quot;</span>.into()))<span class="question-mark">?</span>;
             <span class="kw">let </span>cont = evaluation
                 .status
-                .to_cont(<span class="kw-2">&amp;mut </span>s)
+                .to_cont(s)
                 .ok_or_else(|| Error::VerificationError(<span class="string">&quot;continuation cannot be proved&quot;</span>.into()))<span class="question-mark">?</span>;
 
             IO::&lt;S1&gt; { expr, env, cont }
         };
 
-        <span class="kw">let </span>public_outputs = output_io.to_inputs(<span class="kw-2">&amp;</span>s);
-
-        <span class="prelude-val">Ok</span>((public_inputs, public_outputs))
+        <span class="prelude-val">Ok</span>((input_io, output_io))
     }
 
-    <span class="kw">pub fn </span>verify_opening(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;S1&gt;, Vec&lt;S1&gt;), Error&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>s = Store::&lt;S1&gt;::default();
-
+    <span class="kw">pub fn </span>opening_io(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;mut </span>Store&lt;S1&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(IO&lt;S1&gt;, IO&lt;S1&gt;), Error&gt; {
         <span class="macro">assert!</span>(<span class="self">self</span>.claim.is_opening());
 
         <span class="kw">let </span>opening = <span class="self">self</span>.claim.opening().expect(<span class="string">&quot;expected opening claim&quot;</span>);
-        <span class="kw">let </span>output = opening.public_output_expression(<span class="kw-2">&amp;mut </span>s);
-
+        <span class="kw">let </span>output = opening.public_output_expression(s);
         <span class="kw">let </span>input = s.read(<span class="kw-2">&amp;</span>opening.input).expect(<span class="string">&quot;could not read input&quot;</span>);
 
-        <span class="kw">let </span>expression = opening.commitment.fun_application(<span class="kw-2">&amp;mut </span>s, input);
-
-        <span class="kw">let </span>expr = s
-            .hash_expr(<span class="kw-2">&amp;</span>expression)
-            .expect(<span class="string">&quot;failed to hash input expression&quot;</span>);
-
-        <span class="kw">let </span>empty_env = s.hash_expr(<span class="kw-2">&amp;</span>empty_sym_env(<span class="kw-2">&amp;</span>s)).unwrap();
+        <span class="kw">let </span>expression = opening.commitment.fun_application(s, input);
         <span class="kw">let </span>outermost = s.intern_cont_outermost();
-        <span class="kw">let </span>cont = s.hash_cont(<span class="kw-2">&amp;</span>outermost).unwrap();
 
-        <span class="kw">let </span>public_inputs = <span class="macro">vec!</span>[
-            <span class="kw-2">*</span>expr.tag(),
-            <span class="kw-2">*</span>expr.value(),
-            <span class="kw-2">*</span>empty_env.tag(),
-            <span class="kw-2">*</span>empty_env.value(),
-            <span class="kw-2">*</span>cont.tag(),
-            <span class="kw-2">*</span>cont.value(),
-        ];
+        <span class="kw">let </span>input_io = IO::&lt;S1&gt; {
+            expr: expression,
+            env: empty_sym_env(s),
+            cont: outermost,
+        };
 
         <span class="kw">let </span>output_io = IO::&lt;S1&gt; {
             expr: output,
-            env: empty_sym_env(<span class="kw-2">&amp;</span>s),
+            env: empty_sym_env(s),
             cont: s.intern_cont_terminal(),
         };
 
-        <span class="kw">let </span>public_outputs = output_io.to_inputs(<span class="kw-2">&amp;</span>s);
-
-        <span class="prelude-val">Ok</span>((public_inputs, public_outputs))
+        <span class="prelude-val">Ok</span>((input_io, output_io))
     }
-}
 
-<span class="kw">impl </span>Key&lt;Commitment&lt;S1&gt;&gt; <span class="kw">for </span>Function&lt;S1&gt; {
-    <span class="kw">fn </span>key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Commitment&lt;S1&gt; {
-        <span class="self">self</span>.commitment.expect(<span class="string">&quot;commitment missing&quot;</span>)
+    <span class="kw">pub fn </span>io(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;mut </span>Store&lt;S1&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(IO&lt;S1&gt;, IO&lt;S1&gt;), Error&gt; {
+        <span class="kw">match </span><span class="self">self</span>.claim {
+            Claim::Evaluation(<span class="kw">_</span>) =&gt; <span class="self">self</span>.evaluation_io(s),
+            Claim::Opening(<span class="kw">_</span>) =&gt; <span class="self">self</span>.opening_io(s),
+        }
     }
-}
+    <span class="kw">fn </span>io_vecs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;S1&gt;, Vec&lt;S1&gt;), Error&gt; {
+        <span class="kw">let </span>s = <span class="kw-2">&amp;mut </span>Store::&lt;S1&gt;::default();
 
-<span class="kw">impl </span>Key&lt;Cid&gt; <span class="kw">for </span>Proof&lt;<span class="lifetime">&#39;_</span>, S1&gt; {
-    <span class="kw">fn </span>key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Cid {
-        <span class="self">self</span>.claim.cid()
+        <span class="self">self</span>.io(s).map(|(i, o)| (i.to_inputs(s), o.to_inputs(s)))
     }
 }
 
@@ -1936,5 +2014,4 @@
         <span class="macro">assert_eq!</span>(cert, cert_again);
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="fcomm" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (e3dfeeaa4 2023-03-07)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

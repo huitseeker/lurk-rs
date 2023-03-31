@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/store.rs`."><title>store.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../lurk/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/store.rs`."><title>store.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fbd14db5c88ed452.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (ec2f40c6b 2023-03-30)" data-search-js="search-bc5a112813b5d712.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" data-theme-light-css="light-db279b6232be9c13.css" data-theme-dark-css="dark-cf923f49f397b216.css" data-theme-ayu-css="ayu-be46fdc453a55015.css" ></div><script src="../../static.files/storage-d4a1a279bad1a0c0.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-9ade54abd4bd73c8.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../lurk/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3271,20 +3271,16 @@
 <a href="#3271" id="3271">3271</a>
 <a href="#3272" id="3272">3272</a>
 <a href="#3273" id="3273">3273</a>
-<a href="#3274" id="3274">3274</a>
-<a href="#3275" id="3275">3275</a>
-<a href="#3276" id="3276">3276</a>
-<a href="#3277" id="3277">3277</a>
-<a href="#3278" id="3278">3278</a>
-<a href="#3279" id="3279">3279</a>
-<a href="#3280" id="3280">3280</a>
-<a href="#3281" id="3281">3281</a>
-<a href="#3282" id="3282">3282</a>
-</pre><pre class="rust"><code><span class="kw">use </span>generic_array::typenum::{U3, U4, U6, U8};
+</pre><pre class="rust"><code><span class="kw">use </span>anyhow::anyhow;
+<span class="kw">use </span>generic_array::typenum::{U3, U4, U6, U8};
 <span class="kw">use </span>neptune::Poseidon;
+<span class="attr">#[cfg(not(target_arch = <span class="string">&quot;wasm32&quot;</span>))]
+</span><span class="kw">use </span>proptest_derive::Arbitrary;
 <span class="kw">use </span>rayon::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>std::collections::VecDeque;
+<span class="kw">use </span>std::fmt::{Display, Formatter};
 <span class="kw">use </span>std::hash::Hash;
+<span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>std::{fmt, marker::PhantomData};
 <span class="kw">use </span>string_interner::symbol::{Symbol, SymbolUsize};
 <span class="kw">use </span>thiserror;
@@ -3297,12 +3293,15 @@
 <span class="kw">use </span>libipld::Cid;
 <span class="kw">use </span>libipld::Multihash;
 
+<span class="kw">use </span><span class="kw">crate</span>::light_data::Encodable;
+<span class="kw">use </span><span class="kw">crate</span>::light_data::LightData;
+
 <span class="kw">use </span><span class="kw">crate</span>::field::{FWrap, LurkField};
 <span class="kw">use </span><span class="kw">crate</span>::package::{Package, LURK_EXTERNAL_SYMBOL_NAMES};
 <span class="kw">use </span><span class="kw">crate</span>::parser::{convert_sym_case, names_keyword};
 <span class="kw">use </span><span class="kw">crate</span>::scalar_store::{ScalarContinuation, ScalarExpression, ScalarStore};
 <span class="kw">use </span><span class="kw">crate</span>::sym::Sym;
-<span class="kw">use </span><span class="kw">crate</span>::tag::{ContTag, ExprTag, Op1, Op2};
+<span class="kw">use </span><span class="kw">crate</span>::tag::{ContTag, ExprTag, Op1, Op2, Tag};
 <span class="kw">use crate</span>::{Num, UInt};
 
 <span class="kw">use </span>serde::Deserialize;
@@ -3444,7 +3443,9 @@
     dehydrated_cont: Vec&lt;ContPtr&lt;F&gt;&gt;,
     opaque_raw_ptr_count: usize,
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) lurk_package: Package,
+    pointer_scalar_ptr_cache: dashmap::DashMap&lt;Ptr&lt;F&gt;, ScalarPtr&lt;F&gt;&gt;,
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) lurk_package: Arc&lt;Package&gt;,
     constants: OnceCell&lt;NamedConstants&lt;F&gt;&gt;,
 }
 
@@ -3461,7 +3462,7 @@
 <span class="attr">#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 </span><span class="kw">struct </span>CacheKey&lt;F: LurkField, <span class="kw">const </span>N: usize&gt;([F; N]);
 
-<span class="attr">#[allow(clippy::derive_hash_xor_eq)]
+<span class="attr">#[allow(clippy::derived_hash_with_manual_eq)]
 </span><span class="kw">impl</span>&lt;F: LurkField, <span class="kw">const </span>N: usize&gt; Hash <span class="kw">for </span>CacheKey&lt;F, N&gt; {
     <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
         <span class="kw">for </span>el <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0 </span>{
@@ -3511,25 +3512,18 @@
 }
 
 <span class="kw">pub trait </span>Pointer&lt;F: LurkField + From&lt;u64&gt;&gt;: fmt::Debug + Copy + Clone + PartialEq + Hash {
-    <span class="kw">type </span>Tag: Into&lt;u64&gt;;
-    <span class="kw">type </span>ScalarPointer: ScalarPointer&lt;F&gt;;
+    <span class="kw">type </span>Tag: Tag;
 
     <span class="kw">fn </span>tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Tag;
     <span class="kw">fn </span>tag_field(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; F {
-        F::from(<span class="self">self</span>.tag().into())
+        F::from(<span class="self">self</span>.tag().into() <span class="kw">as </span>u64)
     }
-}
-
-<span class="kw">pub trait </span>ScalarPointer&lt;F: LurkField&gt;: fmt::Debug + Copy + Clone + PartialEq + Hash {
-    <span class="kw">fn </span>from_parts(tag: F, value: F) -&gt; <span class="self">Self</span>;
-    <span class="kw">fn </span>tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>F;
-    <span class="kw">fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>F;
 }
 
 <span class="attr">#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 </span><span class="kw">pub struct </span>Ptr&lt;F: LurkField&gt;(ExprTag, RawPtr&lt;F&gt;);
 
-<span class="attr">#[allow(clippy::derive_hash_xor_eq)]
+<span class="attr">#[allow(clippy::derived_hash_with_manual_eq)]
 </span><span class="kw">impl</span>&lt;F: LurkField&gt; Hash <span class="kw">for </span>Ptr&lt;F&gt; {
     <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
         <span class="self">self</span>.<span class="number">0</span>.hash(state);
@@ -3538,14 +3532,43 @@
 }
 
 <span class="kw">impl</span>&lt;F: LurkField&gt; Ptr&lt;F&gt; {
-    <span class="comment">// NOTE: Although this could be a type predicate now, when NIL becomes a symbol, it won&#39;t be possible.
-    </span><span class="kw">pub fn </span>is_nil(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="comment">// TODO: Make these methods and the similar ones defined on expression consistent, probably including a shared trait.
+
+    // NOTE: Although this could be a type predicate now, when NIL becomes a symbol, it won&#39;t be possible.
+    </span><span class="kw">pub const fn </span>is_nil(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>.<span class="number">0</span>, ExprTag::Nil)
         <span class="comment">// FIXME: check value also, probably
     </span>}
+    <span class="kw">pub const fn </span>is_cons(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="macro">matches!</span>(<span class="self">self</span>.<span class="number">0</span>, ExprTag::Cons)
+    }
 
-    <span class="kw">pub fn </span>is_opaque(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_atom(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        !<span class="self">self</span>.is_cons()
+    }
+
+    <span class="kw">pub const fn </span>is_list(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="macro">matches!</span>(<span class="self">self</span>.<span class="number">0</span>, ExprTag::Nil | ExprTag::Cons)
+    }
+
+    <span class="kw">pub const fn </span>is_opaque(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.<span class="number">1</span>.is_opaque()
+    }
+
+    <span class="kw">pub const fn </span>as_cons(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">if </span><span class="self">self</span>.is_cons() {
+            <span class="prelude-val">Some</span>(<span class="self">self</span>)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
+    }
+
+    <span class="kw">pub const fn </span>as_list(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">if </span><span class="self">self</span>.is_list() {
+            <span class="prelude-val">Some</span>(<span class="self">self</span>)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
     }
 }
 
@@ -3557,51 +3580,105 @@
 
 <span class="kw">impl</span>&lt;F: LurkField&gt; Pointer&lt;F&gt; <span class="kw">for </span>Ptr&lt;F&gt; {
     <span class="kw">type </span>Tag = ExprTag;
-    <span class="kw">type </span>ScalarPointer = ScalarPtr&lt;F&gt;;
 
     <span class="kw">fn </span>tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ExprTag {
         <span class="self">self</span>.<span class="number">0
     </span>}
 }
 
-<span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
-</span><span class="kw">pub struct </span>ScalarPtr&lt;F: LurkField&gt;(F, F);
+<span class="attr">#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(not(target_arch = <span class="string">&quot;wasm32&quot;</span>), derive(Arbitrary))]
+</span><span class="comment">// Note: the trait bound E: Tag is not necessary in the struct, but it makes the proptest strategy more efficient.
+</span><span class="doccomment">/// A struct representing a scalar pointer with a tag and a value.
+///
+/// The `SPtr` struct is used to store a tagged scalar pointer, where `E` is its tag, and `F` the field for its values.
+/// It has two important aliases, `ScalarPtr` and `ScalarContPtr`, which are used respectively with `ExprTag` and `ContTag`,
+/// i.e. the type of expressions and the type of continuations.
+</span><span class="kw">pub struct </span>SPtr&lt;E: Tag, F: LurkField&gt;(
+    E,
+    <span class="attr">#[cfg_attr(
+        not(target_arch = <span class="string">&quot;wasm32&quot;</span>),
+        proptest(strategy = <span class="string">&quot;any::&lt;FWrap&lt;F&gt;&gt;().prop_map(|x| x.0)&quot;</span>)
+    )]
+    </span>F,
+);
 
-<span class="kw">impl</span>&lt;F: LurkField&gt; Copy <span class="kw">for </span>ScalarPtr&lt;F&gt; {}
-
-<span class="attr">#[cfg(not(target_arch = <span class="string">&quot;wasm32&quot;</span>))]
-</span><span class="kw">impl</span>&lt;Fr: LurkField&gt; Arbitrary <span class="kw">for </span>ScalarPtr&lt;Fr&gt; {
-    <span class="kw">type </span>Parameters = ();
-    <span class="kw">type </span>Strategy = BoxedStrategy&lt;<span class="self">Self</span>&gt;;
-
-    <span class="kw">fn </span>arbitrary_with(_args: <span class="self">Self</span>::Parameters) -&gt; <span class="self">Self</span>::Strategy {
-        any::&lt;(ExprTag, FWrap&lt;Fr&gt;)&gt;()
-            .prop_map(|(tag, val)| ScalarPtr::from_parts(Fr::from(tag <span class="kw">as </span>u64), val.<span class="number">0</span>))
-            .boxed()
+<span class="kw">impl</span>&lt;E: Tag + Display, F: LurkField&gt; Display <span class="kw">for </span>SPtr&lt;E, F&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">let </span>tag = <span class="self">self</span>.<span class="number">0</span>;
+        <span class="kw">let </span>trimmed_f = <span class="self">self</span>.<span class="number">1</span>.trimmed_hex_digits();
+        <span class="macro">write!</span>(f, <span class="string">&quot;(ptr-&gt;{tag}, {trimmed_f})&quot;</span>,)
     }
 }
 
-<span class="kw">impl</span>&lt;F: LurkField&gt; PartialOrd <span class="kw">for </span>ScalarPtr&lt;F&gt; {
+<span class="kw">impl</span>&lt;E: Tag, F: LurkField&gt; PartialOrd <span class="kw">for </span>SPtr&lt;E, F&gt; {
     <span class="kw">fn </span>partial_cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;core::cmp::Ordering&gt; {
-        (<span class="self">self</span>.<span class="number">0</span>.to_repr().as_ref(), <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref())
-            .partial_cmp(<span class="kw-2">&amp;</span>(other.<span class="number">0</span>.to_repr().as_ref(), other.<span class="number">1</span>.to_repr().as_ref()))
+        (
+            <span class="self">self</span>.<span class="number">0</span>.to_field_bytes::&lt;F&gt;().as_ref(),
+            <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref(),
+        )
+            .partial_cmp(<span class="kw-2">&amp;</span>(
+                other.<span class="number">0</span>.to_field_bytes::&lt;F&gt;().as_ref(),
+                other.<span class="number">1</span>.to_repr().as_ref(),
+            ))
     }
 }
 
-<span class="kw">impl</span>&lt;F: LurkField&gt; Ord <span class="kw">for </span>ScalarPtr&lt;F&gt; {
+<span class="kw">impl</span>&lt;E: Tag, F: LurkField&gt; Ord <span class="kw">for </span>SPtr&lt;E, F&gt; {
     <span class="kw">fn </span>cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; core::cmp::Ordering {
-        (<span class="self">self</span>.<span class="number">0</span>.to_repr().as_ref(), <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref())
-            .cmp(<span class="kw-2">&amp;</span>(other.<span class="number">0</span>.to_repr().as_ref(), other.<span class="number">1</span>.to_repr().as_ref()))
+        <span class="self">self</span>.partial_cmp(other)
+            .expect(<span class="string">&quot;SPtr::cmp: partial_cmp domain invariant violation&quot;</span>)
     }
 }
 
-<span class="kw">impl</span>&lt;F: LurkField&gt; Serialize <span class="kw">for </span>ScalarPtr&lt;F&gt; {
+<span class="kw">impl</span>&lt;E: Tag, F: LurkField&gt; Encodable <span class="kw">for </span>SPtr&lt;E, F&gt; {
+    <span class="kw">fn </span>ser(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LightData {
+        <span class="kw">let </span>(x, y): (FWrap&lt;F&gt;, FWrap&lt;F&gt;) = (FWrap(<span class="self">self</span>.<span class="number">0</span>.to_field()), FWrap(<span class="self">self</span>.<span class="number">1</span>));
+        (x, y).ser()
+    }
+    <span class="kw">fn </span>de(ld: <span class="kw-2">&amp;</span>LightData) -&gt; anyhow::Result&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>(x, y): (FWrap&lt;F&gt;, FWrap&lt;F&gt;) = Encodable::de(ld)<span class="question-mark">?</span>;
+        <span class="kw">let </span>tag_as_u16 =
+            x.<span class="number">0</span>.to_u16()
+                .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;invalid range for field element representing a tag&quot;</span>))<span class="question-mark">?</span>;
+        <span class="kw">let </span>tag = E::try_from(tag_as_u16).map_err(|<span class="kw">_</span>| <span class="macro">anyhow!</span>(<span class="string">&quot;invalid tag&quot;</span>))<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(SPtr(tag, y.<span class="number">0</span>))
+    }
+}
+
+<span class="attr">#[allow(clippy::derived_hash_with_manual_eq)]
+</span><span class="kw">impl</span>&lt;E: Tag, F: LurkField&gt; Hash <span class="kw">for </span>SPtr&lt;E, F&gt; {
+    <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        <span class="self">self</span>.<span class="number">0</span>.to_field_bytes::&lt;F&gt;().as_ref().hash(state);
+        <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref().hash(state);
+    }
+}
+
+<span class="kw">impl</span>&lt;E: Tag, F: LurkField&gt; SPtr&lt;E, F&gt; {
+    <span class="kw">pub fn </span>from_parts(tag: E, value: F) -&gt; <span class="self">Self </span>{
+        SPtr(tag, value)
+    }
+
+    <span class="kw">pub fn </span>tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; E {
+        <span class="self">self</span>.<span class="number">0
+    </span>}
+
+    <span class="kw">pub fn </span>tag_field(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; F {
+        <span class="self">self</span>.<span class="number">0</span>.to_field::&lt;F&gt;()
+    }
+
+    <span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>F {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1
+    </span>}
+}
+
+<span class="kw">impl</span>&lt;E: Tag, F: LurkField&gt; Serialize <span class="kw">for </span>SPtr&lt;E, F&gt; {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: serde::Serializer,
     {
         <span class="kw">use </span>ser::Error;
-        <span class="kw">let </span>tag = <span class="self">self</span>.tag();
+        <span class="kw">let </span>tag = <span class="self">self</span>.tag_field();
         <span class="kw">let </span>val = <span class="self">self</span>.value();
         <span class="comment">// magic numbers to avoid multicodec table collisons
         // this will disappear when we move from IPLD to LDON
@@ -3613,7 +3690,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, F: LurkField&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ScalarPtr&lt;F&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, E: Tag, F: LurkField&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>SPtr&lt;E, F&gt; {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
         </span>D: serde::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
@@ -3623,31 +3700,13 @@
         <span class="kw">let </span>tag = F::from_u64(cid.codec() &amp; <span class="number">0x0000_0000_ffff_ffff</span>);
         <span class="kw">let </span>val = F::from_bytes(cid.hash().digest())
             .ok_or_else(|| D::Error::custom(<span class="string">&quot;expected ScalarContPtr value&quot;</span>.to_string()))<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(ScalarPtr::from_parts(tag, val))
+        <span class="comment">// TODO(fga): eliminate this round-trip through the field
+        </span><span class="kw">let </span>e_tag = E::from_field(<span class="kw-2">&amp;</span>tag).ok_or_else(|| D::Error::custom(<span class="string">&quot;invalid Tag&quot;</span>))<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(SPtr::from_parts(e_tag, val))
     }
 }
 
-<span class="attr">#[allow(clippy::derive_hash_xor_eq)]
-</span><span class="kw">impl</span>&lt;F: LurkField&gt; Hash <span class="kw">for </span>ScalarPtr&lt;F&gt; {
-    <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
-        <span class="self">self</span>.<span class="number">0</span>.to_repr().as_ref().hash(state);
-        <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref().hash(state);
-    }
-}
-
-<span class="kw">impl</span>&lt;F: LurkField&gt; ScalarPointer&lt;F&gt; <span class="kw">for </span>ScalarPtr&lt;F&gt; {
-    <span class="kw">fn </span>from_parts(tag: F, value: F) -&gt; <span class="self">Self </span>{
-        ScalarPtr(tag, value)
-    }
-
-    <span class="kw">fn </span>tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>F {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
-
-    <span class="kw">fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>F {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1
-    </span>}
-}
+<span class="kw">pub type </span>ScalarPtr&lt;F&gt; = SPtr&lt;ExprTag, F&gt;;
 
 <span class="kw">pub trait </span>IntoHashComponents&lt;F: LurkField&gt; {
     <span class="kw">fn </span>into_hash_components(<span class="self">self</span>) -&gt; [F; <span class="number">2</span>];
@@ -3659,106 +3718,18 @@
     </span>}
 }
 
-<span class="kw">impl</span>&lt;F: LurkField&gt; IntoHashComponents&lt;F&gt; <span class="kw">for </span>ScalarPtr&lt;F&gt; {
+<span class="kw">impl</span>&lt;E: Tag, F: LurkField&gt; IntoHashComponents&lt;F&gt; <span class="kw">for </span>SPtr&lt;E, F&gt; {
     <span class="kw">fn </span>into_hash_components(<span class="self">self</span>) -&gt; [F; <span class="number">2</span>] {
-        [<span class="self">self</span>.<span class="number">0</span>, <span class="self">self</span>.<span class="number">1</span>]
+        [<span class="self">self</span>.<span class="number">0</span>.to_field::&lt;F&gt;(), <span class="self">self</span>.<span class="number">1</span>]
     }
 }
 
-<span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
-</span><span class="kw">pub struct </span>ScalarContPtr&lt;F: LurkField&gt;(F, F);
-
-<span class="kw">impl</span>&lt;F: LurkField&gt; Copy <span class="kw">for </span>ScalarContPtr&lt;F&gt; {}
-
-<span class="attr">#[cfg(not(target_arch = <span class="string">&quot;wasm32&quot;</span>))]
-</span><span class="kw">impl</span>&lt;Fr: LurkField&gt; Arbitrary <span class="kw">for </span>ScalarContPtr&lt;Fr&gt; {
-    <span class="kw">type </span>Parameters = ();
-    <span class="kw">type </span>Strategy = BoxedStrategy&lt;<span class="self">Self</span>&gt;;
-
-    <span class="kw">fn </span>arbitrary_with(_args: <span class="self">Self</span>::Parameters) -&gt; <span class="self">Self</span>::Strategy {
-        any::&lt;(ContTag, FWrap&lt;Fr&gt;)&gt;()
-            .prop_map(|(tag, val)| ScalarContPtr::from_parts(Fr::from(tag <span class="kw">as </span>u64), val.<span class="number">0</span>))
-            .boxed()
-    }
-}
-
-<span class="kw">impl</span>&lt;F: LurkField&gt; PartialOrd <span class="kw">for </span>ScalarContPtr&lt;F&gt; {
-    <span class="kw">fn </span>partial_cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;core::cmp::Ordering&gt; {
-        (<span class="self">self</span>.<span class="number">0</span>.to_repr().as_ref(), <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref())
-            .partial_cmp(<span class="kw-2">&amp;</span>(other.<span class="number">0</span>.to_repr().as_ref(), other.<span class="number">1</span>.to_repr().as_ref()))
-    }
-}
-
-<span class="kw">impl</span>&lt;F: LurkField&gt; Ord <span class="kw">for </span>ScalarContPtr&lt;F&gt; {
-    <span class="kw">fn </span>cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; core::cmp::Ordering {
-        (<span class="self">self</span>.<span class="number">0</span>.to_repr().as_ref(), <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref())
-            .cmp(<span class="kw-2">&amp;</span>(other.<span class="number">0</span>.to_repr().as_ref(), other.<span class="number">1</span>.to_repr().as_ref()))
-    }
-}
-
-<span class="kw">impl</span>&lt;F: LurkField&gt; Serialize <span class="kw">for </span>ScalarContPtr&lt;F&gt; {
-    <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
-    <span class="kw">where
-        </span>S: serde::Serializer,
-    {
-        <span class="kw">use </span>ser::Error;
-        <span class="kw">let </span>tag = <span class="self">self</span>.tag();
-        <span class="kw">let </span>val = <span class="self">self</span>.value();
-        <span class="comment">// magic numbers to avoid multicodec table collisons
-        // this will disappear when we move from IPLD to LDON
-        </span><span class="kw">let </span>codec: u64 = <span class="number">0x10de </span>&lt;&lt; <span class="number">48 </span>| tag.to_u64_unchecked();
-        <span class="kw">let </span>hash = Multihash::wrap(codec, <span class="kw-2">&amp;</span>val.to_bytes())
-            .map_err(|<span class="kw">_</span>| S::Error::custom(<span class="string">&quot;expected validly tagged ScalarContPtr&quot;</span>.to_string()))<span class="question-mark">?</span>;
-        <span class="kw">let </span>cid = Cid::new_v1(codec, hash);
-        cid.serialize(serializer)
-    }
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, F: LurkField&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ScalarContPtr&lt;F&gt; {
-    <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
-    <span class="kw">where
-        </span>D: serde::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
-    {
-        <span class="kw">use </span>de::Error;
-        <span class="kw">let </span>cid = Cid::deserialize(deserializer)<span class="question-mark">?</span>;
-        <span class="kw">let </span>tag = F::from_u64(cid.codec() &amp; <span class="number">0x0000_0000_ffff_ffff</span>);
-        <span class="kw">let </span>val = F::from_bytes(cid.hash().digest())
-            .ok_or_else(|| D::Error::custom(<span class="string">&quot;expected ScalarContPtr value&quot;</span>.to_string()))<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(ScalarContPtr::from_parts(tag, val))
-    }
-}
-
-<span class="attr">#[allow(clippy::derive_hash_xor_eq)]
-</span><span class="kw">impl</span>&lt;F: LurkField&gt; Hash <span class="kw">for </span>ScalarContPtr&lt;F&gt; {
-    <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
-        <span class="self">self</span>.<span class="number">0</span>.to_repr().as_ref().hash(state);
-        <span class="self">self</span>.<span class="number">1</span>.to_repr().as_ref().hash(state);
-    }
-}
-
-<span class="kw">impl</span>&lt;F: LurkField&gt; ScalarPointer&lt;F&gt; <span class="kw">for </span>ScalarContPtr&lt;F&gt; {
-    <span class="kw">fn </span>from_parts(tag: F, value: F) -&gt; <span class="self">Self </span>{
-        ScalarContPtr(tag, value)
-    }
-    <span class="kw">fn </span>tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>F {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
-
-    <span class="kw">fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>F {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1
-    </span>}
-}
-
-<span class="kw">impl</span>&lt;F: LurkField&gt; IntoHashComponents&lt;F&gt; <span class="kw">for </span>ScalarContPtr&lt;F&gt; {
-    <span class="kw">fn </span>into_hash_components(<span class="self">self</span>) -&gt; [F; <span class="number">2</span>] {
-        [<span class="self">self</span>.<span class="number">0</span>, <span class="self">self</span>.<span class="number">1</span>]
-    }
-}
+<span class="kw">pub type </span>ScalarContPtr&lt;F&gt; = SPtr&lt;ContTag, F&gt;;
 
 <span class="attr">#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 </span><span class="kw">pub struct </span>ContPtr&lt;F: LurkField&gt;(ContTag, RawPtr&lt;F&gt;);
 
-<span class="attr">#[allow(clippy::derive_hash_xor_eq)]
+<span class="attr">#[allow(clippy::derived_hash_with_manual_eq)]
 </span><span class="kw">impl</span>&lt;F: LurkField&gt; Hash <span class="kw">for </span>ContPtr&lt;F&gt; {
     <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
         <span class="self">self</span>.<span class="number">0</span>.hash(state);
@@ -3768,7 +3739,6 @@
 
 <span class="kw">impl</span>&lt;F: LurkField&gt; Pointer&lt;F&gt; <span class="kw">for </span>ContPtr&lt;F&gt; {
     <span class="kw">type </span>Tag = ContTag;
-    <span class="kw">type </span>ScalarPointer = ScalarContPtr&lt;F&gt;;
 
     <span class="kw">fn </span>tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Tag {
         <span class="self">self</span>.<span class="number">0
@@ -3776,10 +3746,10 @@
 }
 
 <span class="kw">impl</span>&lt;F: LurkField&gt; ContPtr&lt;F&gt; {
-    <span class="kw">pub fn </span>new(tag: ContTag, raw_ptr: RawPtr&lt;F&gt;) -&gt; <span class="self">Self </span>{
+    <span class="kw">pub const fn </span>new(tag: ContTag, raw_ptr: RawPtr&lt;F&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>(tag, raw_ptr)
     }
-    <span class="kw">pub fn </span>is_error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>.<span class="number">0</span>, ContTag::Error)
     }
 }
@@ -3796,16 +3766,16 @@
         RawPtr((p, <span class="bool-val">false</span>), Default::default())
     }
 
-    <span class="kw">fn </span>is_opaque(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">const fn </span>is_opaque(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.<span class="number">0 </span>.<span class="number">1
     </span>}
 
-    <span class="kw">pub fn </span>idx(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+    <span class="kw">pub const fn </span>idx(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.<span class="number">0 </span>.<span class="number">0
     </span>}
 }
 
-<span class="attr">#[allow(clippy::derive_hash_xor_eq)]
+<span class="attr">#[allow(clippy::derived_hash_with_manual_eq)]
 </span><span class="kw">impl</span>&lt;F: LurkField&gt; Hash <span class="kw">for </span>RawPtr&lt;F&gt; {
     <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
         <span class="self">self</span>.<span class="number">0</span>.hash(state);
@@ -3850,7 +3820,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) continuation: ContPtr&lt;F&gt;,
 }
 
-<span class="attr">#[allow(clippy::derive_hash_xor_eq)]
+<span class="attr">#[allow(clippy::derived_hash_with_manual_eq)]
 </span><span class="kw">impl</span>&lt;F: LurkField&gt; Hash <span class="kw">for </span>Thunk&lt;F&gt; {
     <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
         <span class="self">self</span>.value.hash(state);
@@ -4019,7 +3989,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>cont_tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContTag {
+    <span class="kw">pub const fn </span>cont_tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContTag {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Outermost =&gt; ContTag::Outermost,
             <span class="self">Self</span>::Dummy =&gt; ContTag::Dummy,
@@ -4139,7 +4109,8 @@
             dehydrated: Default::default(),
             dehydrated_cont: Default::default(),
             opaque_raw_ptr_count: <span class="number">0</span>,
-            lurk_package: Package::lurk(),
+            pointer_scalar_ptr_cache: Default::default(),
+            lurk_package: Arc::new(Package::lurk()),
             constants: Default::default(),
         };
 
@@ -4280,9 +4251,9 @@
     }
 
     <span class="kw">pub fn </span>lurk_sym&lt;T: AsRef&lt;str&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: T) -&gt; Ptr&lt;F&gt; {
-        <span class="kw">let </span>package = <span class="self">self</span>.lurk_package.clone(); <span class="comment">// This clone is annoying.
+        <span class="kw">let </span>package = <span class="self">self</span>.lurk_package.clone();
 
-        </span><span class="self">self</span>.intern_sym_with_case_conversion(name, <span class="kw-2">&amp;</span>package)
+        <span class="self">self</span>.intern_sym_with_case_conversion(name, <span class="kw-2">&amp;</span>package)
     }
 
     <span class="kw">pub fn </span>sym&lt;T: AsRef&lt;str&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: T) -&gt; Ptr&lt;F&gt; {
@@ -4315,7 +4286,7 @@
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.car_cdr(expr)<span class="question-mark">?</span>.<span class="number">1</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>poseidon_constants(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashConstants&lt;F&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>poseidon_constants(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashConstants&lt;F&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.poseidon_cache.constants
     }
 
@@ -4379,6 +4350,7 @@
         <span class="kw">let </span>(p, inserted) = <span class="self">self</span>.comm_store.insert_full((FWrap(secret), payload));
 
         <span class="kw">let </span>ptr = Ptr(ExprTag::Comm, RawPtr::new(p));
+
         <span class="kw">if </span>inserted {
             <span class="self">self</span>.dehydrated.push(ptr);
         }
@@ -4398,7 +4370,7 @@
     }
 
     <span class="kw">pub fn </span>get_maybe_opaque(<span class="kw-2">&amp;</span><span class="self">self</span>, tag: ExprTag, hash: F) -&gt; <span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt; {
-        <span class="kw">let </span>scalar_ptr = ScalarPtr::from_parts(tag.as_field(), hash);
+        <span class="kw">let </span>scalar_ptr = ScalarPtr::from_parts(tag, hash);
 
         <span class="kw">let </span>ptr = <span class="self">self</span>.scalar_ptr_map.get(<span class="kw-2">&amp;</span>scalar_ptr);
         <span class="kw">if let </span><span class="prelude-val">Some</span>(p) = ptr {
@@ -4416,7 +4388,7 @@
         return_non_opaque_if_existing: bool,
     ) -&gt; Ptr&lt;F&gt; {
         <span class="self">self</span>.hydrate_scalar_cache();
-        <span class="kw">let </span>scalar_ptr = ScalarPtr::from_parts(tag.as_field(), hash);
+        <span class="kw">let </span>scalar_ptr = ScalarPtr::from_parts(tag, hash);
 
         <span class="comment">// Scope the first immutable borrow.
         </span>{
@@ -4440,7 +4412,7 @@
         scalar_store: <span class="kw-2">&amp;</span>ScalarStore&lt;F&gt;,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;ContPtr&lt;F&gt;&gt; {
         <span class="kw">use </span>ScalarContinuation::<span class="kw-2">*</span>;
-        <span class="kw">let </span>tag: ContTag = ContTag::from_field(ptr.tag())<span class="question-mark">?</span>;
+        <span class="kw">let </span>tag: ContTag = ptr.tag();
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(cont) = scalar_store.get_cont(<span class="kw-2">&amp;</span>ptr) {
             <span class="kw">let </span>continuation = <span class="kw">match </span>cont {
@@ -4557,7 +4529,7 @@
         ptr: ScalarPtr&lt;F&gt;,
         scalar_store: <span class="kw-2">&amp;</span>ScalarStore&lt;F&gt;,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt; {
-        <span class="kw">let </span>tag: ExprTag = ExprTag::from_field(ptr.tag())<span class="question-mark">?</span>;
+        <span class="kw">let </span>tag: ExprTag = ptr.tag();
         <span class="kw">let </span>expr = scalar_store.get_expr(<span class="kw-2">&amp;</span>ptr);
         <span class="kw">use </span>ScalarExpression::<span class="kw-2">*</span>;
         <span class="kw">match </span>(tag, expr) {
@@ -4569,7 +4541,7 @@
             }
             (ExprTag::Str, <span class="prelude-val">Some</span>(Str(s))) =&gt; <span class="prelude-val">Some</span>(<span class="self">self</span>.intern_str(s)),
             (ExprTag::Sym, <span class="prelude-val">Some</span>(Sym(s))) =&gt; <span class="prelude-val">Some</span>(<span class="self">self</span>.intern_sym(s)),
-            (ExprTag::Key, <span class="prelude-val">Some</span>(Sym(<span class="kw">_</span>))) =&gt; <span class="macro">todo!</span>(),
+            (ExprTag::Key, <span class="prelude-val">Some</span>(Sym(k))) =&gt; <span class="prelude-val">Some</span>(<span class="self">self</span>.intern_key(k)),
             (ExprTag::Num, <span class="prelude-val">Some</span>(Num(x))) =&gt; <span class="prelude-val">Some</span>(<span class="self">self</span>.intern_num(<span class="kw">crate</span>::Num::Scalar(<span class="kw-2">*</span>x))),
             (ExprTag::Thunk, <span class="prelude-val">Some</span>(Thunk(t))) =&gt; {
                 <span class="kw">let </span>value = <span class="self">self</span>.intern_scalar_ptr(t.value, scalar_store)<span class="question-mark">?</span>;
@@ -4650,6 +4622,13 @@
 
     <span class="kw">pub fn </span>intern_sym(<span class="kw-2">&amp;mut </span><span class="self">self</span>, sym: <span class="kw-2">&amp;</span>Sym) -&gt; Ptr&lt;F&gt; {
         <span class="kw">let </span>name = sym.full_name();
+        <span class="self">self</span>.intern_sym_by_full_name(name)
+    }
+
+    <span class="kw">pub fn </span>intern_key(<span class="kw-2">&amp;mut </span><span class="self">self</span>, sym: <span class="kw-2">&amp;</span>Sym) -&gt; Ptr&lt;F&gt; {
+        <span class="kw">let </span>name = sym.full_name();
+
+        <span class="macro">assert!</span>(names_keyword(<span class="kw-2">&amp;</span>name).<span class="number">0</span>);
         <span class="self">self</span>.intern_sym_by_full_name(name)
     }
 
@@ -4850,16 +4829,16 @@
     }
 
     <span class="kw">pub fn </span>scalar_from_parts(<span class="kw-2">&amp;</span><span class="self">self</span>, tag: F, value: F) -&gt; <span class="prelude-ty">Option</span>&lt;ScalarPtr&lt;F&gt;&gt; {
-        <span class="kw">let </span>scalar_ptr = ScalarPtr(tag, value);
-        <span class="kw">if </span><span class="self">self</span>.scalar_ptr_map.contains_key(<span class="kw-2">&amp;</span>scalar_ptr) {
-            <span class="kw">return </span><span class="prelude-val">Some</span>(scalar_ptr);
-        }
-
-        <span class="prelude-val">None
-    </span>}
+        <span class="kw">let </span><span class="prelude-val">Some</span>(e_tag) = ExprTag::from_field(<span class="kw-2">&amp;</span>tag) <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">None </span>};
+        <span class="kw">let </span>scalar_ptr = ScalarPtr::from_parts(e_tag, value);
+        <span class="self">self</span>.scalar_ptr_map
+            .contains_key(<span class="kw-2">&amp;</span>scalar_ptr)
+            .then_some(scalar_ptr)
+    }
 
     <span class="kw">pub fn </span>scalar_from_parts_cont(<span class="kw-2">&amp;</span><span class="self">self</span>, tag: F, value: F) -&gt; <span class="prelude-ty">Option</span>&lt;ScalarContPtr&lt;F&gt;&gt; {
-        <span class="kw">let </span>scalar_ptr = ScalarContPtr(tag, value);
+        <span class="kw">let </span><span class="prelude-val">Some</span>(e_tag) = ContTag::from_field(<span class="kw-2">&amp;</span>tag) <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">None </span>};
+        <span class="kw">let </span>scalar_ptr = ScalarContPtr::from_parts(e_tag, value);
         <span class="kw">if </span><span class="self">self</span>.scalar_ptr_cont_map.contains_key(<span class="kw-2">&amp;</span>scalar_ptr) {
             <span class="kw">return </span><span class="prelude-val">Some</span>(scalar_ptr);
         }
@@ -4869,15 +4848,12 @@
     <span class="kw">pub fn </span>fetch_scalar(<span class="kw-2">&amp;</span><span class="self">self</span>, scalar_ptr: <span class="kw-2">&amp;</span>ScalarPtr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt; {
         <span class="self">self</span>.scalar_ptr_map.get(scalar_ptr).map(|p| <span class="kw-2">*</span>p)
     }
-    <span class="kw">pub fn </span>fetch_scalar_m(<span class="kw-2">&amp;mut </span><span class="self">self</span>, scalar_ptr: <span class="kw-2">&amp;</span>ScalarPtr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt; {
-        <span class="self">self</span>.scalar_ptr_map.get(scalar_ptr).map(|p| <span class="kw-2">*</span>p)
-    }
 
     <span class="kw">pub fn </span>fetch_scalar_cont(<span class="kw-2">&amp;</span><span class="self">self</span>, scalar_ptr: <span class="kw-2">&amp;</span>ScalarContPtr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;ContPtr&lt;F&gt;&gt; {
         <span class="self">self</span>.scalar_ptr_cont_map.get(scalar_ptr).map(|p| <span class="kw-2">*</span>p)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_sym(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Sym&gt; {
+    <span class="kw">pub fn </span>fetch_sym(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Sym&gt; {
         <span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::Sym | ExprTag::Key | ExprTag::Nil));
 
         <span class="kw">if </span>ptr.<span class="number">1</span>.is_opaque() {
@@ -4899,18 +4875,18 @@
             })
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_str(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+    <span class="kw">pub fn </span>fetch_str(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::Str));
         <span class="kw">let </span>symbol = SymbolUsize::try_from_usize(ptr.<span class="number">1</span>.idx()).expect(<span class="string">&quot;invalid pointer&quot;</span>);
         <span class="self">self</span>.str_store.<span class="number">0</span>.resolve(symbol)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_char(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;char&gt; {
+    <span class="kw">pub fn </span>fetch_char(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;char&gt; {
         <span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::Char));
         char::from_u32(ptr.<span class="number">1 </span>.<span class="number">0 </span>.<span class="number">0 </span><span class="kw">as </span>u32)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_fun(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(Ptr&lt;F&gt;, Ptr&lt;F&gt;, Ptr&lt;F&gt;)&gt; {
+    <span class="kw">pub fn </span>fetch_fun(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(Ptr&lt;F&gt;, Ptr&lt;F&gt;, Ptr&lt;F&gt;)&gt; {
         <span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::Fun));
         <span class="kw">if </span>ptr.<span class="number">1</span>.is_opaque() {
             <span class="prelude-val">None
@@ -4920,7 +4896,7 @@
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_cons(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(Ptr&lt;F&gt;, Ptr&lt;F&gt;)&gt; {
+    <span class="kw">pub fn </span>fetch_cons(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(Ptr&lt;F&gt;, Ptr&lt;F&gt;)&gt; {
         <span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::Cons));
         <span class="kw">if </span>ptr.<span class="number">1</span>.is_opaque() {
             <span class="prelude-val">None
@@ -4929,7 +4905,7 @@
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_comm(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(FWrap&lt;F&gt;, Ptr&lt;F&gt;)&gt; {
+    <span class="kw">pub fn </span>fetch_comm(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(FWrap&lt;F&gt;, Ptr&lt;F&gt;)&gt; {
         <span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::Comm));
         <span class="kw">if </span>ptr.<span class="number">1</span>.is_opaque() {
             <span class="prelude-val">None
@@ -4938,7 +4914,7 @@
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_num(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Num&lt;F&gt;&gt; {
+    <span class="kw">pub fn </span>fetch_num(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Num&lt;F&gt;&gt; {
         <span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::Num));
         <span class="self">self</span>.num_store.get_index(ptr.<span class="number">1</span>.idx())
     }
@@ -4948,7 +4924,7 @@
         <span class="self">self</span>.thunk_store.get_index(ptr.<span class="number">1</span>.idx())
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>fetch_uint(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;UInt&gt; {
+    <span class="kw">pub fn </span>fetch_uint(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;UInt&gt; {
         <span class="comment">// If more UInt variants are added, the following assertion should be relaxed to check for any of them.
         </span><span class="macro">debug_assert!</span>(<span class="macro">matches!</span>(ptr.<span class="number">0</span>, ExprTag::U64));
         <span class="kw">match </span>ptr.<span class="number">0 </span>{
@@ -5151,7 +5127,12 @@
 
     <span class="kw">pub fn </span>hash_expr_aux(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;, mode: HashScalar) -&gt; <span class="prelude-ty">Option</span>&lt;ScalarPtr&lt;F&gt;&gt; {
         <span class="kw">use </span>ExprTag::<span class="kw-2">*</span>;
-        <span class="kw">match </span>ptr.tag() {
+
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(scalar_ptr) = <span class="kw-2">&amp;</span><span class="self">self</span>.pointer_scalar_ptr_cache.get(ptr) {
+            <span class="kw">return </span><span class="prelude-val">Some</span>(<span class="kw-2">**</span>scalar_ptr);
+        }
+
+        <span class="kw">let </span>scalar_ptr = <span class="kw">match </span>ptr.tag() {
             Nil =&gt; <span class="self">self</span>.hash_nil(mode),
             Cons =&gt; <span class="self">self</span>.hash_cons(<span class="kw-2">*</span>ptr, mode),
             Comm =&gt; <span class="self">self</span>.hash_comm(<span class="kw-2">*</span>ptr, mode),
@@ -5163,7 +5144,18 @@
             Char =&gt; <span class="self">self</span>.hash_char(<span class="kw-2">*</span>ptr, mode),
             Thunk =&gt; <span class="self">self</span>.hash_thunk(<span class="kw-2">*</span>ptr, mode),
             U64 =&gt; <span class="self">self</span>.hash_uint(<span class="kw-2">*</span>ptr, mode),
+        };
+
+        <span class="kw">match </span>mode {
+            HashScalar::Create =&gt; {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(sp) = scalar_ptr {
+                    <span class="self">self</span>.pointer_scalar_ptr_cache.insert(<span class="kw-2">*</span>ptr, sp);
+                }
+            }
+            HashScalar::Get =&gt; (),
         }
+
+        scalar_ptr
     }
 
     <span class="kw">pub fn </span>hash_cont(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: <span class="kw-2">&amp;</span>ContPtr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;ScalarContPtr&lt;F&gt;&gt; {
@@ -5183,20 +5175,20 @@
     <span class="doccomment">/// The only places that `ScalarPtr`s for `Ptr`s should be created, to
     /// ensure that they are cached properly
     </span><span class="kw">fn </span>create_scalar_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: Ptr&lt;F&gt;, hash: F) -&gt; ScalarPtr&lt;F&gt; {
-        <span class="kw">let </span>scalar_ptr = ScalarPtr(ptr.tag_field(), hash);
+        <span class="kw">let </span>scalar_ptr = ScalarPtr::from_parts(ptr.<span class="number">0</span>, hash);
         <span class="kw">let </span>entry = <span class="self">self</span>.scalar_ptr_map.entry(scalar_ptr);
         entry.or_insert(ptr);
         scalar_ptr
     }
 
     <span class="kw">fn </span>get_scalar_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: Ptr&lt;F&gt;, hash: F) -&gt; ScalarPtr&lt;F&gt; {
-        ScalarPtr(ptr.tag_field(), hash)
+        ScalarPtr::from_parts(ptr.<span class="number">0</span>, hash)
     }
 
     <span class="doccomment">/// The only places that `ScalarContPtr`s for `ContPtr`s should be created, to
     /// ensure that they are cached properly
     </span><span class="kw">fn </span>create_cont_scalar_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>, ptr: ContPtr&lt;F&gt;, hash: F) -&gt; ScalarContPtr&lt;F&gt; {
-        <span class="kw">let </span>scalar_ptr = ScalarContPtr(ptr.tag_field(), hash);
+        <span class="kw">let </span>scalar_ptr = ScalarContPtr::from_parts(ptr.<span class="number">0</span>, hash);
         <span class="self">self</span>.scalar_ptr_cont_map.entry(scalar_ptr).or_insert(ptr);
 
         scalar_ptr
@@ -5327,7 +5319,7 @@
         cont: <span class="kw-2">&amp;</span>ContPtr&lt;F&gt;,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;[[F; <span class="number">2</span>]; <span class="number">4</span>]&gt; {
         <span class="kw">let </span>def = [F::zero(), F::zero()];
-        <span class="kw">let </span>op = <span class="self">self</span>.hash_op2(op).into_hash_components();
+        <span class="kw">let </span>op = [op.to_field(), F::zero()];
         <span class="kw">let </span>arg1 = <span class="self">self</span>.get_expr_hash(arg1)<span class="question-mark">?</span>.into_hash_components();
         <span class="kw">let </span>cont = <span class="self">self</span>.hash_cont(cont)<span class="question-mark">?</span>.into_hash_components();
         <span class="prelude-val">Some</span>([op, arg1, cont, def])
@@ -5340,7 +5332,7 @@
         unevaled_args: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;,
         cont: <span class="kw-2">&amp;</span>ContPtr&lt;F&gt;,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;[[F; <span class="number">2</span>]; <span class="number">4</span>]&gt; {
-        <span class="kw">let </span>op = <span class="self">self</span>.hash_op2(op).into_hash_components();
+        <span class="kw">let </span>op = [op.to_field(), F::zero()];
         <span class="kw">let </span>saved_env = <span class="self">self</span>.get_expr_hash(saved_env)<span class="question-mark">?</span>.into_hash_components();
         <span class="kw">let </span>unevaled_args = <span class="self">self</span>.get_expr_hash(unevaled_args)<span class="question-mark">?</span>.into_hash_components();
         <span class="kw">let </span>cont = <span class="self">self</span>.hash_cont(cont)<span class="question-mark">?</span>.into_hash_components();
@@ -5349,7 +5341,7 @@
 
     <span class="kw">fn </span>get_hash_components_unop(<span class="kw-2">&amp;</span><span class="self">self</span>, op: <span class="kw-2">&amp;</span>Op1, cont: <span class="kw-2">&amp;</span>ContPtr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;[[F; <span class="number">2</span>]; <span class="number">4</span>]&gt; {
         <span class="kw">let </span>def = [F::zero(), F::zero()];
-        <span class="kw">let </span>op = <span class="self">self</span>.hash_op1(op).into_hash_components();
+        <span class="kw">let </span>op = [op.to_field(), F::zero()];
         <span class="kw">let </span>cont = <span class="self">self</span>.hash_cont(cont)<span class="question-mark">?</span>.into_hash_components();
         <span class="prelude-val">Some</span>([op, cont, def, def])
     }
@@ -5506,7 +5498,7 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>commitment_hash(<span class="kw-2">&amp;</span><span class="self">self</span>, secret_scalar: F, payload: ScalarPtr&lt;F&gt;) -&gt; F {
-        <span class="kw">let </span>preimage = [secret_scalar, payload.<span class="number">0</span>, payload.<span class="number">1</span>];
+        <span class="kw">let </span>preimage = [secret_scalar, payload.<span class="number">0</span>.to_field(), payload.<span class="number">1</span>];
         <span class="self">self</span>.poseidon_cache.hash3(<span class="kw-2">&amp;</span>preimage)
     }
 
@@ -5606,26 +5598,19 @@
 
     <span class="kw">pub fn </span>hash_string_mut&lt;T: AsRef&lt;str&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, s: T) -&gt; F {
         <span class="kw">let </span>s = s.as_ref();
-        <span class="kw">let </span><span class="kw-2">mut </span>v = Vec::&lt;char&gt;::new();
-        <span class="kw">for </span>c <span class="kw">in </span>s.chars() {
-            v.push(c);
-        }
+        <span class="kw">if </span>s.is_empty() {
+            <span class="kw">return </span>F::zero();
+        };
 
-        <span class="kw">let </span>initial_hash = F::zero();
         <span class="kw">let </span>initial_scalar_ptr = {
-            <span class="kw">let </span>hash = initial_hash;
+            <span class="kw">let </span>hash = F::zero();
             <span class="kw">let </span>ptr = <span class="self">self</span>.intern_str_aux(<span class="string">&quot;&quot;</span>);
             <span class="self">self</span>.create_scalar_ptr(ptr, hash)
         };
 
-        <span class="kw">if </span>s.is_empty() {
-            initial_hash
-        } <span class="kw">else </span>{
-            <span class="kw">let </span>all_hashes = <span class="self">self</span>.all_hashes(s, initial_scalar_ptr);
-            <span class="comment">// the conversion to a VecDeque is O(1)
-            // https://github.com/rust-lang/rust/blob/ac583f18b75f005023b41d49298d4d343740648a/library/alloc/src/collections/vec_deque/mod.rs#L2791-L2805
-            </span><span class="self">self</span>.hash_string_mut_aux(v.into(), all_hashes)
-        }
+        <span class="kw">let </span>all_hashes = <span class="self">self</span>.all_hashes(s, initial_scalar_ptr);
+        <span class="kw">let </span>v: VecDeque&lt;char&gt; = s.chars().collect();
+        <span class="self">self</span>.hash_string_mut_aux(v, all_hashes)
     }
 
     <span class="comment">// All hashes of substrings, shortest to longest.
@@ -5636,11 +5621,11 @@
         chars.fold(initial_scalar_ptr, |acc, char| {
             <span class="kw">let </span>c_scalar: F = (u32::from(char) <span class="kw">as </span>u64).into();
             <span class="comment">// This bypasses create_scalar_ptr but is okay because Chars are immediate and don&#39;t need to be indexed.
-            </span><span class="kw">let </span>c = ScalarPtr(ExprTag::Char.as_field(), c_scalar);
+            </span><span class="kw">let </span>c = ScalarPtr::from_parts(ExprTag::Char, c_scalar);
             <span class="kw">let </span>hash = <span class="self">self</span>.hash_scalar_ptrs_2(<span class="kw-2">&amp;</span>[c, acc]);
             <span class="comment">// This bypasses create_scalar_ptr but is okay because we will call it to correctly create each of these
-            // ScalarPtrs belwo, in hash_string_mut_aux.
-            </span><span class="kw">let </span>new_scalar_ptr = ScalarPtr(ExprTag::Str.as_field(), hash);
+            // ScalarPtrs below, in hash_string_mut_aux.
+            </span><span class="kw">let </span>new_scalar_ptr = ScalarPtr::from_parts(ExprTag::Str, hash);
             hashes.push(hash);
             new_scalar_ptr
         });
@@ -5681,13 +5666,23 @@
     }
 
     <span class="kw">fn </span>hash_scalar_ptrs_2(<span class="kw-2">&amp;</span><span class="self">self</span>, ptrs: <span class="kw-2">&amp;</span>[ScalarPtr&lt;F&gt;; <span class="number">2</span>]) -&gt; F {
-        <span class="kw">let </span>preimage = [ptrs[<span class="number">0</span>].<span class="number">0</span>, ptrs[<span class="number">0</span>].<span class="number">1</span>, ptrs[<span class="number">1</span>].<span class="number">0</span>, ptrs[<span class="number">1</span>].<span class="number">1</span>];
+        <span class="kw">let </span>preimage = [
+            ptrs[<span class="number">0</span>].<span class="number">0</span>.to_field::&lt;F&gt;(),
+            ptrs[<span class="number">0</span>].<span class="number">1</span>,
+            ptrs[<span class="number">1</span>].<span class="number">0</span>.to_field::&lt;F&gt;(),
+            ptrs[<span class="number">1</span>].<span class="number">1</span>,
+        ];
         <span class="self">self</span>.poseidon_cache.hash4(<span class="kw-2">&amp;</span>preimage)
     }
 
     <span class="kw">fn </span>hash_scalar_ptrs_3(<span class="kw-2">&amp;</span><span class="self">self</span>, ptrs: <span class="kw-2">&amp;</span>[ScalarPtr&lt;F&gt;; <span class="number">3</span>]) -&gt; F {
         <span class="kw">let </span>preimage = [
-            ptrs[<span class="number">0</span>].<span class="number">0</span>, ptrs[<span class="number">0</span>].<span class="number">1</span>, ptrs[<span class="number">1</span>].<span class="number">0</span>, ptrs[<span class="number">1</span>].<span class="number">1</span>, ptrs[<span class="number">2</span>].<span class="number">0</span>, ptrs[<span class="number">2</span>].<span class="number">1</span>,
+            ptrs[<span class="number">0</span>].<span class="number">0</span>.to_field::&lt;F&gt;(),
+            ptrs[<span class="number">0</span>].<span class="number">1</span>,
+            ptrs[<span class="number">1</span>].<span class="number">0</span>.to_field::&lt;F&gt;(),
+            ptrs[<span class="number">1</span>].<span class="number">1</span>,
+            ptrs[<span class="number">2</span>].<span class="number">0</span>.to_field::&lt;F&gt;(),
+            ptrs[<span class="number">2</span>].<span class="number">1</span>,
         ];
         <span class="self">self</span>.poseidon_cache.hash6(<span class="kw-2">&amp;</span>preimage)
     }
@@ -5696,14 +5691,6 @@
         <span class="kw">let </span>nil = <span class="self">self</span>.get_nil();
 
         <span class="self">self</span>.hash_sym(nil, mode)
-    }
-
-    <span class="kw">fn </span>hash_op1(<span class="kw-2">&amp;</span><span class="self">self</span>, op: <span class="kw-2">&amp;</span>Op1) -&gt; ScalarPtr&lt;F&gt; {
-        ScalarPtr(op.as_field(), F::zero())
-    }
-
-    <span class="kw">fn </span>hash_op2(<span class="kw-2">&amp;</span><span class="self">self</span>, op: <span class="kw-2">&amp;</span>Op2) -&gt; ScalarPtr&lt;F&gt; {
-        ScalarPtr(op.as_field(), F::zero())
     }
 
     <span class="comment">// An opaque Ptr is one for which we have the hash, but not the preimages.
@@ -5786,7 +5773,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+    <span class="kw">pub const fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             Expression::Str(s) =&gt; <span class="prelude-val">Some</span>(s),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -5800,7 +5787,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>as_sym(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Sym&gt; {
+    <span class="kw">pub const fn </span>as_sym(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Sym&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             Expression::Sym(s) =&gt; <span class="prelude-val">Some</span>(s),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -5814,37 +5801,37 @@
         }
     }
 
-    <span class="kw">pub fn </span>is_null(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_null(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Nil)
     }
 
-    <span class="kw">pub fn </span>is_cons(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_cons(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Cons(<span class="kw">_</span>, <span class="kw">_</span>))
     }
 
-    <span class="kw">pub fn </span>is_list(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_list(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.is_null() || <span class="self">self</span>.is_cons()
     }
 
-    <span class="kw">pub fn </span>is_sym(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_sym(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Sym(<span class="kw">_</span>))
     }
-    <span class="kw">pub fn </span>is_fun(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_fun(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Fun(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>))
     }
 
-    <span class="kw">pub fn </span>is_num(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_num(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Num(<span class="kw">_</span>))
     }
-    <span class="kw">pub fn </span>is_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Str(<span class="kw">_</span>))
     }
 
-    <span class="kw">pub fn </span>is_thunk(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_thunk(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Thunk(<span class="kw">_</span>))
     }
 
-    <span class="kw">pub fn </span>is_opaque(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">pub const fn </span>is_opaque(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Opaque(<span class="kw">_</span>))
     }
 }
@@ -5860,7 +5847,7 @@
         <span class="self">self</span>.<span class="number">0
             </span>.expect(<span class="string">&quot;ScalarPtr missing; hydrate_scalar_cache should have been called.&quot;</span>)
     }
-    <span class="kw">pub fn </span>ptr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Ptr&lt;F&gt; {
+    <span class="kw">pub const fn </span>ptr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Ptr&lt;F&gt; {
         <span class="self">self</span>.<span class="number">1
     </span>}
 }
@@ -6014,9 +6001,7 @@
         <span class="kw">let </span>from_ipld = from_ipld(to_ipld).unwrap();
         <span class="macro">assert_eq!</span>(x, from_ipld);
       }
-    }
 
-    <span class="macro">proptest! </span>{
       <span class="attr">#[test]
       </span><span class="kw">fn </span>prop_scalar_cont_ptr_ipld(x <span class="kw">in </span>any::&lt;ScalarContPtr&lt;Fr&gt;&gt;()) {
           <span class="kw">let </span>to_ipld = to_ipld(x).unwrap();
@@ -6024,9 +6009,6 @@
               <span class="macro">assert_eq!</span>(x, from_ipld);
 
       }
-    }
-
-    <span class="macro">proptest! </span>{
       <span class="attr">#[test]
       </span><span class="kw">fn </span>prop_op1_ipld(x <span class="kw">in </span>any::&lt;Op1&gt;())  {
           <span class="kw">let </span>to_ipld = to_ipld(x).unwrap();
@@ -6469,7 +6451,7 @@
         <span class="kw">let </span>sym_tag = s.get_expr_hash(<span class="kw-2">&amp;</span>sym).unwrap().<span class="number">0</span>;
         <span class="comment">// let sym_hash = s.get_expr_hash(&amp;sym).unwrap().1;
 
-        </span><span class="macro">assert_eq!</span>(ExprTag::Sym.as_field::&lt;Fr&gt;(), sym_tag);
+        </span><span class="macro">assert_eq!</span>(ExprTag::Sym, sym_tag);
 
         <span class="comment">// FIXME: What should this be? Should this even be allowed?
         // assert_eq!(Fr::from(0), sym_hash)
@@ -6562,5 +6544,4 @@
         <span class="macro">assert_eq!</span>(opaque_comm.fmt_to_string(s), expr.fmt_to_string(s));
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (e3dfeeaa4 2023-03-07)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>
