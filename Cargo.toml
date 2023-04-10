@@ -60,8 +60,8 @@ rustyline = { version = "11.0", features = ["derive"], default-features = false 
 
 [features]
 default = []
-cuda = ["neptune/cuda", "neptune/pasta"]
-opencl = ["neptune/opencl", "neptune/pasta"]
+cuda = ["neptune/cuda"]
+opencl = ["neptune/opencl"]
 
 [dev-dependencies]
 criterion = "0.3.6"
