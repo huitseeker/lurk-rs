@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `clutch/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fbd14db5c88ed452.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="clutch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (ec2f40c6b 2023-03-30)" data-search-js="search-bc5a112813b5d712.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" data-theme-light-css="light-db279b6232be9c13.css" data-theme-dark-css="dark-cf923f49f397b216.css" data-theme-ayu-css="ayu-be46fdc453a55015.css" ></div><script src="../../static.files/storage-d4a1a279bad1a0c0.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-9ade54abd4bd73c8.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../clutch/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `clutch/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="clutch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.0-nightly (8bdcc62cb 2023-04-20)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-1a524efa7bd4ab32.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../clutch/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -553,20 +553,36 @@
 <a href="#553" id="553">553</a>
 <a href="#554" id="554">554</a>
 <a href="#555" id="555">555</a>
-</pre><pre class="rust"><code><span class="kw">use </span>anyhow::{anyhow, bail, Context, <span class="prelude-ty">Result</span>};
+<a href="#556" id="556">556</a>
+<a href="#557" id="557">557</a>
+<a href="#558" id="558">558</a>
+<a href="#559" id="559">559</a>
+<a href="#560" id="560">560</a>
+<a href="#561" id="561">561</a>
+<a href="#562" id="562">562</a>
+<a href="#563" id="563">563</a>
+<a href="#564" id="564">564</a>
+</pre></div><pre class="rust"><code><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
+
+</span><span class="kw">use </span>anyhow::{anyhow, bail, Context, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>clap::{Arg, ArgAction, Command};
 <span class="kw">use </span>pasta_curves::pallas;
 
 <span class="kw">use </span>fcomm::{
-    public_params, Claim, Commitment, CommittedExpression, CommittedExpressionMap, Evaluation, Id,
-    LurkPtr, NovaProofCache, Opening, Proof,
+    public_params, Claim, Commitment, CommittedExpression, CommittedExpressionMap, Id, LurkCont,
+    LurkPtr, NovaProofCache, Opening, Proof, PtrEvaluation,
 };
-<span class="kw">use </span>lurk::eval::{Evaluable, Status, IO};
+<span class="kw">use </span>lurk::coprocessor::Coprocessor;
+<span class="kw">use </span>lurk::eval::{
+    lang::{Coproc, Lang},
+    Evaluable, Status, Witness, IO,
+};
 <span class="kw">use </span>lurk::field::LurkField;
 <span class="kw">use </span>lurk::package::Package;
 <span class="kw">use </span>lurk::proof::{nova::NovaProver, Prover};
 <span class="kw">use </span>lurk::repl::{ReplState, ReplTrait};
 <span class="kw">use </span>lurk::store::{Expression, Pointer, Ptr, Store};
+<span class="kw">use </span>lurk::sym::Sym;
 <span class="kw">use </span>lurk::tag::ExprTag;
 <span class="kw">use </span>lurk::writer::Write;
 
@@ -640,8 +656,8 @@
     }
 }
 
-<span class="kw">pub struct </span>ClutchState&lt;F: LurkField&gt; {
-    repl_state: ReplState&lt;F&gt;,
+<span class="kw">pub struct </span>ClutchState&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt; {
+    repl_state: ReplState&lt;F, C&gt;,
     reduction_count: usize,
     history: Vec&lt;IO&lt;F&gt;&gt;,
     proof_map: NovaProofCache,
@@ -652,14 +668,19 @@
 
 <span class="kw">type </span>F = pallas::Scalar;
 
-<span class="kw">impl</span>&lt;F: LurkField&gt; ClutchState&lt;F&gt; {
+<span class="kw">impl</span>&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt; ClutchState&lt;F, C&gt; {
     <span class="kw">fn </span>base_prompt() -&gt; String {
         <span class="string">&quot;\n!&gt; &quot;</span>.into()
     }
 }
 
-<span class="kw">impl </span>ReplTrait&lt;F&gt; <span class="kw">for </span>ClutchState&lt;F&gt; {
-    <span class="kw">fn </span>new(s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, limit: usize, command: <span class="prelude-ty">Option</span>&lt;Command&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span>ReplTrait&lt;F, Coproc&lt;F&gt;&gt; <span class="kw">for </span>ClutchState&lt;F, Coproc&lt;F&gt;&gt; {
+    <span class="kw">fn </span>new(
+        s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
+        limit: usize,
+        command: <span class="prelude-ty">Option</span>&lt;Command&gt;,
+        lang: Lang&lt;F, Coproc&lt;F&gt;&gt;,
+    ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>reduction_count = DEFAULT_REDUCTION_COUNT;
 
         <span class="kw">let </span>proof_map = fcomm::nova_proof_cache(reduction_count);
@@ -678,13 +699,13 @@
         </span>thread::spawn(<span class="kw">move </span>|| public_params(reduction_count));
 
         <span class="self">Self </span>{
-            repl_state: ReplState::new(s, limit, command),
+            repl_state: ReplState::new(s, limit, command, lang),
             reduction_count,
             history: Default::default(),
             proof_map,
             expression_map,
-            last_claim: <span class="prelude-val">None</span>,
             demo,
+            last_claim: <span class="prelude-val">None</span>,
         }
     }
 
@@ -705,7 +726,7 @@
     }
 
     <span class="kw">fn </span>command() -&gt; Command {
-        ReplState::&lt;F&gt;::command().arg(
+        ReplState::&lt;F, Coproc&lt;F&gt;&gt;::command().arg(
             Arg::new(<span class="string">&quot;demo&quot;</span>)
                 .long(<span class="string">&quot;demo&quot;</span>)
                 .value_parser(clap::builder::NonEmptyStringValueParser::new())
@@ -728,18 +749,6 @@
             .to_string()
     }
 
-    <span class="doccomment">/// Returns two bools.
-    /// First bool is true if input is a command.
-    /// Second bool is true if processing should continue.
-    </span><span class="kw">fn </span>maybe_handle_command(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
-        line: <span class="kw-2">&amp;</span>str,
-        package: <span class="kw-2">&amp;</span>Package,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(bool, bool)&gt; {
-        <span class="self">self</span>.repl_state.maybe_handle_command(store, line, package)
-    }
-
     <span class="kw">fn </span>handle_meta&lt;P: AsRef&lt;Path&gt; + Copy&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
@@ -757,24 +766,18 @@
 
         <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt; = <span class="kw">match </span>expr {
             Expression::Cons(car, rest) =&gt; <span class="kw">match </span><span class="kw-2">&amp;</span>store.fetch(<span class="kw-2">&amp;</span>car).unwrap() {
-                Expression::Sym(s) =&gt; {
-                    <span class="kw">if let </span><span class="prelude-val">Some</span>(name) = s.simple_keyword_name() {
-                        <span class="kw">match </span>name.as_str() {
-                            <span class="string">&quot;CALL&quot; </span>=&gt; <span class="self">self</span>.call(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;CHAIN&quot; </span>=&gt; <span class="self">self</span>.chain(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;COMMIT&quot; </span>=&gt; <span class="self">self</span>.commit(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;OPEN&quot; </span>=&gt; <span class="self">self</span>.open(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;PROOF-IN-EXPR&quot; </span>=&gt; <span class="self">self</span>.proof_in_expr(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;PROOF-OUT-EXPR&quot; </span>=&gt; <span class="self">self</span>.proof_out_expr(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;PROOF-CLAIM&quot; </span>=&gt; <span class="self">self</span>.proof_claim(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;PROVE&quot; </span>=&gt; <span class="self">self</span>.prove(store, rest)<span class="question-mark">?</span>,
-                            <span class="string">&quot;VERIFY&quot; </span>=&gt; <span class="self">self</span>.verify(store, rest)<span class="question-mark">?</span>,
-                            <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="macro">delegate!</span>(),
-                        }
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="macro">delegate!</span>();
-                    }
-                }
+                Expression::Sym(Sym::Sym(s)) =&gt; <span class="kw">match </span>s.name().as_str() {
+                    <span class="string">&quot;CALL&quot; </span>=&gt; <span class="self">self</span>.call(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;CHAIN&quot; </span>=&gt; <span class="self">self</span>.chain(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;COMMIT&quot; </span>=&gt; <span class="self">self</span>.commit(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;OPEN&quot; </span>=&gt; <span class="self">self</span>.open(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;PROOF-IN-EXPR&quot; </span>=&gt; <span class="self">self</span>.proof_in_expr(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;PROOF-OUT-EXPR&quot; </span>=&gt; <span class="self">self</span>.proof_out_expr(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;PROOF-CLAIM&quot; </span>=&gt; <span class="self">self</span>.proof_claim(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;PROVE&quot; </span>=&gt; <span class="self">self</span>.prove(store, rest)<span class="question-mark">?</span>,
+                    <span class="string">&quot;VERIFY&quot; </span>=&gt; <span class="self">self</span>.verify(store, rest)<span class="question-mark">?</span>,
+                    <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="macro">delegate!</span>(),
+                },
                 Expression::Comm(<span class="kw">_</span>, c) =&gt; {
                     <span class="comment">// NOTE: this cannot happen from a text-based REPL, since there is not currrently a literal Comm syntax.
                     </span><span class="self">self</span>.apply_comm(store, <span class="kw-2">*</span>c, rest)<span class="question-mark">?
@@ -804,22 +807,20 @@
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
         expr_ptr: Ptr&lt;F&gt;,
-        update_env: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(IO&lt;F&gt;, IO&lt;F&gt;, usize)&gt; {
-        <span class="kw">let </span>(input, output, iterations) = <span class="self">self
-            </span>.repl_state
-            .handle_non_meta(store, expr_ptr, update_env)<span class="question-mark">?</span>;
+        <span class="kw">let </span>(input, output, iterations) = <span class="self">self</span>.repl_state.handle_non_meta(store, expr_ptr)<span class="question-mark">?</span>;
 
         <span class="self">self</span>.history.push(output);
 
-        <span class="kw">let </span>claim = Claim::Evaluation::&lt;F&gt;(Evaluation {
-            expr: input.expr.fmt_to_string(store),
-            env: input.env.fmt_to_string(store),
-            cont: input.cont.fmt_to_string(store),
-            expr_out: output.expr.fmt_to_string(store),
-            env_out: output.env.fmt_to_string(store),
-            cont_out: output.cont.fmt_to_string(store),
-            status: output.status(),
+        <span class="kw">let </span>claim = Claim::PtrEvaluation::&lt;F&gt;(PtrEvaluation {
+            expr: LurkPtr::from_ptr(store, <span class="kw-2">&amp;</span>input.expr),
+            env: LurkPtr::from_ptr(store, <span class="kw-2">&amp;</span>input.env),
+            cont: LurkCont::from_cont_ptr(store, <span class="kw-2">&amp;</span>input.cont),
+            expr_out: LurkPtr::from_ptr(store, <span class="kw-2">&amp;</span>output.expr),
+            env_out: LurkPtr::from_ptr(store, <span class="kw-2">&amp;</span>output.env),
+            cont_out: LurkCont::from_cont_ptr(store, <span class="kw-2">&amp;</span>output.cont),
+            status: &lt;lurk::eval::IO&lt;F&gt; <span class="kw">as </span>Evaluable&lt;F, Witness&lt;F&gt;, Coproc&lt;F&gt;&gt;&gt;::status(<span class="kw-2">&amp;</span>output),
+
             iterations: <span class="prelude-val">None</span>,
         });
 
@@ -829,13 +830,16 @@
     }
 }
 
-<span class="kw">impl</span>&lt;F: LurkField&gt; ClutchState&lt;F&gt; {
+<span class="kw">impl</span>&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt; ClutchState&lt;F, C&gt; {
     <span class="kw">fn </span>hist(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>IO&lt;F&gt;&gt; {
         <span class="self">self</span>.history.get(n)
     }
 }
 
-<span class="kw">impl </span>ClutchState&lt;F&gt; {
+<span class="kw">impl </span>ClutchState&lt;F, Coproc&lt;F&gt;&gt; {
+    <span class="kw">fn </span>lang(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Lang&lt;F, Coproc&lt;F&gt;&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.repl_state.lang
+    }
     <span class="kw">fn </span>commit(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
         <span class="kw">let </span>(first, rest) = store.car_cdr(<span class="kw-2">&amp;</span>rest)<span class="question-mark">?</span>;
         <span class="kw">let </span>(second, <span class="kw">_</span>) = store.car_cdr(<span class="kw-2">&amp;</span>rest)<span class="question-mark">?</span>;
@@ -866,7 +870,7 @@
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(store.intern_maybe_opaque_comm(commitment.comm)))
     }
 
-    <span class="kw">fn </span>open(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
+    <span class="kw">fn </span>open(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.open_aux(store, rest)<span class="question-mark">?</span>.<span class="number">1</span>)
     }
 
@@ -961,7 +965,7 @@
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(result))
     }
     <span class="kw">fn </span>open_aux(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
         store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
         rest: Ptr&lt;F&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(Commitment&lt;F&gt;, <span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;)&gt; {
@@ -991,7 +995,7 @@
 
         <span class="kw">let </span>commitment_expr = <span class="self">self</span>.expression_map.get(<span class="kw-2">&amp;</span>commitment);
         <span class="kw">let </span>commitment_ptr = commitment_expr.map(|c| {
-            <span class="kw">let </span>ptr = c.expr.ptr(store, <span class="self">self</span>.repl_state.limit);
+            <span class="kw">let </span>ptr = c.expr.ptr(store, <span class="self">self</span>.repl_state.limit, <span class="self">self</span>.lang());
 
             <span class="kw">if let </span><span class="prelude-val">Some</span>(secret) = c.secret {
                 store.intern_comm(secret, ptr);
@@ -1005,32 +1009,32 @@
         <span class="prelude-val">Ok</span>((commitment, commitment_ptr))
     }
 
-    <span class="kw">fn </span>proof_in_expr(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
+    <span class="kw">fn </span>proof_in_expr(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
         <span class="kw">let </span>proof = <span class="self">self</span>.get_proof(store, rest)<span class="question-mark">?</span>;
-        <span class="kw">let </span>(input, _output) = proof.io(store)<span class="question-mark">?</span>;
+        <span class="kw">let </span>(input, _output) = proof.io(store, <span class="self">self</span>.lang())<span class="question-mark">?</span>;
 
         <span class="kw">let </span><span class="kw-2">mut </span>handle = io::stdout().lock();
         input.expr.fmt(store, <span class="kw-2">&amp;mut </span>handle)<span class="question-mark">?</span>;
         <span class="macro">println!</span>();
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     }
-    <span class="kw">fn </span>proof_out_expr(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
+    <span class="kw">fn </span>proof_out_expr(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
         <span class="kw">let </span>proof = <span class="self">self</span>.get_proof(store, rest)<span class="question-mark">?</span>;
-        <span class="kw">let </span>(_input, output) = proof.io(store)<span class="question-mark">?</span>;
+        <span class="kw">let </span>(_input, output) = proof.io(store, <span class="self">self</span>.lang())<span class="question-mark">?</span>;
 
         <span class="kw">let </span><span class="kw-2">mut </span>handle = io::stdout().lock();
         output.expr.fmt(store, <span class="kw-2">&amp;mut </span>handle)<span class="question-mark">?</span>;
         <span class="macro">println!</span>();
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     }
-    <span class="kw">fn </span>proof_claim(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
+    <span class="kw">fn </span>proof_claim(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
         <span class="kw">let </span>proof = <span class="self">self</span>.get_proof(store, rest)<span class="question-mark">?</span>;
 
         <span class="macro">println!</span>(<span class="string">&quot;{0:#?}&quot;</span>, proof.claim);
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     }
 
-    <span class="kw">fn </span>get_proof(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Proof&lt;F&gt;&gt; {
+    <span class="kw">fn </span>get_proof(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Proof&lt;F&gt;&gt; {
         <span class="kw">let </span>(proof_cid, _rest1) = store.car_cdr(<span class="kw-2">&amp;</span>rest)<span class="question-mark">?</span>;
         <span class="kw">let </span>cid_string = <span class="kw">if let </span>Expression::Str(p) = store
             .fetch(<span class="kw-2">&amp;</span>proof_cid)
@@ -1050,30 +1054,43 @@
     <span class="kw">fn </span>prove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, rest: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Ptr&lt;F&gt;&gt;&gt; {
         <span class="kw">let </span>(proof_in_expr, _rest1) = store.car_cdr(<span class="kw-2">&amp;</span>rest)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>prover = NovaProver::&lt;F&gt;::new(<span class="self">self</span>.reduction_count);
+        <span class="kw">let </span>prover = NovaProver::&lt;F, Coproc&lt;F&gt;&gt;::new(<span class="self">self</span>.reduction_count, <span class="self">self</span>.lang().clone());
         <span class="kw">let </span>pp = public_params(<span class="self">self</span>.reduction_count)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>proof = <span class="kw">if </span>rest.is_nil() {
             <span class="self">self</span>.last_claim
                 .as_ref()
                 .map(|claim| {
-                    Proof::prove_claim(store, claim, <span class="self">self</span>.repl_state.limit, <span class="bool-val">false</span>, <span class="kw-2">&amp;</span>prover, <span class="kw-2">&amp;</span>pp)
+                    Proof::prove_claim(
+                        store,
+                        claim,
+                        <span class="self">self</span>.repl_state.limit,
+                        <span class="bool-val">false</span>,
+                        <span class="kw-2">&amp;</span>prover,
+                        <span class="kw-2">&amp;</span>pp,
+                        <span class="self">self</span>.lang(),
+                    )
                 })
                 .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;no last claim&quot;</span>))<span class="question-mark">?
         </span>} <span class="kw">else </span>{
             Proof::&lt;pallas::Scalar&gt;::eval_and_prove(
                 store,
                 proof_in_expr,
+                <span class="prelude-val">Some</span>(<span class="self">self</span>.repl_state.env),
                 <span class="self">self</span>.repl_state.limit,
                 <span class="bool-val">false</span>,
                 <span class="kw-2">&amp;</span>prover,
                 <span class="kw-2">&amp;</span>pp,
+                <span class="self">self</span>.lang(),
             )
         }<span class="question-mark">?</span>;
 
-        <span class="kw">if </span>proof.verify(<span class="kw-2">&amp;</span>pp)<span class="question-mark">?</span>.verified {
+        <span class="kw">if </span>proof.verify(<span class="kw-2">&amp;</span>pp, <span class="self">self</span>.lang())<span class="question-mark">?</span>.verified {
             <span class="kw">let </span>cid_str = proof.claim.cid().to_string();
-            <span class="macro">println!</span>(<span class="string">&quot;{0:#?}&quot;</span>, proof.claim);
+            <span class="kw">match </span>proof.claim {
+                Claim::Evaluation(<span class="kw">_</span>) | Claim::Opening(<span class="kw">_</span>) =&gt; <span class="macro">println!</span>(<span class="string">&quot;{0:#?}&quot;</span>, proof.claim),
+                Claim::PtrEvaluation(<span class="kw">_</span>) =&gt; <span class="macro">println!</span>(<span class="string">&quot;Claim::PtrEvaluation elided.&quot;</span>),
+            }
 
             <span class="kw">let </span>cid = store.str(cid_str);
             <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(cid))
@@ -1098,8 +1115,9 @@
             </span>.proof_map
             .get(<span class="kw-2">&amp;</span>cid)
             .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;proof not found: {cid}&quot;</span>))<span class="question-mark">?</span>;
+
         <span class="kw">let </span>pp = public_params(<span class="self">self</span>.reduction_count)<span class="question-mark">?</span>;
-        <span class="kw">let </span>result = proof.verify(<span class="kw-2">&amp;</span>pp).unwrap();
+        <span class="kw">let </span>result = proof.verify(<span class="kw-2">&amp;</span>pp, <span class="self">self</span>.lang()).unwrap();
 
         <span class="kw">if </span>result.verified {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(store.get_t()))
