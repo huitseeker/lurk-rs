@@ -65,17 +65,17 @@ opencl = ["neptune/opencl"]
 cuda = ["neptune/cuda"]
 # compile without ISA extensions
 portable = ["blstrs/portable", "pasta-msm/portable"]
+flamegraph = ["pprof/flamegraph", "pprof/criterion"]
 
 [dev-dependencies]
-criterion = "0.3.6"
+criterion = "0.4"
 structopt = { version = "0.3", default-features = false }
 tap = "1.0.1"
 assert_cmd = "2.0.8"
 tempfile = "3.5.0"
-
-[[bench]]
-name = "eval"
-harness = false
+fcomm = { path = "fcomm" }
+pprof = { version = "0.11" }
+cfg-if = "1.0.0"
 
 [workspace]
 members = [
@@ -99,3 +99,7 @@ codegen-units = 16
 # being off (they test release behavior in case of duplicate clauses).
 inherits = "dev-ci"
 debug-assertions = false
+
+[[bench]]
+name = "fibonacci"
+harness = false
