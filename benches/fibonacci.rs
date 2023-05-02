@@ -42,6 +42,9 @@ fn fibo_total<M: measurement::Measurement>(name: &str, iterations: u64, c: &mut 
     let lang_vesta = Lang::<pasta_curves::Fq, Coproc<pasta_curves::Fq>>::new();
     let reduction_count = DEFAULT_REDUCTION_COUNT;
 
+    // use cached public params
+    let pp = fcomm::public_params(reduction_count).unwrap();
+
     c.bench_with_input(
         BenchmarkId::new(name.to_string(), iterations),
         &(iterations),
@@ -50,9 +53,6 @@ fn fibo_total<M: measurement::Measurement>(name: &str, iterations: u64, c: &mut 
             let env = empty_sym_env(&store);
             let ptr = fib::<pasta_curves::Fq>(&mut store, black_box(*iterations));
             let prover = NovaProver::new(reduction_count, lang_vesta.clone());
-
-            // use cached public params
-            let pp = fcomm::public_params(reduction_count).unwrap();
 
             b.iter(|| {
                 let result = prover
@@ -88,6 +88,7 @@ fn fibo_prove<M: measurement::Measurement>(name: &str, iterations: u64, c: &mut 
     let limit = 10_000_000_000;
     let lang_vesta = Lang::<pasta_curves::Fq, Coproc<pasta_curves::Fq>>::new();
     let reduction_count = DEFAULT_REDUCTION_COUNT;
+    let pp = fcomm::public_params(reduction_count).unwrap();
 
     c.bench_with_input(
         BenchmarkId::new(name.to_string(), iterations),
@@ -98,7 +99,6 @@ fn fibo_prove<M: measurement::Measurement>(name: &str, iterations: u64, c: &mut 
             let ptr = fib::<pasta_curves::Fq>(&mut store, black_box(*iterations));
             let prover = NovaProver::new(reduction_count, lang_vesta.clone());
 
-            let pp = fcomm::public_params(reduction_count).unwrap();
             let frames = prover
                 .get_evaluation_frames(ptr, env, &mut store, limit, &lang_vesta)
                 .unwrap();
