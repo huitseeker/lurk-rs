@@ -500,7 +500,9 @@ fn main() {
         .filter_level(cli.verbose.log_level_filter())
         .init();
 
+    // TODO: make this properly configurable, e.g. allowing coprocessors
     let lang = Lang::new();
+
     match &cli.command {
         Command::Commit(c) => c.commit(cli.limit, &lang),
         Command::Open(o) => o.open(cli.limit, cli.eval_input, &lang),

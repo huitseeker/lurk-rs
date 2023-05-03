@@ -6,6 +6,7 @@ use std::{
 use once_cell::sync::Lazy;
 use pasta_curves::pallas;
 use serde::{de::DeserializeOwned, Serialize};
+use tap::TapFallible;
 
 use crate::public_parameters::Error;
 use crate::{coprocessor::Coprocessor, eval::lang::Lang, proof::nova::PublicParams};
@@ -46,18 +47,16 @@ impl Registry {
         let lang_key = lang.key();
         // Sanity-check: we're about to use a lang-dependent disk cache, which should be specialized
         // for this lang/coprocessor.
-        debug_assert!(
-            !lang_key.is_empty(),
-            "Lang key is empty, error in coprocessor initialization!"
-        );
         let key = format!("public-params-rc-{rc}-coproc-{lang_key}");
         // read the file if it exists, otherwise initialize
         if let Some(pp) = disk_cache.get::<PublicParams<'static, C>>(&key) {
+            eprintln!("Using disk-cached public params for lang {}", lang_key);
             Ok(Arc::new(pp))
         } else {
             let pp = default(lang);
             disk_cache
                 .set(key, &*pp)
+                .tap_ok(|_| eprintln!("Writing public params to disk-cache: {}", lang_key))
                 .map_err(|e| Error::CacheError(format!("Disk write error: {e}")))?;
             Ok(pp)
         }
