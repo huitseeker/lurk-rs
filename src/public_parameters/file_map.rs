@@ -3,6 +3,9 @@ use std::io::Error;
 use std::marker::PhantomData;
 use std::path::{Path, PathBuf};
 
+use log::debug;
+use tap::TapFallible;
+
 use crate::public_parameters::FileStore;
 
 pub(crate) fn data_dir() -> PathBuf {
@@ -35,7 +38,9 @@ impl<K: ToString> FileIndex<K> {
 
     pub(crate) fn get<V: FileStore>(&self, key: &K) -> Option<V> {
         self.key_path(key);
-        V::read_from_path(self.key_path(key)).ok()
+        V::read_from_path(self.key_path(key))
+            .tap_err(|e| debug!("Issue retrieving cache keyed by {}: {e}", key.to_string()))
+            .ok()
     }
 
     pub(crate) fn set<V: FileStore>(&self, key: K, data: &V) -> Result<(), Error> {
