@@ -24,6 +24,7 @@ use bellperson::{ConstraintSystem, SynthesisError};
 
 use itertools::enumerate;
 use pasta_curves::pallas::Scalar as Fr;
+use pretty_env_logger::env_logger;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
@@ -134,6 +135,8 @@ enum Sha256Coproc<F: LurkField> {
 /// Run the example in this file with
 /// `cargo run --release --example sha256 1 f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b false`
 fn main() {
+    env_logger::init();
+
     let args: Vec<String> = env::args().collect();
 
     let num_of_64_bytes = args[1].parse::<usize>().unwrap();
