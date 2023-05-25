@@ -1,4 +1,5 @@
 use std::env;
+use std::fs::File;
 use std::marker::PhantomData;
 use std::sync::Arc;
 use std::time::Instant;
@@ -169,9 +170,16 @@ fn main() {
 
     println!("Setting up public parameters...");
 
+    let guard = pprof::ProfilerGuard::new(100).unwrap();
     let pp_start = Instant::now();
+
     let pp = public_params::<Sha256Coproc<Fr>>(REDUCTION_COUNT, lang_rc.clone()).unwrap();
     let pp_end = pp_start.elapsed();
+
+    if let Ok(report) = guard.report().build() {
+        let file = File::create("flamegraph.svg").unwrap();
+        report.flamegraph(file).unwrap();
+    };
 
     println!("Public parameters took {:?}", pp_end);
 
