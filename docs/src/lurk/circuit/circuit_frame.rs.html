@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/circuit/circuit_frame.rs`."><title>circuit_frame.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.0-nightly (8bdcc62cb 2023-04-20)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-1a524efa7bd4ab32.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../lurk/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/circuit/circuit_frame.rs`."><title>circuit_frame.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-f3501f0f5ae15dfb.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.72.0-nightly (871b59520 2023-05-31)" data-search-js="search-4926e5fc22a5646a.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f0540c1d82cde29b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../lurk/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -5951,119 +5951,6 @@
 <a href="#5951" id="5951">5951</a>
 <a href="#5952" id="5952">5952</a>
 <a href="#5953" id="5953">5953</a>
-<a href="#5954" id="5954">5954</a>
-<a href="#5955" id="5955">5955</a>
-<a href="#5956" id="5956">5956</a>
-<a href="#5957" id="5957">5957</a>
-<a href="#5958" id="5958">5958</a>
-<a href="#5959" id="5959">5959</a>
-<a href="#5960" id="5960">5960</a>
-<a href="#5961" id="5961">5961</a>
-<a href="#5962" id="5962">5962</a>
-<a href="#5963" id="5963">5963</a>
-<a href="#5964" id="5964">5964</a>
-<a href="#5965" id="5965">5965</a>
-<a href="#5966" id="5966">5966</a>
-<a href="#5967" id="5967">5967</a>
-<a href="#5968" id="5968">5968</a>
-<a href="#5969" id="5969">5969</a>
-<a href="#5970" id="5970">5970</a>
-<a href="#5971" id="5971">5971</a>
-<a href="#5972" id="5972">5972</a>
-<a href="#5973" id="5973">5973</a>
-<a href="#5974" id="5974">5974</a>
-<a href="#5975" id="5975">5975</a>
-<a href="#5976" id="5976">5976</a>
-<a href="#5977" id="5977">5977</a>
-<a href="#5978" id="5978">5978</a>
-<a href="#5979" id="5979">5979</a>
-<a href="#5980" id="5980">5980</a>
-<a href="#5981" id="5981">5981</a>
-<a href="#5982" id="5982">5982</a>
-<a href="#5983" id="5983">5983</a>
-<a href="#5984" id="5984">5984</a>
-<a href="#5985" id="5985">5985</a>
-<a href="#5986" id="5986">5986</a>
-<a href="#5987" id="5987">5987</a>
-<a href="#5988" id="5988">5988</a>
-<a href="#5989" id="5989">5989</a>
-<a href="#5990" id="5990">5990</a>
-<a href="#5991" id="5991">5991</a>
-<a href="#5992" id="5992">5992</a>
-<a href="#5993" id="5993">5993</a>
-<a href="#5994" id="5994">5994</a>
-<a href="#5995" id="5995">5995</a>
-<a href="#5996" id="5996">5996</a>
-<a href="#5997" id="5997">5997</a>
-<a href="#5998" id="5998">5998</a>
-<a href="#5999" id="5999">5999</a>
-<a href="#6000" id="6000">6000</a>
-<a href="#6001" id="6001">6001</a>
-<a href="#6002" id="6002">6002</a>
-<a href="#6003" id="6003">6003</a>
-<a href="#6004" id="6004">6004</a>
-<a href="#6005" id="6005">6005</a>
-<a href="#6006" id="6006">6006</a>
-<a href="#6007" id="6007">6007</a>
-<a href="#6008" id="6008">6008</a>
-<a href="#6009" id="6009">6009</a>
-<a href="#6010" id="6010">6010</a>
-<a href="#6011" id="6011">6011</a>
-<a href="#6012" id="6012">6012</a>
-<a href="#6013" id="6013">6013</a>
-<a href="#6014" id="6014">6014</a>
-<a href="#6015" id="6015">6015</a>
-<a href="#6016" id="6016">6016</a>
-<a href="#6017" id="6017">6017</a>
-<a href="#6018" id="6018">6018</a>
-<a href="#6019" id="6019">6019</a>
-<a href="#6020" id="6020">6020</a>
-<a href="#6021" id="6021">6021</a>
-<a href="#6022" id="6022">6022</a>
-<a href="#6023" id="6023">6023</a>
-<a href="#6024" id="6024">6024</a>
-<a href="#6025" id="6025">6025</a>
-<a href="#6026" id="6026">6026</a>
-<a href="#6027" id="6027">6027</a>
-<a href="#6028" id="6028">6028</a>
-<a href="#6029" id="6029">6029</a>
-<a href="#6030" id="6030">6030</a>
-<a href="#6031" id="6031">6031</a>
-<a href="#6032" id="6032">6032</a>
-<a href="#6033" id="6033">6033</a>
-<a href="#6034" id="6034">6034</a>
-<a href="#6035" id="6035">6035</a>
-<a href="#6036" id="6036">6036</a>
-<a href="#6037" id="6037">6037</a>
-<a href="#6038" id="6038">6038</a>
-<a href="#6039" id="6039">6039</a>
-<a href="#6040" id="6040">6040</a>
-<a href="#6041" id="6041">6041</a>
-<a href="#6042" id="6042">6042</a>
-<a href="#6043" id="6043">6043</a>
-<a href="#6044" id="6044">6044</a>
-<a href="#6045" id="6045">6045</a>
-<a href="#6046" id="6046">6046</a>
-<a href="#6047" id="6047">6047</a>
-<a href="#6048" id="6048">6048</a>
-<a href="#6049" id="6049">6049</a>
-<a href="#6050" id="6050">6050</a>
-<a href="#6051" id="6051">6051</a>
-<a href="#6052" id="6052">6052</a>
-<a href="#6053" id="6053">6053</a>
-<a href="#6054" id="6054">6054</a>
-<a href="#6055" id="6055">6055</a>
-<a href="#6056" id="6056">6056</a>
-<a href="#6057" id="6057">6057</a>
-<a href="#6058" id="6058">6058</a>
-<a href="#6059" id="6059">6059</a>
-<a href="#6060" id="6060">6060</a>
-<a href="#6061" id="6061">6061</a>
-<a href="#6062" id="6062">6062</a>
-<a href="#6063" id="6063">6063</a>
-<a href="#6064" id="6064">6064</a>
-<a href="#6065" id="6065">6065</a>
-<a href="#6066" id="6066">6066</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::fmt::Debug;
 <span class="kw">use </span>std::marker::PhantomData;
 
@@ -6096,13 +5983,16 @@
 <span class="kw">use </span><span class="kw">crate</span>::circuit::ToInputs;
 <span class="kw">use </span><span class="kw">crate</span>::coprocessor::Coprocessor;
 <span class="kw">use </span><span class="kw">crate</span>::eval::{lang::Lang, Frame, Witness, IO};
+<span class="kw">use </span><span class="kw">crate</span>::expr::Thunk;
 <span class="kw">use </span><span class="kw">crate</span>::hash_witness::HashWitness;
 <span class="kw">use </span><span class="kw">crate</span>::proof::Provable;
-<span class="kw">use </span><span class="kw">crate</span>::store::{Ptr, Store, Thunk};
+<span class="kw">use </span><span class="kw">crate</span>::ptr::Ptr;
+<span class="kw">use </span><span class="kw">crate</span>::store::Store;
 <span class="kw">use </span><span class="kw">crate</span>::tag::{ContTag, ExprTag, Op1, Op2};
 <span class="kw">use </span>num_bigint::BigUint;
 <span class="kw">use </span>num_integer::Integer;
 <span class="kw">use </span>num_traits::FromPrimitive;
+<span class="kw">use </span>std::sync::Arc;
 
 <span class="attr">#[derive(Clone, Copy, Debug)]
 </span><span class="kw">pub struct </span>CircuitFrame&lt;<span class="lifetime">&#39;a</span>, F: LurkField, T, W, C: Coprocessor&lt;F&gt;&gt; {
@@ -6116,7 +6006,7 @@
 <span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>MultiFrame&lt;<span class="lifetime">&#39;a</span>, F: LurkField, T: Copy, W, C: Coprocessor&lt;F&gt;&gt; {
     <span class="kw">pub </span>store: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;&gt;,
-    <span class="kw">pub </span>lang: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;&gt;,
+    <span class="kw">pub </span>lang: <span class="prelude-ty">Option</span>&lt;Arc&lt;Lang&lt;F, C&gt;&gt;&gt;,
     <span class="kw">pub </span>input: <span class="prelude-ty">Option</span>&lt;T&gt;,
     <span class="kw">pub </span>output: <span class="prelude-ty">Option</span>&lt;T&gt;,
     <span class="kw">pub </span>frames: <span class="prelude-ty">Option</span>&lt;Vec&lt;CircuitFrame&lt;<span class="lifetime">&#39;a</span>, F, T, W, C&gt;&gt;&gt;,
@@ -6148,7 +6038,7 @@
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, F: LurkField, T: Clone + Copy + std::cmp::PartialEq, W: Copy, C: Coprocessor&lt;F&gt;&gt;
     MultiFrame&lt;<span class="lifetime">&#39;a</span>, F, T, W, C&gt;
 {
-    <span class="kw">pub fn </span>blank(count: usize, lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;) -&gt; <span class="self">Self </span>{
+    <span class="kw">pub fn </span>blank(count: usize, lang: Arc&lt;Lang&lt;F, C&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             store: <span class="prelude-val">None</span>,
             lang: <span class="prelude-val">Some</span>(lang),
@@ -6163,15 +6053,11 @@
         <span class="self">self</span>.store.expect(<span class="string">&quot;store missing&quot;</span>)
     }
 
-    <span class="kw">pub fn </span>frame_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.count
-    }
-
     <span class="kw">pub fn </span>from_frames(
         count: usize,
         frames: <span class="kw-2">&amp;</span>[Frame&lt;T, W, C&gt;],
         store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;,
-        lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;,
+        lang: Arc&lt;Lang&lt;F, C&gt;&gt;,
     ) -&gt; Vec&lt;<span class="self">Self</span>&gt; {
         <span class="comment">// `count` is the number of `Frames` to include per `MultiFrame`.
         </span><span class="kw">let </span>total_frames = frames.len();
@@ -6202,7 +6088,7 @@
 
             <span class="kw">let </span>mf = MultiFrame {
                 store: <span class="prelude-val">Some</span>(store),
-                lang: <span class="prelude-val">Some</span>(lang),
+                lang: <span class="prelude-val">Some</span>(lang.clone()),
                 input: <span class="prelude-val">Some</span>(chunk[<span class="number">0</span>].input),
                 output: <span class="prelude-val">Some</span>(output),
                 frames: <span class="prelude-val">Some</span>(inner_frames),
@@ -6220,7 +6106,7 @@
         count: usize,
         circuit_frame: <span class="prelude-ty">Option</span>&lt;CircuitFrame&lt;<span class="lifetime">&#39;a</span>, F, T, W, C&gt;&gt;,
         store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;,
-        lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;,
+        lang: Arc&lt;Lang&lt;F, C&gt;&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>(frames, input, output) = <span class="kw">if let </span><span class="prelude-val">Some</span>(circuit_frame) = circuit_frame {
             (
@@ -6291,7 +6177,13 @@
                 (
                     i + <span class="number">1</span>,
                     frame
-                        .synthesize(cs, i, allocated_io, <span class="self">self</span>.lang.expect(<span class="string">&quot;Lang missing&quot;</span>), g)
+                        .synthesize(
+                            cs,
+                            i,
+                            allocated_io,
+                            <span class="self">self</span>.lang.as_ref().expect(<span class="string">&quot;Lang missing&quot;</span>),
+                            g,
+                        )
                         .unwrap(),
                 )
             });
@@ -6354,20 +6246,20 @@
         <span class="kw">let </span>(input_expr, input_env, input_cont) = inputs;
 
         <span class="kw">let </span><span class="kw-2">mut </span>reduce = |store| {
-            <span class="kw">let </span>cons_witness = <span class="kw">match </span><span class="self">self</span>.witness.map(|x| x.conses) {
-                <span class="prelude-val">Some</span>(hw) =&gt; hw,
-                <span class="prelude-val">None </span>=&gt; HashWitness::new_blank(),
-            };
+            <span class="kw">let </span>cons_witness = <span class="self">self
+                </span>.witness
+                .map(|x| x.conses)
+                .unwrap_or_else(|| HashWitness::new_blank());
             <span class="kw">let </span><span class="kw-2">mut </span>allocated_cons_witness = AllocatedConsWitness::from_cons_witness(
                 <span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;allocated_cons_witness {i}&quot;</span>)),
                 store,
                 <span class="kw-2">&amp;</span>cons_witness,
             )<span class="question-mark">?</span>;
 
-            <span class="kw">let </span>cont_witness = <span class="kw">match </span><span class="self">self</span>.witness.map(|x| x.conts) {
-                <span class="prelude-val">Some</span>(hw) =&gt; hw,
-                <span class="prelude-val">None </span>=&gt; HashWitness::new_blank(),
-            };
+            <span class="kw">let </span>cont_witness = <span class="self">self
+                </span>.witness
+                .map(|x| x.conts)
+                .unwrap_or_else(|| HashWitness::new_blank());
 
             <span class="kw">let </span><span class="kw-2">mut </span>allocated_cont_witness = AllocatedContWitness::from_cont_witness(
                 <span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;allocated_cont_witness {i}&quot;</span>)),
@@ -6472,8 +6364,8 @@
 
         <span class="kw">match </span><span class="self">self</span>.store {
             <span class="prelude-val">Some</span>(s) =&gt; {
-                <span class="kw">let </span>frames = <span class="self">self</span>.frames.clone().unwrap();
-                synth(s, <span class="kw-2">&amp;</span>frames, <span class="self">self</span>.input, <span class="self">self</span>.output)
+                <span class="kw">let </span>frames = <span class="self">self</span>.frames.as_ref().unwrap();
+                synth(s, frames, <span class="self">self</span>.input, <span class="self">self</span>.output)
             }
             <span class="prelude-val">None </span>=&gt; {
                 <span class="kw">let </span>store = Default::default();
@@ -6523,7 +6415,7 @@
     key: F,
     value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>AllocatedNum&lt;F&gt;,
 ) {
-    clauses.push(CaseClause { key, value });
+    clauses.push(CaseClause::new(key, value));
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, F: LurkField&gt; Results&lt;<span class="lifetime">&#39;a</span>, F&gt; {
@@ -6536,35 +6428,17 @@
         result_apply_continuation: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>AllocatedNum&lt;F&gt;,
     ) {
         <span class="kw">let </span>key = key.to_field();
-        add_clause(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.expr_tag_clauses,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.expr_hash_clauses,
+        <span class="self">self</span>.add_clauses_cons(
             key,
             result_expr,
-        );
-
-        add_clause(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.env_tag_clauses,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.env_hash_clauses,
-            key,
             result_env,
-        );
-
-        add_clause_cont(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.cont_tag_clauses,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.cont_hash_clauses,
-            key,
             result_cont,
-        );
-
-        add_clause_single(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.apply_continuation_clauses,
-            key,
             result_apply_continuation,
-        );
+        )
     }
 
-    <span class="kw">fn </span>add_clauses_cons(
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>add_clauses_cons(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         key: F,
         result_expr: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>AllocatedPtr&lt;F&gt;,
@@ -7476,7 +7350,10 @@
 
     <span class="kw">let </span><span class="kw-2">mut </span>head_is_coprocessor_bools = Vec::with_capacity(lang.coprocessors().len());
 
-    <span class="kw">for </span>(sym, (_coproc, scalar_ptr)) <span class="kw">in </span>lang.coprocessors().iter() {
+    <span class="kw">for </span>(sym, (coproc, scalar_ptr)) <span class="kw">in </span>lang.coprocessors().iter() {
+        <span class="kw">if </span>!coproc.has_circuit() {
+            <span class="kw">continue</span>;
+        };
         <span class="kw">let </span>cs = <span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;head is {}&quot;</span>, sym.full_name()));
 
         <span class="kw">let </span>allocated_boolean = head.alloc_hash_equal(cs, <span class="kw-2">*</span>scalar_ptr.value())<span class="question-mark">?</span>;
@@ -8700,6 +8577,10 @@
             )<span class="question-mark">?</span>;
 
             <span class="kw">for </span>(sym, (coproc, scalar_ptr)) <span class="kw">in </span>lang.coprocessors().iter() {
+                <span class="kw">if </span>!coproc.has_circuit() {
+                    <span class="kw">continue</span>;
+                };
+
                 <span class="kw">let </span>cs = <span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;{} coprocessor&quot;</span>, sym.full_name()));
 
                 <span class="kw">let </span>arity = coproc.arity();
@@ -8711,7 +8592,7 @@
                 )<span class="question-mark">?</span>;
 
                 <span class="kw">let </span>(result_expr, result_env, result_cont) =
-                    coproc.synthesize(cs, store, <span class="kw-2">&amp;</span>inputs[..arity], env, cont)<span class="question-mark">?</span>;
+                    coproc.synthesize(cs, g, store, <span class="kw-2">&amp;</span>inputs[..arity], env, cont)<span class="question-mark">?</span>;
 
                 <span class="kw">let </span>new_expr = <span class="macro">pick_ptr!</span>(cs, <span class="kw-2">&amp;</span>arity_is_correct, <span class="kw-2">&amp;</span>result_expr, <span class="kw-2">&amp;</span>rest)<span class="question-mark">?</span>; <span class="comment">// TODO: The error case should probably be expr, but this is harder in straight evaluation atm.
                 </span><span class="kw">let </span>new_env = <span class="macro">pick_ptr!</span>(cs, <span class="kw-2">&amp;</span>arity_is_correct, <span class="kw-2">&amp;</span>result_env, <span class="kw-2">&amp;</span>env)<span class="question-mark">?</span>;
@@ -8725,7 +8606,7 @@
     }
 
     <span class="kw">for </span>c <span class="kw">in </span><span class="kw-2">&amp;</span>coprocessor_results {
-        results.add_clauses_cons(<span class="kw-2">*</span>c.<span class="number">0</span>.value(), <span class="kw-2">&amp;</span>c.<span class="number">1</span>, <span class="kw-2">&amp;</span>c.<span class="number">2</span>, <span class="kw-2">&amp;</span>c.<span class="number">3</span>, <span class="kw-2">&amp;</span>g.false_num);
+        results.add_clauses_cons(<span class="kw-2">*</span>c.<span class="number">0</span>.value(), <span class="kw-2">&amp;</span>c.<span class="number">1</span>, <span class="kw-2">&amp;</span>c.<span class="number">2</span>, <span class="kw-2">&amp;</span>c.<span class="number">3</span>, <span class="kw-2">&amp;</span>g.true_num);
     }
 
     <span class="kw">let </span>is_zero_arg_call = rest_is_nil;
@@ -8837,7 +8718,8 @@
         <span class="kw-2">&amp;</span>expr_cdr_not_dummy.not(),
         <span class="kw-2">&amp;</span>head_is_begin.not(),
         <span class="kw-2">&amp;</span>head_is_current_env.not(),
-        <span class="kw-2">&amp;</span>head_potentially_fun.not()
+        <span class="kw-2">&amp;</span>head_potentially_fun.not(),
+        <span class="kw-2">&amp;</span>head_is_coprocessor.not()
     )<span class="question-mark">?</span>;
     <span class="kw">let </span>zero_arg_built_in_too_many_args_error =
         <span class="macro">and!</span>(cs, <span class="kw-2">&amp;</span>head_is_current_env, <span class="kw-2">&amp;</span>is_zero_arg_call.not())<span class="question-mark">?</span>;
@@ -9175,16 +9057,13 @@
         <span class="comment">// IF this is open, we need to know what we are opening.
         </span><span class="kw">let </span>digest = result.hash();
 
-        <span class="kw">let </span>(open_secret_scalar, open_expr_ptr) = <span class="kw">match </span>store.get_maybe_opaque(
-            ExprTag::Comm,
-            digest.get_value().unwrap_or_else(|| F::zero()),
-        ) {
-            <span class="prelude-val">Some</span>(commit) =&gt; <span class="kw">match </span>store.open(commit) {
-                <span class="prelude-val">Some</span>((secret, opening)) =&gt; (secret, opening),
-                <span class="prelude-val">None </span>=&gt; (F::zero(), store.get_nil()), <span class="comment">// nil is dummy
-            </span>},
-            <span class="prelude-val">None </span>=&gt; (F::zero(), store.get_nil()), <span class="comment">// nil is dummy
-        </span>};
+        <span class="kw">let </span>(open_secret_scalar, open_expr_ptr) = store
+            .get_maybe_opaque(ExprTag::Comm, digest.get_value().unwrap_or(F::ZERO))
+            .and_then(|commit| store.open(commit))
+            .unwrap_or_else(|| {
+                <span class="comment">// nil is dummy
+                </span>(F::ZERO, store.get_nil())
+            });
 
         <span class="kw">let </span>open_expr = AllocatedPtr::alloc(<span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="string">&quot;open_expr&quot;</span>), || {
             <span class="prelude-val">Ok</span>(store.hash_expr(<span class="kw-2">&amp;</span>open_expr_ptr).unwrap())
@@ -9269,104 +9148,32 @@
             op1.tag(),
             <span class="kw-2">&amp;</span>[
                 <span class="kw-2">&amp;</span>[
-                    CaseClause {
-                        key: Op1::Car.to_field(),
-                        value: res_car.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::Cdr.to_field(),
-                        value: res_cdr.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::Atom.to_field(),
-                        value: is_atom_ptr.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::Emit.to_field(),
-                        value: result.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::Commit.to_field(),
-                        value: commitment.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::Open.to_field(),
-                        value: committed_expr.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::Secret.to_field(),
-                        value: <span class="kw-2">&amp;</span>g.num_tag,
-                    },
-                    CaseClause {
-                        key: Op1::Num.to_field(),
-                        value: num.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::U64.to_field(),
-                        value: <span class="kw-2">&amp;</span>g.u64_tag,
-                    },
-                    CaseClause {
-                        key: Op1::Comm.to_field(),
-                        value: comm.tag(),
-                    },
-                    CaseClause {
-                        key: Op1::Char.to_field(),
-                        value: <span class="kw-2">&amp;</span>g.char_tag,
-                    },
-                    CaseClause {
-                        key: Op1::Eval.to_field(),
-                        value: result.tag(),
-                    },
+                    CaseClause::new(Op1::Car.to_field(), res_car.tag()),
+                    CaseClause::new(Op1::Cdr.to_field(), res_cdr.tag()),
+                    CaseClause::new(Op1::Atom.to_field(), is_atom_ptr.tag()),
+                    CaseClause::new(Op1::Emit.to_field(), result.tag()),
+                    CaseClause::new(Op1::Commit.to_field(), commitment.tag()),
+                    CaseClause::new(Op1::Open.to_field(), committed_expr.tag()),
+                    CaseClause::new(Op1::Secret.to_field(), <span class="kw-2">&amp;</span>g.num_tag),
+                    CaseClause::new(Op1::Num.to_field(), num.tag()),
+                    CaseClause::new(Op1::U64.to_field(), <span class="kw-2">&amp;</span>g.u64_tag),
+                    CaseClause::new(Op1::Comm.to_field(), comm.tag()),
+                    CaseClause::new(Op1::Char.to_field(), <span class="kw-2">&amp;</span>g.char_tag),
+                    CaseClause::new(Op1::Eval.to_field(), result.tag()),
                 ],
                 <span class="kw-2">&amp;</span>[
-                    CaseClause {
-                        key: Op1::Car.to_field(),
-                        value: allocated_car.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::Cdr.to_field(),
-                        value: allocated_cdr.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::Atom.to_field(),
-                        value: is_atom_ptr.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::Emit.to_field(),
-                        value: result.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::Commit.to_field(),
-                        value: commitment.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::Open.to_field(),
-                        value: committed_expr.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::Secret.to_field(),
-                        value: <span class="kw-2">&amp;</span>commitment_secret,
-                    },
-                    CaseClause {
-                        key: Op1::Num.to_field(),
-                        value: num.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::U64.to_field(),
-                        value: <span class="kw-2">&amp;</span>u64_elem,
-                    },
-                    CaseClause {
-                        key: Op1::Comm.to_field(),
-                        value: comm.hash(),
-                    },
-                    CaseClause {
-                        key: Op1::Char.to_field(),
-                        value: <span class="kw-2">&amp;</span>u32_elem,
-                    },
-                    CaseClause {
-                        key: Op1::Eval.to_field(),
-                        value: result.hash(),
-                    },
+                    CaseClause::new(Op1::Car.to_field(), allocated_car.hash()),
+                    CaseClause::new(Op1::Cdr.to_field(), allocated_cdr.hash()),
+                    CaseClause::new(Op1::Atom.to_field(), is_atom_ptr.hash()),
+                    CaseClause::new(Op1::Emit.to_field(), result.hash()),
+                    CaseClause::new(Op1::Commit.to_field(), commitment.hash()),
+                    CaseClause::new(Op1::Open.to_field(), committed_expr.hash()),
+                    CaseClause::new(Op1::Secret.to_field(), <span class="kw-2">&amp;</span>commitment_secret),
+                    CaseClause::new(Op1::Num.to_field(), num.hash()),
+                    CaseClause::new(Op1::U64.to_field(), <span class="kw-2">&amp;</span>u64_elem),
+                    CaseClause::new(Op1::Comm.to_field(), comm.hash()),
+                    CaseClause::new(Op1::Char.to_field(), <span class="kw-2">&amp;</span>u32_elem),
+                    CaseClause::new(Op1::Eval.to_field(), result.hash()),
                 ],
             ],
             <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>g.default_num, <span class="kw-2">&amp;</span>g.default_num],
@@ -9986,42 +9793,15 @@
             <span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="string">&quot;Binop2 case&quot;</span>),
             op2.tag(),
             <span class="kw-2">&amp;</span>[
-                CaseClause {
-                    key: Op2::Sum.to_field(),
-                    value: <span class="kw-2">&amp;</span>sum,
-                },
-                CaseClause {
-                    key: Op2::Diff.to_field(),
-                    value: <span class="kw-2">&amp;</span>diff,
-                },
-                CaseClause {
-                    key: Op2::Product.to_field(),
-                    value: <span class="kw-2">&amp;</span>product,
-                },
-                CaseClause {
-                    key: Op2::Quotient.to_field(),
-                    value: <span class="kw-2">&amp;</span>quotient,
-                },
-                CaseClause {
-                    key: Op2::Equal.to_field(),
-                    value: args_equal_ptr.hash(),
-                },
-                CaseClause {
-                    key: Op2::NumEqual.to_field(),
-                    value: args_equal_ptr.hash(),
-                },
-                CaseClause {
-                    key: Op2::Cons.to_field(),
-                    value: cons.hash(),
-                },
-                CaseClause {
-                    key: Op2::StrCons.to_field(),
-                    value: cons.hash(),
-                },
-                CaseClause {
-                    key: Op2::Hide.to_field(),
-                    value: commitment.hash(),
-                },
+                CaseClause::new(Op2::Sum.to_field(), <span class="kw-2">&amp;</span>sum),
+                CaseClause::new(Op2::Diff.to_field(), <span class="kw-2">&amp;</span>diff),
+                CaseClause::new(Op2::Product.to_field(), <span class="kw-2">&amp;</span>product),
+                CaseClause::new(Op2::Quotient.to_field(), <span class="kw-2">&amp;</span>quotient),
+                CaseClause::new(Op2::Equal.to_field(), args_equal_ptr.hash()),
+                CaseClause::new(Op2::NumEqual.to_field(), args_equal_ptr.hash()),
+                CaseClause::new(Op2::Cons.to_field(), cons.hash()),
+                CaseClause::new(Op2::StrCons.to_field(), cons.hash()),
+                CaseClause::new(Op2::Hide.to_field(), commitment.hash()),
             ],
             <span class="kw-2">&amp;</span>g.default_num,
             g,
@@ -10436,10 +10216,7 @@
 
         (body, extended_env, tail_cont, newer_cont2_not_dummy)
     };
-    <span class="kw">let </span>let_cont = <span class="kw">match </span>tail_cont {
-        <span class="prelude-val">Ok</span>(c) =&gt; c,
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; g.dummy_ptr.clone(),
-    };
+    <span class="kw">let </span>let_cont = tail_cont.unwrap_or_else(|<span class="kw">_</span>| g.dummy_ptr.clone());
     results.add_clauses_cont(
         ContTag::Let,
         <span class="kw-2">&amp;</span>body,
@@ -10681,7 +10458,7 @@
 
     <span class="comment">// This is all clunky because we can&#39;t currently return AllocatedBit from case expressions.
     </span><span class="kw">let </span>newer_cont2_not_dummy_result_num = case_results[<span class="number">7</span>].clone();
-    <span class="kw">let </span>newer_cont2_not_dummy_ = <span class="macro">equal_const!</span>(cs, <span class="kw-2">&amp;</span>newer_cont2_not_dummy_result_num, F::one())<span class="question-mark">?</span>;
+    <span class="kw">let </span>newer_cont2_not_dummy_ = <span class="macro">equal_const!</span>(cs, <span class="kw-2">&amp;</span>newer_cont2_not_dummy_result_num, F::ONE)<span class="question-mark">?</span>;
     <span class="kw">let </span>newer_cont2_not_dummy = <span class="macro">and!</span>(cs, <span class="kw-2">&amp;</span>newer_cont2_not_dummy_, not_dummy)<span class="question-mark">?</span>;
 
     <span class="macro">implies_equal!</span>(
@@ -10935,10 +10712,10 @@
     g: <span class="kw-2">&amp;</span>GlobalAllocations&lt;F&gt;,
     maybe_unsigned: <span class="kw-2">&amp;</span>AllocatedNum&lt;F&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(AllocatedNum&lt;F&gt;, AllocatedNum&lt;F&gt;), SynthesisError&gt; {
-    <span class="kw">let </span>field_elem = <span class="kw">match </span>maybe_unsigned.get_value() {
-        <span class="prelude-val">Some</span>(v) =&gt; v,
-        <span class="prelude-val">None </span>=&gt; F::zero(), <span class="comment">//dummy
-    </span>};
+    <span class="kw">let </span>field_elem = maybe_unsigned.get_value().unwrap_or(
+        <span class="comment">// dummy
+        </span>F::ZERO,
+    );
     <span class="kw">let </span>field_bn = BigUint::from_bytes_le(field_elem.to_repr().as_ref());
     <span class="comment">// Since bit decomposition is expensive, we compute it only once here
     </span><span class="kw">let </span>field_elem_bits =
@@ -10970,7 +10747,7 @@
     g: <span class="kw-2">&amp;</span>GlobalAllocations&lt;F&gt;,
     maybe_u64: <span class="kw-2">&amp;</span>AllocatedNum&lt;F&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;AllocatedNum&lt;F&gt;, SynthesisError&gt; {
-    <span class="kw">let </span>field_elem = maybe_u64.get_value().unwrap_or_else(|| F::zero()); <span class="comment">//
+    <span class="kw">let </span>field_elem = maybe_u64.get_value().unwrap_or(F::ZERO); <span class="comment">//
     </span><span class="kw">let </span>field_bn = BigUint::from_bytes_le(field_elem.to_repr().as_ref());
     <span class="kw">let </span>field_elem_bits = maybe_u64.to_bits_le(<span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="string">&quot;field element bit decomp&quot;</span>))<span class="question-mark">?</span>;
 
@@ -11403,7 +11180,7 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use </span><span class="kw">crate</span>::circuit::circuit_frame::constraints::{popcount, sub};
+    <span class="kw">use </span><span class="kw">crate</span>::circuit::circuit_frame::constraints::{popcount_equal, sub};
     <span class="kw">use </span><span class="kw">crate</span>::eval::{
         empty_sym_env,
         lang::{Coproc, Lang},
@@ -11433,16 +11210,17 @@
             env,
             cont: store.intern_cont_outermost(),
         };
-        <span class="kw">let </span>lang = Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new();
+        <span class="kw">let </span>raw_lang = Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new();
+        <span class="kw">let </span>lang = Arc::new(raw_lang.clone());
         <span class="kw">let </span>(<span class="kw">_</span>, witness) = input.reduce(<span class="kw-2">&amp;mut </span>store, <span class="kw-2">&amp;</span>lang).unwrap();
 
         <span class="kw">let </span>public_params = Groth16Prover::&lt;Bls12, Coproc&lt;Fr&gt;, Fr&gt;::create_groth_params(
             DEFAULT_REDUCTION_COUNT,
-            <span class="kw-2">&amp;</span>lang,
+            lang.clone(),
         )
         .unwrap();
         <span class="kw">let </span>groth_prover =
-            Groth16Prover::&lt;Bls12, Coproc&lt;Fr&gt;, Fr&gt;::new(DEFAULT_REDUCTION_COUNT, lang.clone());
+            Groth16Prover::&lt;Bls12, Coproc&lt;Fr&gt;, Fr&gt;::new(DEFAULT_REDUCTION_COUNT, raw_lang);
         <span class="kw">let </span>groth_params = <span class="kw-2">&amp;</span>public_params.<span class="number">0</span>;
 
         <span class="kw">let </span>vk = <span class="kw-2">&amp;</span>groth_params.vk;
@@ -11455,7 +11233,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>cs_blank = MetricCS::&lt;Fr&gt;::new();
             <span class="kw">let </span>blank_multiframe = MultiFrame::&lt;&lt;Bls12 <span class="kw">as </span>Engine&gt;::Fr, <span class="kw">_</span>, <span class="kw">_</span>, Coproc&lt;Fr&gt;&gt;::blank(
                 DEFAULT_REDUCTION_COUNT,
-                <span class="kw-2">&amp;</span>lang,
+                lang.clone(),
             );
 
             blank_multiframe
@@ -11472,7 +11250,7 @@
                     _p: Default::default(),
                 }],
                 store,
-                <span class="kw-2">&amp;</span>lang,
+                lang.clone(),
             );
 
             <span class="kw">let </span>multiframe = <span class="kw-2">&amp;</span>multiframes[<span class="number">0</span>];
@@ -11486,9 +11264,9 @@
             <span class="macro">assert!</span>(delta == Delta::Equal);
 
             <span class="comment">//println!(&quot;{}&quot;, print_cs(&amp;cs));
-            </span><span class="macro">assert_eq!</span>(<span class="number">12096</span>, cs.num_constraints());
+            </span><span class="macro">assert_eq!</span>(<span class="number">12035</span>, cs.num_constraints());
             <span class="macro">assert_eq!</span>(<span class="number">13</span>, cs.num_inputs());
-            <span class="macro">assert_eq!</span>(<span class="number">11751</span>, cs.aux().len());
+            <span class="macro">assert_eq!</span>(<span class="number">11690</span>, cs.aux().len());
 
             <span class="kw">let </span>public_inputs = multiframe.public_inputs();
             <span class="kw">let </span><span class="kw-2">mut </span>rng = rand::thread_rng();
@@ -11569,7 +11347,7 @@
             cont: store.intern_cont_outermost(),
         };
 
-        <span class="kw">let </span>lang = Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new();
+        <span class="kw">let </span>lang = Arc::new(Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new());
         <span class="kw">let </span>(<span class="kw">_</span>, witness) = input.reduce(<span class="kw-2">&amp;mut </span>store, <span class="kw-2">&amp;</span>lang).unwrap();
         store.hydrate_scalar_cache();
 
@@ -11588,7 +11366,7 @@
                 DEFAULT_REDUCTION_COUNT,
                 <span class="kw-2">&amp;</span>[frame],
                 store,
-                <span class="kw-2">&amp;</span>lang,
+                lang.clone(),
             )[<span class="number">0</span>]
             .clone()
             .synthesize(<span class="kw-2">&amp;mut </span>cs)
@@ -11650,7 +11428,7 @@
             cont: store.intern_cont_outermost(),
         };
 
-        <span class="kw">let </span>lang = Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new();
+        <span class="kw">let </span>lang = Arc::new(Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new());
         <span class="kw">let </span>(<span class="kw">_</span>, witness) = input.reduce(<span class="kw-2">&amp;mut </span>store, <span class="kw-2">&amp;</span>lang).unwrap();
         store.hydrate_scalar_cache();
 
@@ -11669,7 +11447,7 @@
                 DEFAULT_REDUCTION_COUNT,
                 <span class="kw-2">&amp;</span>[frame],
                 store,
-                <span class="kw-2">&amp;</span>lang,
+                lang.clone(),
             )[<span class="number">0</span>]
             .clone()
             .synthesize(<span class="kw-2">&amp;mut </span>cs)
@@ -11731,7 +11509,7 @@
             cont: store.intern_cont_outermost(),
         };
 
-        <span class="kw">let </span>lang = Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new();
+        <span class="kw">let </span>lang = Arc::new(Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new());
         <span class="kw">let </span>(<span class="kw">_</span>, witness) = input.reduce(<span class="kw-2">&amp;mut </span>store, <span class="kw-2">&amp;</span>lang).unwrap();
 
         store.hydrate_scalar_cache();
@@ -11751,7 +11529,7 @@
                 DEFAULT_REDUCTION_COUNT,
                 <span class="kw-2">&amp;</span>[frame],
                 store,
-                <span class="kw-2">&amp;</span>lang,
+                lang.clone(),
             )[<span class="number">0</span>]
             .clone()
             .synthesize(<span class="kw-2">&amp;mut </span>cs)
@@ -11814,7 +11592,7 @@
             cont: store.intern_cont_outermost(),
         };
 
-        <span class="kw">let </span>lang = Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new();
+        <span class="kw">let </span>lang = Arc::new(Lang::&lt;Fr, Coproc&lt;Fr&gt;&gt;::new());
         <span class="kw">let </span>(<span class="kw">_</span>, witness) = input.reduce(<span class="kw-2">&amp;mut </span>store, <span class="kw-2">&amp;</span>lang).unwrap();
 
         store.hydrate_scalar_cache();
@@ -11834,7 +11612,7 @@
                 DEFAULT_REDUCTION_COUNT,
                 <span class="kw-2">&amp;</span>[frame],
                 store,
-                <span class="kw-2">&amp;</span>lang,
+                lang.clone(),
             )[<span class="number">0</span>]
             .clone()
             .synthesize(<span class="kw-2">&amp;mut </span>cs)
@@ -12029,28 +11807,24 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_enforce_popcount() {
         <span class="kw">let </span><span class="kw-2">mut </span>cs = TestConstraintSystem::&lt;Fr&gt;::new();
-        <span class="kw">let </span>s = <span class="kw-2">&amp;mut </span>Store::&lt;Fr&gt;::default();
 
         <span class="kw">for </span>x <span class="kw">in </span><span class="number">0</span>..<span class="number">128 </span>{
-            <span class="kw">let </span>a = s.num(x);
             <span class="kw">let </span>alloc_a =
-                AllocatedPtr::alloc_ptr(<span class="kw-2">&amp;mut </span>cs.namespace(|| x.to_string()), s, || <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span>a)).unwrap();
+                AllocatedNum::alloc(<span class="kw-2">&amp;mut </span>cs.namespace(|| x.to_string()), || <span class="prelude-val">Ok</span>(Fr::from(x)))
+                    .unwrap();
             <span class="kw">let </span>bits = alloc_a
-                .hash()
                 .to_bits_le(<span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;bits_{x}&quot;</span>)))
                 .unwrap();
-            <span class="kw">let </span>popcount_result = s.num(x.count_ones() <span class="kw">as </span>u64);
-            <span class="kw">let </span>alloc_popcount = AllocatedPtr::alloc_ptr(
-                <span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;alloc popcount {x}&quot;</span>)),
-                s,
-                || <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span>popcount_result),
-            )
-            .unwrap();
+            <span class="kw">let </span>popcount_result =
+                AllocatedNum::alloc(<span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;alloc popcount {x}&quot;</span>)), || {
+                    <span class="prelude-val">Ok</span>(Fr::from(x.count_ones() <span class="kw">as </span>u64))
+                })
+                .unwrap();
 
-            popcount(
+            popcount_equal(
                 <span class="kw-2">&amp;mut </span>cs.namespace(|| <span class="macro">format!</span>(<span class="string">&quot;popcount {x}&quot;</span>)),
                 <span class="kw-2">&amp;</span>bits,
-                alloc_popcount.hash(),
+                popcount_result.get_variable(),
             )
             .unwrap();
         }

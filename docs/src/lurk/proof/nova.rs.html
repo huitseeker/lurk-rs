@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/proof/nova.rs`."><title>nova.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.0-nightly (8bdcc62cb 2023-04-20)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-1a524efa7bd4ab32.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../lurk/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/proof/nova.rs`."><title>nova.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-f3501f0f5ae15dfb.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.72.0-nightly (871b59520 2023-05-31)" data-search-js="search-4926e5fc22a5646a.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f0540c1d82cde29b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../lurk/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3606,6 +3606,34 @@
 <a href="#3606" id="3606">3606</a>
 <a href="#3607" id="3607">3607</a>
 <a href="#3608" id="3608">3608</a>
+<a href="#3609" id="3609">3609</a>
+<a href="#3610" id="3610">3610</a>
+<a href="#3611" id="3611">3611</a>
+<a href="#3612" id="3612">3612</a>
+<a href="#3613" id="3613">3613</a>
+<a href="#3614" id="3614">3614</a>
+<a href="#3615" id="3615">3615</a>
+<a href="#3616" id="3616">3616</a>
+<a href="#3617" id="3617">3617</a>
+<a href="#3618" id="3618">3618</a>
+<a href="#3619" id="3619">3619</a>
+<a href="#3620" id="3620">3620</a>
+<a href="#3621" id="3621">3621</a>
+<a href="#3622" id="3622">3622</a>
+<a href="#3623" id="3623">3623</a>
+<a href="#3624" id="3624">3624</a>
+<a href="#3625" id="3625">3625</a>
+<a href="#3626" id="3626">3626</a>
+<a href="#3627" id="3627">3627</a>
+<a href="#3628" id="3628">3628</a>
+<a href="#3629" id="3629">3629</a>
+<a href="#3630" id="3630">3630</a>
+<a href="#3631" id="3631">3631</a>
+<a href="#3632" id="3632">3632</a>
+<a href="#3633" id="3633">3633</a>
+<a href="#3634" id="3634">3634</a>
+<a href="#3635" id="3635">3635</a>
+<a href="#3636" id="3636">3636</a>
 </pre></div><pre class="rust"><code><span class="attr">#![allow(non_snake_case)]
 
 </span><span class="kw">use </span>std::marker::PhantomData;
@@ -3622,6 +3650,7 @@
 };
 <span class="kw">use </span>pasta_curves::{pallas, vesta};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span><span class="kw">crate</span>::circuit::{
     gadgets::{
@@ -3635,7 +3664,8 @@
 <span class="kw">use </span><span class="kw">crate</span>::eval::{lang::Lang, Evaluator, Frame, Witness, IO};
 <span class="kw">use </span><span class="kw">crate</span>::field::LurkField;
 <span class="kw">use </span><span class="kw">crate</span>::proof::{Prover, PublicParameters};
-<span class="kw">use </span><span class="kw">crate</span>::store::{Ptr, Store};
+<span class="kw">use </span><span class="kw">crate</span>::ptr::Ptr;
+<span class="kw">use </span><span class="kw">crate</span>::store::Store;
 
 <span class="doccomment">/// Type alias for G1 group elements using the Pallas curve.
 </span><span class="kw">pub type </span>G1 = pallas::Point;
@@ -3652,15 +3682,10 @@
 <span class="doccomment">/// Type alias for the Evaluation Engine using G2 group elements.
 </span><span class="kw">pub type </span>EE2 = nova::provider::ipa_pc::EvaluationEngine&lt;G2&gt;;
 
-<span class="doccomment">/// Type alias for Nova&#39;s Trivial Compressed Computation Engine using G1 group elements and EE1.
-</span><span class="kw">type </span>CC1 = nova::spartan::spark::TrivialCompComputationEngine&lt;G1, EE1&gt;;
-<span class="doccomment">/// Type alias for Nova&#39;s Trivial Compressed Computation Engine using G2 group elements and EE2.
-</span><span class="kw">type </span>CC2 = nova::spartan::spark::TrivialCompComputationEngine&lt;G2, EE2&gt;;
-
-<span class="doccomment">/// Type alias for the Relaxed R1CS Spartan SNARK using G1 group elements, EE1, and CC1.
-</span><span class="kw">pub type </span>SS1 = nova::spartan::RelaxedR1CSSNARK&lt;G1, EE1, CC1&gt;;
-<span class="doccomment">/// Type alias for the Relaxed R1CS Spartan SNARK using G2 group elements, EE2, and CC2.
-</span><span class="kw">pub type </span>SS2 = nova::spartan::RelaxedR1CSSNARK&lt;G2, EE2, CC2&gt;;
+<span class="doccomment">/// Type alias for the Relaxed R1CS Spartan SNARK using G1 group elements, EE1.
+</span><span class="kw">pub type </span>SS1 = nova::spartan::RelaxedR1CSSNARK&lt;G1, EE1&gt;;
+<span class="doccomment">/// Type alias for the Relaxed R1CS Spartan SNARK using G2 group elements, EE2.
+</span><span class="kw">pub type </span>SS2 = nova::spartan::RelaxedR1CSSNARK&lt;G2, EE2&gt;;
 
 <span class="doccomment">/// Type alias for a MultiFrame with S1 field elements.
 </span><span class="kw">pub type </span>C1&lt;<span class="lifetime">&#39;a</span>, C&gt; = MultiFrame&lt;<span class="lifetime">&#39;a</span>, S1, IO&lt;S1&gt;, Witness&lt;S1&gt;, C&gt;;
@@ -3688,10 +3713,10 @@
 }
 
 <span class="doccomment">/// Generates the public parameters for the Nova proving system.
-</span><span class="kw">pub fn </span>public_params&lt;C: Coprocessor&lt;S1&gt;&gt;(
+</span><span class="kw">pub fn </span>public_params&lt;<span class="lifetime">&#39;a</span>, C: Coprocessor&lt;S1&gt;&gt;(
     num_iters_per_step: usize,
-    lang: <span class="kw-2">&amp;</span>Lang&lt;S1, C&gt;,
-) -&gt; PublicParams&lt;<span class="lifetime">&#39;_</span>, C&gt; {
+    lang: Arc&lt;Lang&lt;S1, C&gt;&gt;,
+) -&gt; PublicParams&lt;<span class="lifetime">&#39;a</span>, C&gt; {
     <span class="kw">let </span>(circuit_primary, circuit_secondary) = C1::circuits(num_iters_per_step, lang);
 
     <span class="kw">let </span>pp = nova::PublicParams::setup(circuit_primary, circuit_secondary);
@@ -3700,7 +3725,7 @@
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, C: Coprocessor&lt;S1&gt;&gt; MultiFrame&lt;<span class="lifetime">&#39;a</span>, S1, IO&lt;S1&gt;, Witness&lt;S1&gt;, C&gt; {
-    <span class="kw">fn </span>circuits(count: usize, lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;S1, C&gt;) -&gt; (C1&lt;<span class="lifetime">&#39;a</span>, C&gt;, C2) {
+    <span class="kw">fn </span>circuits(count: usize, lang: Arc&lt;Lang&lt;S1, C&gt;&gt;) -&gt; (C1&lt;<span class="lifetime">&#39;a</span>, C&gt;, C2) {
         (
             MultiFrame::blank(count, lang),
             TrivialTestCircuit::default(),
@@ -3737,7 +3762,8 @@
 }
 
 <span class="kw">impl</span>&lt;C: Coprocessor&lt;S1&gt;&gt; NovaProver&lt;S1, C&gt; {
-    <span class="kw">fn </span>get_evaluation_frames(
+    <span class="doccomment">/// Evaluates and generates the frames of the computation given the expression, environment, and store
+    </span><span class="kw">pub fn </span>get_evaluation_frames(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         expr: Ptr&lt;S1&gt;,
         env: Ptr&lt;S1&gt;,
@@ -3754,6 +3780,25 @@
         <span class="prelude-val">Ok</span>(frames)
     }
 
+    <span class="doccomment">/// Proves the computation given the public parameters, frames, and store.
+    </span><span class="kw">pub fn </span>prove&lt;<span class="lifetime">&#39;a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+        pp: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PublicParams&lt;<span class="lifetime">&#39;_</span>, C&gt;,
+        frames: Vec&lt;Frame&lt;IO&lt;S1&gt;, Witness&lt;S1&gt;, C&gt;&gt;,
+        store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;S1&gt;,
+        lang: Arc&lt;Lang&lt;S1, C&gt;&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Proof&lt;<span class="lifetime">&#39;_</span>, C&gt;, Vec&lt;S1&gt;, Vec&lt;S1&gt;, usize), ProofError&gt; {
+        <span class="kw">let </span>z0 = frames[<span class="number">0</span>].input.to_vector(store)<span class="question-mark">?</span>;
+        <span class="kw">let </span>zi = frames.last().unwrap().output.to_vector(store)<span class="question-mark">?</span>;
+        <span class="kw">let </span>circuits =
+            MultiFrame::from_frames(<span class="self">self</span>.reduction_count(), <span class="kw-2">&amp;</span>frames, store, lang.clone());
+        <span class="kw">let </span>num_steps = circuits.len();
+        <span class="kw">let </span>proof =
+            Proof::prove_recursively(pp, store, <span class="kw-2">&amp;</span>circuits, <span class="self">self</span>.reduction_count, z0.clone(), lang)<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>((proof, z0, zi, num_steps))
+    }
+
     <span class="doccomment">/// Evaluates and proves the computation given the public parameters, expression, environment, and store.
     </span><span class="kw">pub fn </span>evaluate_and_prove&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
@@ -3762,17 +3807,10 @@
         env: Ptr&lt;S1&gt;,
         store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;S1&gt;,
         limit: usize,
-        lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;S1, C&gt;,
+        lang: Arc&lt;Lang&lt;S1, C&gt;&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(Proof&lt;<span class="lifetime">&#39;_</span>, C&gt;, Vec&lt;S1&gt;, Vec&lt;S1&gt;, usize), ProofError&gt; {
-        <span class="kw">let </span>frames = <span class="self">self</span>.get_evaluation_frames(expr, env, store, limit, lang)<span class="question-mark">?</span>;
-        <span class="kw">let </span>z0 = frames[<span class="number">0</span>].input.to_vector(store)<span class="question-mark">?</span>;
-        <span class="kw">let </span>zi = frames.last().unwrap().output.to_vector(store)<span class="question-mark">?</span>;
-        <span class="kw">let </span>circuits = MultiFrame::from_frames(<span class="self">self</span>.reduction_count(), <span class="kw-2">&amp;</span>frames, store, lang);
-        <span class="kw">let </span>num_steps = circuits.len();
-        <span class="kw">let </span>proof =
-            Proof::prove_recursively(pp, store, <span class="kw-2">&amp;</span>circuits, <span class="self">self</span>.reduction_count, z0.clone(), lang)<span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>((proof, z0, zi, num_steps))
+        <span class="kw">let </span>frames = <span class="self">self</span>.get_evaluation_frames(expr, env, store, limit, <span class="kw-2">&amp;</span>lang)<span class="question-mark">?</span>;
+        <span class="self">self</span>.prove(pp, frames, store, lang)
     }
 }
 
@@ -3845,7 +3883,7 @@
         circuits: <span class="kw-2">&amp;</span>[C1&lt;<span class="lifetime">&#39;a</span>, C&gt;],
         num_iters_per_step: usize,
         z0: Vec&lt;S1&gt;,
-        lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;S1, C&gt;,
+        lang: Arc&lt;Lang&lt;S1, C&gt;&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ProofError&gt; {
         <span class="macro">assert!</span>(!circuits.is_empty());
         <span class="macro">assert_eq!</span>(circuits[<span class="number">0</span>].arity(), z0.len());
@@ -3951,14 +3989,14 @@
 }
 
 <span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
+</span><span class="kw">pub mod </span>tests {
     <span class="kw">use </span><span class="kw">crate</span>::num::Num;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::eval::empty_sym_env;
     <span class="kw">use </span><span class="kw">crate</span>::eval::lang::Coproc;
     <span class="kw">use </span><span class="kw">crate</span>::proof::Provable;
-    <span class="kw">use </span><span class="kw">crate</span>::store::ContPtr;
+    <span class="kw">use </span><span class="kw">crate</span>::ptr::ContPtr;
     <span class="kw">use </span><span class="kw">crate</span>::tag::{Op, Op1, Op2};
 
     <span class="kw">use </span>bellperson::{
@@ -3969,7 +4007,8 @@
 
     <span class="kw">const </span>DEFAULT_REDUCTION_COUNT: usize = <span class="number">5</span>;
     <span class="kw">const </span>REDUCTION_COUNTS_TO_TEST: [usize; <span class="number">3</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>];
-    <span class="kw">fn </span>test_aux&lt;C: Coprocessor&lt;Fr&gt;&gt;(
+    <span class="doccomment">/// fake docs
+    </span><span class="kw">pub fn </span>test_aux&lt;C: Coprocessor&lt;Fr&gt;&gt;(
         s: <span class="kw-2">&amp;mut </span>Store&lt;Fr&gt;,
         expr: <span class="kw-2">&amp;</span>str,
         expected_result: <span class="prelude-ty">Option</span>&lt;Ptr&lt;Fr&gt;&gt;,
@@ -3977,7 +4016,7 @@
         expected_cont: <span class="prelude-ty">Option</span>&lt;ContPtr&lt;Fr&gt;&gt;,
         expected_emitted: <span class="prelude-ty">Option</span>&lt;Vec&lt;Ptr&lt;Fr&gt;&gt;&gt;,
         expected_iterations: usize,
-        lang: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Lang&lt;Fr, C&gt;&gt;,
+        lang: <span class="prelude-ty">Option</span>&lt;Arc&lt;Lang&lt;Fr, C&gt;&gt;&gt;,
     ) {
         <span class="kw">for </span>chunk_size <span class="kw">in </span>REDUCTION_COUNTS_TO_TEST {
             nova_test_full_aux(
@@ -3991,7 +4030,7 @@
                 chunk_size,
                 <span class="bool-val">false</span>,
                 <span class="prelude-val">None</span>,
-                lang,
+                lang.clone(),
             )
         }
     }
@@ -4007,7 +4046,7 @@
         reduction_count: usize,
         check_nova: bool,
         limit: <span class="prelude-ty">Option</span>&lt;usize&gt;,
-        lang: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Lang&lt;Fr, C&gt;&gt;,
+        lang: <span class="prelude-ty">Option</span>&lt;Arc&lt;Lang&lt;Fr, C&gt;&gt;&gt;,
     ) {
         <span class="kw">let </span>expr = s.read(expr).unwrap();
 
@@ -4031,7 +4070,7 @@
             f(l)
         } <span class="kw">else </span>{
             <span class="kw">let </span>lang = Lang::new();
-            f(<span class="kw-2">&amp;</span>lang)
+            f(Arc::new(lang))
         };
     }
 
@@ -4046,18 +4085,18 @@
         reduction_count: usize,
         check_nova: bool,
         limit: <span class="prelude-ty">Option</span>&lt;usize&gt;,
-        lang: <span class="kw-2">&amp;</span>Lang&lt;Fr, C&gt;,
+        lang: Arc&lt;Lang&lt;Fr, C&gt;&gt;,
     ) {
         <span class="kw">let </span>limit = limit.unwrap_or(<span class="number">10000</span>);
 
         <span class="kw">let </span>e = empty_sym_env(s);
 
-        <span class="kw">let </span>nova_prover = NovaProver::&lt;Fr, C&gt;::new(reduction_count, lang.clone());
+        <span class="kw">let </span>nova_prover = NovaProver::&lt;Fr, C&gt;::new(reduction_count, (<span class="kw-2">*</span>lang).clone());
 
         <span class="kw">if </span>check_nova {
-            <span class="kw">let </span>pp = public_params(reduction_count, lang);
+            <span class="kw">let </span>pp = public_params(reduction_count, lang.clone());
             <span class="kw">let </span>(proof, z0, zi, num_steps) = nova_prover
-                .evaluate_and_prove(<span class="kw-2">&amp;</span>pp, expr, empty_sym_env(s), s, limit, <span class="kw-2">&amp;</span>lang)
+                .evaluate_and_prove(<span class="kw-2">&amp;</span>pp, expr, empty_sym_env(s), s, limit, lang.clone())
                 .unwrap();
 
             <span class="kw">let </span>res = proof.verify(<span class="kw-2">&amp;</span>pp, num_steps, z0.clone(), <span class="kw-2">&amp;</span>zi);
@@ -4076,7 +4115,8 @@
             .get_evaluation_frames(expr, e, s, limit, <span class="kw-2">&amp;</span>lang)
             .unwrap();
 
-        <span class="kw">let </span>multiframes = MultiFrame::from_frames(nova_prover.reduction_count(), <span class="kw-2">&amp;</span>frames, s, <span class="kw-2">&amp;</span>lang);
+        <span class="kw">let </span>multiframes =
+            MultiFrame::from_frames(nova_prover.reduction_count(), <span class="kw-2">&amp;</span>frames, s, lang.clone());
         <span class="kw">let </span>len = multiframes.len();
 
         <span class="kw">let </span>adjusted_iterations = nova_prover.expected_total_iterations(expected_iterations);
@@ -7054,7 +7094,7 @@
         <span class="kw">let </span>expr = s.list(<span class="kw-2">&amp;</span>[fun, input]);
         <span class="kw">let </span>res = s.num(<span class="number">10</span>);
         <span class="kw">let </span>terminal = s.get_cont_terminal();
-        <span class="kw">let </span>lang: Lang&lt;Fr, Coproc&lt;Fr&gt;&gt; = Lang::new();
+        <span class="kw">let </span>lang: Arc&lt;Lang&lt;Fr, Coproc&lt;Fr&gt;&gt;&gt; = Arc::new(Lang::new());
 
         nova_test_full_aux2(
             s,
@@ -7067,7 +7107,7 @@
             DEFAULT_REDUCTION_COUNT,
             <span class="bool-val">false</span>,
             <span class="prelude-val">None</span>,
-            <span class="kw-2">&amp;</span>lang,
+            lang,
         );
     }
 
@@ -7184,16 +7224,13 @@
     </span><span class="kw">fn </span>test_dumb_lang() {
         <span class="kw">use </span><span class="kw">crate</span>::coprocessor::test::DumbCoprocessor;
         <span class="kw">use </span><span class="kw">crate</span>::eval::tests::coproc::DumbCoproc;
-        <span class="kw">use </span><span class="kw">crate</span>::sym::Sym;
 
         <span class="kw">let </span>s = <span class="kw-2">&amp;mut </span>Store::&lt;Fr&gt;::new();
 
-        <span class="kw">let </span><span class="kw-2">mut </span>lang = Lang::&lt;Fr, DumbCoproc&lt;Fr&gt;&gt;::new();
-        <span class="kw">let </span>name = Sym::new(<span class="string">&quot;.cproc.dumb&quot;</span>.to_string());
-        <span class="kw">let </span>dumb = DumbCoprocessor::new();
-        <span class="kw">let </span>coproc = DumbCoproc::DC(dumb);
-
-        lang.add_coprocessor(name, coproc, s);
+        <span class="kw">let </span>lang = Lang::&lt;Fr, DumbCoproc&lt;Fr&gt;&gt;::new_with_bindings(
+            s,
+            <span class="macro">vec!</span>[(<span class="string">&quot;.cproc.dumb&quot;</span>, DumbCoprocessor::new().into())],
+        );
 
         <span class="comment">// 9^2 + 8 = 89
         </span><span class="kw">let </span>expr = <span class="string">&quot;(.cproc.dumb 9 8)&quot;</span>;
@@ -7207,11 +7244,30 @@
 
         <span class="kw">let </span>res = s.num(<span class="number">89</span>);
         <span class="kw">let </span>error = s.get_cont_error();
+        <span class="kw">let </span>lang = Arc::new(lang);
 
-        test_aux(s, <span class="kw-2">&amp;</span>expr, <span class="prelude-val">Some</span>(res), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="number">2</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>lang));
-        test_aux(s, <span class="kw-2">&amp;</span>expr2, <span class="prelude-val">Some</span>(res), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="number">4</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>lang));
-        test_aux(s, <span class="kw-2">&amp;</span>expr3, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(error), <span class="prelude-val">None</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>lang));
-        test_aux(s, <span class="kw-2">&amp;</span>expr4, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(error), <span class="prelude-val">None</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>lang));
+        test_aux(s, <span class="kw-2">&amp;</span>expr, <span class="prelude-val">Some</span>(res), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(lang.clone()));
+        test_aux(
+            s,
+            <span class="kw-2">&amp;</span>expr2,
+            <span class="prelude-val">Some</span>(res),
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">None</span>,
+            <span class="number">3</span>,
+            <span class="prelude-val">Some</span>(lang.clone()),
+        );
+        test_aux(
+            s,
+            <span class="kw-2">&amp;</span>expr3,
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(error),
+            <span class="prelude-val">None</span>,
+            <span class="number">1</span>,
+            <span class="prelude-val">Some</span>(lang.clone()),
+        );
+        test_aux(s, <span class="kw-2">&amp;</span>expr4, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(error), <span class="prelude-val">None</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(lang));
     }
 }
 </code></pre></div></section></main></body></html>

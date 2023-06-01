@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":["ToInputs"]};
+window.SIDEBAR_ITEMS = {"mod":["circuit_frame","gadgets"],"trait":["ToInputs"]};
