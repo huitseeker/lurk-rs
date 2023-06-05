@@ -120,3 +120,7 @@ harness = false
 [[bench]]
 name = "public_params"
 harness = false
+
+[patch.crates-io]
+neptune = { git = "https://github.com/winston-h-zhang/neptune", branch = "hz/unsafe_serde"}
+nova = { git = "https://github.com/winston-h-zhang/nova", branch = "hz/unsafe_serde", package = "nova-snark"}
