@@ -9,6 +9,8 @@ use crate::field::LurkField;
 use crate::ptr::{ContPtr, Ptr};
 use crate::store::Store;
 
+pub mod trie;
+
 /// `Coprocessor` is a trait that represents a generalized interface for coprocessors.
 /// Coprocessors augment the Lurk circuit and evaluation with additional built-in functionality.
 /// This trait generalizes over functionality needed in the evaluator, the sibling `CoCircuit` trait,
@@ -145,9 +147,8 @@ pub(crate) mod test {
             let mut result = *a_num;
             result *= *a_num;
             result += *b_num;
-            let x = s.intern_num(result);
 
-            return x;
+            s.intern_num(result)
         }
 
         fn has_circuit(&self) -> bool {

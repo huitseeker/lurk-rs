@@ -132,6 +132,7 @@ impl<'a, C: Coprocessor<S1>> MultiFrame<'a, S1, IO<S1>, Witness<S1>, C> {
 }
 
 /// A struct for the Nova prover that operates on field elements of type `F`.
+#[derive(Debug)]
 pub struct NovaProver<F: LurkField, C: Coprocessor<F>> {
     // `reduction_count` specifies the number of small-step reductions are performed in each recursive step.
     reduction_count: usize,
@@ -189,7 +190,7 @@ impl<C: Coprocessor<S1>> NovaProver<S1, C> {
         let z0 = frames[0].input.to_vector(store)?;
         let zi = frames.last().unwrap().output.to_vector(store)?;
         let circuits =
-            MultiFrame::from_frames(self.reduction_count(), &frames, store, lang.clone());
+            MultiFrame::from_frames(self.reduction_count(), &frames, store, &lang);
 
         let num_steps = circuits.len();
         let proof =
@@ -220,8 +221,8 @@ impl<'a, F: LurkField, C: Coprocessor<F>> MultiFrame<'a, F, IO<F>, Witness<F>, C
         let input = self.input.unwrap();
 
         use crate::tag::Tag;
-        let expr = s.get_expr_hash(&input.expr).unwrap();
-        let env = s.get_expr_hash(&input.env).unwrap();
+        let expr = s.hash_expr(&input.expr).unwrap();
+        let env = s.hash_expr(&input.env).unwrap();
         let cont = s.hash_cont(&input.cont).unwrap();
 
         let z_scalar = vec![
@@ -441,7 +442,8 @@ impl<'a: 'b, 'b, C: Coprocessor<S1>> Proof<'a, C> {
                     z0_primary.clone(),
                     z0_secondary.clone(),
                 );
-                assert!(res.is_ok());
+                res.clone().unwrap();
+//                assert!(res.is_ok());
                 recursive_snark = Some(res?);
             }
         }
@@ -639,8 +641,7 @@ pub mod tests {
             .get_evaluation_frames(expr, e, s, limit, &lang)
             .unwrap();
 
-        let multiframes =
-            MultiFrame::from_frames(nova_prover.reduction_count(), &frames, s, lang.clone());
+        let multiframes = MultiFrame::from_frames(nova_prover.reduction_count(), &frames, s, &lang);
         let len = multiframes.len();
 
         let adjusted_iterations = nova_prover.expected_total_iterations(expected_iterations);
@@ -1026,7 +1027,7 @@ pub mod tests {
 
     fn test_prove_unop_regression_aux(chunk_count: usize) {
         let s = &mut Store::<Fr>::default();
-        let expected = s.sym("t");
+        let expected = s.lurk_sym("t");
         let terminal = s.get_cont_terminal();
         nova_test_full_aux::<Coproc<Fr>>(
             s,
@@ -1504,6 +1505,22 @@ pub mod tests {
             Some(error),
             None,
             1,
+            None,
+        );
+    }
+
+    #[test]
+    fn test_prove_lambda_empty_error() {
+        let s = &mut Store::<Fr>::default();
+        let error = s.get_cont_error();
+        test_aux::<Coproc<Fr>>(
+            s,
+            "((lambda (x)) 0)",
+            None,
+            None,
+            Some(error),
+            None,
+            3,
             None,
         );
     }
@@ -2564,7 +2581,7 @@ pub mod tests {
     #[test]
     fn test_prove_str_cdr_empty() {
         let s = &mut Store::<Fr>::default();
-        let expected_empty_str = s.intern_str("");
+        let expected_empty_str = s.intern_string("");
         let terminal = s.get_cont_terminal();
         test_aux::<Coproc<Fr>>(
             s,
@@ -2625,7 +2642,7 @@ pub mod tests {
         let terminal = s.get_cont_terminal();
         test_aux::<Coproc<Fr>>(
             s,
-            r#"(car NIL)"#,
+            r#"(car nil)"#,
             Some(expected),
             None,
             Some(terminal),
@@ -2642,7 +2659,7 @@ pub mod tests {
         let terminal = s.get_cont_terminal();
         test_aux::<Coproc<Fr>>(
             s,
-            r#"(cdr NIL)"#,
+            r#"(cdr nil)"#,
             Some(expected),
             None,
             Some(terminal),
@@ -3019,7 +3036,7 @@ pub mod tests {
         let apple = s.read(r#" "apple" "#).unwrap();
         let a_pple = s.read(r#" (#\a . "pple") "#).unwrap();
         let pple = s.read(r#" "pple" "#).unwrap();
-        let empty = s.intern_str("");
+        let empty = s.intern_string("");
         let nil = s.nil();
         let terminal = s.get_cont_terminal();
         let error = s.get_cont_error();
@@ -3276,7 +3293,7 @@ pub mod tests {
         let expr = ":asdf";
         let expr2 = "(eq :asdf :asdf)";
         let expr3 = "(eq :asdf 'asdf)";
-        let res = s.key("ASDF");
+        let res = s.key("asdf");
         let res2 = s.get_t();
         let res3 = s.get_nil();
 
@@ -3562,7 +3579,7 @@ pub mod tests {
         let expr4 = "(u64 (+ 1 1))";
         let res = s.intern_num(1);
         let res2 = s.intern_num(2);
-        let res3 = s.get_u64(2);
+        let res3 = s.intern_u64(2);
         let terminal = s.get_cont_terminal();
 
         test_aux::<Coproc<Fr>>(s, expr, Some(res), None, Some(terminal), None, 3, None);
@@ -3632,8 +3649,8 @@ pub mod tests {
     fn test_prove_call_literal_fun() {
         let s = &mut Store::<Fr>::default();
         let empty_env = s.get_nil();
-        let arg = s.sym("X");
-        let body = s.read("((+ X 1))").unwrap();
+        let arg = s.sym("x");
+        let body = s.read("((+ x 1))").unwrap();
         let fun = s.intern_fun(arg, body, empty_env);
         let input = s.num(9);
         let expr = s.list(&[fun, input]);
@@ -3723,9 +3740,9 @@ pub mod tests {
         let error = s.get_cont_error();
 
         let hash_num = |s: &mut Store<Fr>, name| {
-            let sym = s.sym(name);
-            let scalar_ptr = s.hash_expr(&sym).unwrap();
-            let hash = *scalar_ptr.value();
+            let sym = s.lurk_sym(name);
+            let z_ptr = s.hash_expr(&sym).unwrap();
+            let hash = *z_ptr.value();
             Num::Scalar(hash)
         };
         {
@@ -3769,13 +3786,16 @@ pub mod tests {
     fn test_dumb_lang() {
         use crate::coprocessor::test::DumbCoprocessor;
         use crate::eval::tests::coproc::DumbCoproc;
+        use crate::symbol::Symbol;
 
         let s = &mut Store::<Fr>::new();
 
-        let lang = Lang::<Fr, DumbCoproc<Fr>>::new_with_bindings(
-            s,
-            vec![(".cproc.dumb", DumbCoprocessor::new().into())],
-        );
+        let mut lang = Lang::<Fr, DumbCoproc<Fr>>::new();
+        let name = Symbol::sym(vec!["cproc".into(), "dumb".into()]);
+        let dumb = DumbCoprocessor::new();
+        let coproc = DumbCoproc::DC(dumb);
+
+        lang.add_coprocessor(name, coproc, s);
 
         // 9^2 + 8 = 89
         let expr = "(.cproc.dumb 9 8)";
@@ -3791,20 +3811,11 @@ pub mod tests {
         let error = s.get_cont_error();
         let lang = Arc::new(lang);
 
-        test_aux(s, &expr, Some(res), None, None, None, 1, Some(lang.clone()));
+        test_aux(s, expr, Some(res), None, None, None, 1, Some(lang.clone()));
+        test_aux(s, expr2, Some(res), None, None, None, 3, Some(lang.clone()));
         test_aux(
             s,
-            &expr2,
-            Some(res),
-            None,
-            None,
-            None,
-            3,
-            Some(lang.clone()),
-        );
-        test_aux(
-            s,
-            &expr3,
+            expr3,
             None,
             None,
             Some(error),
@@ -3812,6 +3823,74 @@ pub mod tests {
             1,
             Some(lang.clone()),
         );
-        test_aux(s, &expr4, None, None, Some(error), None, 1, Some(lang));
+        test_aux(s, expr4, None, None, Some(error), None, 1, Some(lang));
+    }
+
+    // This is related to issue #426
+    #[test]
+    fn test_prove_lambda_body_nil() {
+        let s = &mut Store::<Fr>::default();
+        let expected = s.nil();
+        let terminal = s.get_cont_terminal();
+        test_aux::<Coproc<Fr>>(
+            s,
+            "((lambda (x) nil) 0)",
+            Some(expected),
+            None,
+            Some(terminal),
+            None,
+            4,
+            None,
+        );
+    }
+
+    // The following 3 tests are related to issue #424
+    #[test]
+    fn test_letrec_let_nesting() {
+        let s = &mut Store::<Fr>::default();
+        let expected = s.num(2);
+        let terminal = s.get_cont_terminal();
+        test_aux::<Coproc<Fr>>(
+            s,
+            "(letrec ((x (let ((z 0)) 1))) 2)",
+            Some(expected),
+            None,
+            Some(terminal),
+            None,
+            6,
+            None,
+        );
+    }
+    #[test]
+    fn test_let_sequencing() {
+        let s = &mut Store::<Fr>::default();
+        let expected = s.num(1);
+        let terminal = s.get_cont_terminal();
+        test_aux::<Coproc<Fr>>(
+            s,
+            "(let ((x 0) (y x)) 1)",
+            Some(expected),
+            None,
+            Some(terminal),
+            None,
+            5,
+            None,
+        );
+    }
+    #[test]
+    fn test_letrec_sequencing() {
+        let s = &mut Store::<Fr>::default();
+        let expected = s.num(3);
+        let terminal = s.get_cont_terminal();
+        test_aux::<Coproc<Fr>>(
+            s,
+            "(letrec ((x 0) (y (letrec ((inner 1)) 2))) 3)",
+            Some(expected),
+            None,
+            Some(terminal),
+            None,
+            8,
+            None,
+        );
     }
 }

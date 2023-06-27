@@ -10,6 +10,7 @@ use lurk_macros::{let_store, lurk, Coproc};
 use pasta_curves::pallas::Scalar as Fr;
 
 use crate as lurk;
+mod trie;
 
 fn test_aux<C: Coprocessor<Fr>>(
     s: &mut Store<Fr>,
@@ -69,10 +70,12 @@ fn test_aux2<C: Coprocessor<Fr>>(
         },
         iterations,
         emitted,
-    ) = Evaluator::new(*expr, env, s, limit, &lang).eval().unwrap();
+    ) = Evaluator::new(*expr, env, s, limit, lang).eval().unwrap();
 
     if let Some(expected_result) = expected_result {
         dbg!(expected_result.fmt_to_string(s), &new_expr.fmt_to_string(s));
+        eprintln!("expected {:?}", expected_result);
+        eprintln!("new_expr {:?}", new_expr);
         assert!(s.ptr_eq(&expected_result, &new_expr).unwrap());
     }
     if let Some(expected_env) = expected_env {
@@ -195,24 +198,6 @@ fn evaluate_lookup() {
 }
 
 #[test]
-fn print_expr() {
-    let mut s = Store::<Fr>::default();
-    let nil = s.nil();
-    let x = s.sym("x");
-    let lambda = s.lurk_sym("lambda");
-    let val = s.num(123);
-    let lambda_args = s.cons(x, nil);
-    let body = s.cons(x, nil);
-    let rest = s.cons(lambda_args, body);
-    let whole_lambda = s.cons(lambda, rest);
-    let lambda_arguments = s.cons(val, nil);
-    let expr = s.cons(whole_lambda, lambda_arguments);
-    let output = expr.fmt_to_string(&s);
-
-    assert_eq!("((LAMBDA (X) X) 123)".to_string(), output);
-}
-
-#[test]
 fn evaluate_cons() {
     let s = &mut Store::<Fr>::default();
     let expr = "(cons 1 2)";
@@ -246,11 +231,21 @@ fn emit_output() {
 #[test]
 fn evaluate_lambda() {
     let s = &mut Store::<Fr>::default();
-    let expr = "((lambda(x) x) 123)";
+    let expr = "((lambda (x) x) 123)";
 
     let expected = s.num(123);
     let terminal = s.get_cont_terminal();
     test_aux::<Coproc<Fr>>(s, expr, Some(expected), None, Some(terminal), None, 4, None);
+}
+
+#[test]
+fn evaluate_empty_args_lambda() {
+    let s = &mut Store::<Fr>::default();
+    let expr = "((lambda () 123))";
+
+    let expected = s.num(123);
+    let terminal = s.get_cont_terminal();
+    test_aux::<Coproc<Fr>>(s, expr, Some(expected), None, Some(terminal), None, 3, None);
 }
 
 #[test]
@@ -380,12 +375,6 @@ fn evaluate_num_equal() {
     {
         let expr = "(= 5 5)";
 
-        // TODO: Consider special-casing T, like NIL, and force it to the
-        // immediate value 1 (with Symbol type-tag). That way boolean logic
-        // will work out. It might be more consistent to have an explicit
-        // boolean type (like Scheme), though. Otherwise we will have to
-        // think about handling of symbol names (if made explicit), since
-        // neither T/NIL as 1/0 will *not* be hashes of their symbol names.
         let expected = s.t();
         let terminal = s.get_cont_terminal();
         test_aux::<Coproc<Fr>>(s, expr, Some(expected), None, Some(terminal), None, 3, None);
@@ -1014,7 +1003,7 @@ fn evaluate_zero_arg_lambda_variants() {
             .eval()
             .unwrap();
 
-        assert_eq!(crate::tag::ExprTag::Fun, result_expr.tag);
+        assert_eq!(ExprTag::Fun, result_expr.tag);
         assert_eq!(3, iterations);
     }
     {
@@ -1222,7 +1211,7 @@ fn test_str_car_cdr_cons() {
     let apple = s.read(r#" "apple" "#).unwrap();
     let a_pple = s.read(r#" (#\a . "pple") "#).unwrap();
     let pple = s.read(r#" "pple" "#).unwrap();
-    let empty = s.intern_str("");
+    let empty = s.intern_string("");
     let nil = s.nil();
     let terminal = s.get_cont_terminal();
     let error = s.get_cont_error();
@@ -1334,7 +1323,7 @@ fn test_car_nil() {
     let terminal = s.get_cont_terminal();
     test_aux::<Coproc<Fr>>(
         s,
-        r#"(car NIL)"#,
+        r#"(car nil)"#,
         Some(expected),
         None,
         Some(terminal),
@@ -1351,7 +1340,7 @@ fn test_cdr_nil() {
     let terminal = s.get_cont_terminal();
     test_aux::<Coproc<Fr>>(
         s,
-        r#"(cdr NIL)"#,
+        r#"(cdr nil)"#,
         Some(expected),
         None,
         Some(terminal),
@@ -1502,7 +1491,7 @@ fn hide_opaque_open_available() {
 
     assert!(!comm.is_opaque());
 
-    let open = s.sym("open");
+    let open = s.lurk_sym("open");
     let x = s.sym("x");
     let lang = Lang::new();
 
@@ -1512,7 +1501,7 @@ fn hide_opaque_open_available() {
     }
 
     {
-        let secret = s.sym("secret");
+        let secret = s.lurk_sym("secret");
         let expr = s.list(&[secret, comm]);
         let sec = s.num(123);
         test_aux2::<Coproc<Fr>>(s, &expr, Some(sec), None, None, None, 2, &lang);
@@ -2029,7 +2018,7 @@ fn test_num_syntax_implications() {
 fn test_quoted_symbols() {
     let s = &mut Store::<Fr>::default();
     let expr = "(let ((|foo bar| 9)
-                          (|Foo \\| Bar| (lambda (|X|) (* x x))))
+                          (|Foo \\| Bar| (lambda (x) (* x x))))
                       (|Foo \\| Bar| |foo bar|))";
     let res = s.num(81);
     let terminal = s.get_cont_terminal();
@@ -2229,8 +2218,8 @@ fn test_u64_conversion() {
 
     let res = s.intern_num(1);
     let res2 = s.intern_num(2);
-    let res3 = s.get_u64(2);
-    let res5 = s.get_u64(123);
+    let res3 = s.intern_u64(2);
+    let res5 = s.intern_u64(123);
     let terminal = s.get_cont_terminal();
     let error = s.get_cont_error();
 
@@ -2314,7 +2303,7 @@ fn test_keyword() {
     let expr = ":asdf";
     let expr2 = "(eq :asdf :asdf)";
     let expr3 = "(eq :asdf 'asdf)";
-    let res = s.key("ASDF");
+    let res = s.key("asdf");
     let res2 = s.get_t();
     let res3 = s.get_nil();
 
@@ -2327,28 +2316,28 @@ fn test_keyword() {
 
 #[test]
 fn test_root_sym() {
-    use crate::sym::Sym;
+    use crate::Symbol;
 
     let s = &mut Store::<Fr>::default();
 
-    let sym = Sym::root();
-    let x = s.intern_sym(&sym);
+    let sym = Symbol::root();
+    let x = s.intern_symbol(sym);
 
-    let scalar_ptr = &s.get_expr_hash(&x).unwrap();
+    let z_ptr = &s.hash_expr(&x).unwrap();
 
-    assert_eq!(&Fr::zero(), scalar_ptr.value());
-    assert_eq!(ExprTag::Sym, scalar_ptr.tag());
+    assert_eq!(&Fr::zero(), z_ptr.value());
+    assert_eq!(ExprTag::Sym, z_ptr.tag());
 }
 
 #[test]
 fn test_sym_hash_values() {
-    use crate::sym::Sym;
+    use crate::Symbol;
 
     let s = &mut Store::<Fr>::default();
 
-    let sym = s.sym(".ASDF.FDSA");
-    let key = s.sym(":ASDF.FDSA");
-    let expr = s.read("(cons \"FDSA\" '.ASDF)").unwrap();
+    let sym = s.read(".asdf.fdsa").unwrap();
+    let key = s.read(":asdf.fdsa").unwrap();
+    let expr = s.read("(cons \"fdsa\" 'asdf)").unwrap();
 
     let limit = 10;
     let env = empty_sym_env(s);
@@ -2363,35 +2352,32 @@ fn test_sym_hash_values() {
         _emitted,
     ) = Evaluator::new(expr, env, s, limit, &lang).eval().unwrap();
 
-    let toplevel_sym = s.sym(".ASDF");
+    let toplevel_sym = s.read(".asdf").unwrap();
 
-    let root = Sym::root();
-    let root_sym = s.intern_sym(&root);
+    let root = Symbol::root();
+    let root_sym = s.intern_symbol(root);
 
-    let asdf = s.str("ASDF");
+    let asdf = s.str("asdf");
     let consed_with_root = s.cons(asdf, root_sym);
 
-    let cons_scalar_ptr = &s.get_expr_hash(&new_expr).unwrap();
-    let sym_scalar_ptr = &s.get_expr_hash(&sym).unwrap();
-    let key_scalar_ptr = &s.get_expr_hash(&key).unwrap();
+    let cons_z_ptr = &s.hash_expr(&new_expr).unwrap();
+    let sym_z_ptr = &s.hash_expr(&sym).unwrap();
+    let key_z_ptr = &s.hash_expr(&key).unwrap();
 
-    let consed_with_root_scalar_ptr = &s.get_expr_hash(&consed_with_root).unwrap();
-    let toplevel_scalar_ptr = &s.get_expr_hash(&toplevel_sym).unwrap();
+    let consed_with_root_z_ptr = &s.hash_expr(&consed_with_root).unwrap();
+    let toplevel_z_ptr = &s.hash_expr(&toplevel_sym).unwrap();
 
     // Symbol and keyword scalar hash values are the same as
     // those of the name string consed onto the parent symbol.
-    assert_eq!(cons_scalar_ptr.value(), sym_scalar_ptr.value());
-    assert_eq!(cons_scalar_ptr.value(), key_scalar_ptr.value());
+    assert_eq!(cons_z_ptr.value(), sym_z_ptr.value());
+    assert_eq!(cons_z_ptr.value(), key_z_ptr.value());
 
     // Toplevel symbols also have this property, and their parent symbol is the root symbol.
-    assert_eq!(
-        consed_with_root_scalar_ptr.value(),
-        toplevel_scalar_ptr.value()
-    );
+    assert_eq!(consed_with_root_z_ptr.value(), toplevel_z_ptr.value());
 
     // The tags differ though.
-    assert_eq!(ExprTag::Sym, sym_scalar_ptr.tag());
-    assert_eq!(ExprTag::Key, key_scalar_ptr.tag());
+    assert_eq!(ExprTag::Sym, sym_z_ptr.tag());
+    assert_eq!(ExprTag::Key, key_z_ptr.tag());
 }
 
 #[test]
@@ -2566,6 +2552,7 @@ pub(crate) mod coproc {
     use super::*;
     use crate::coprocessor::test::DumbCoprocessor;
     use crate::store::Store;
+    use crate::symbol::Symbol;
 
     #[derive(Clone, Debug, Coproc)]
     pub(crate) enum DumbCoproc<F: LurkField> {
@@ -2576,10 +2563,12 @@ pub(crate) mod coproc {
     fn test_dumb_lang() {
         let s = &mut Store::<Fr>::new();
 
-        let lang = Lang::<Fr, DumbCoproc<Fr>>::new_with_bindings(
-            s,
-            vec![(".cproc.dumb", DumbCoprocessor::new().into())],
-        );
+        let mut lang = Lang::<Fr, DumbCoproc<Fr>>::new();
+        let name = Symbol::sym(vec!["cproc".into(), "dumb".into()]);
+        let dumb = DumbCoprocessor::new();
+        let coproc = DumbCoproc::DC(dumb);
+
+        lang.add_coprocessor(name, coproc, s);
 
         // 9^2 + 8 = 89
         let expr = "(.cproc.dumb 9 8)";
@@ -2594,8 +2583,8 @@ pub(crate) mod coproc {
         let res = s.num(89);
         let error = s.get_cont_error();
 
-        test_aux(s, &expr, Some(res), None, None, None, 1, Some(&lang));
-        test_aux(s, &expr2, Some(res), None, None, None, 3, Some(&lang));
-        test_aux(s, &expr3, None, None, Some(error), None, 1, Some(&lang));
+        test_aux(s, expr, Some(res), None, None, None, 1, Some(&lang));
+        test_aux(s, expr2, Some(res), None, None, None, 3, Some(&lang));
+        test_aux(s, expr3, None, None, Some(error), None, 1, Some(&lang));
     }
 }

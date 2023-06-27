@@ -145,8 +145,7 @@ impl<C: Coprocessor<Scalar>> Groth16Prover<Bls12, C, Scalar> {
         let frames = Evaluator::generate_frames(expr, env, store, limit, padding_predicate, &lang)?;
         store.hydrate_scalar_cache();
 
-        let multiframes =
-            MultiFrame::from_frames(self.reduction_count(), &frames, store, lang.clone());
+        let multiframes = MultiFrame::from_frames(self.reduction_count(), &frames, store, &lang);
         let mut proofs = Vec::with_capacity(multiframes.len());
         let mut statements = Vec::with_capacity(multiframes.len());
 
@@ -408,7 +407,7 @@ mod tests {
             s.hydrate_scalar_cache();
 
             let multi_frames =
-                MultiFrame::from_frames(DEFAULT_REDUCTION_COUNT, &frames, s, lang_rc.clone());
+                MultiFrame::from_frames(DEFAULT_REDUCTION_COUNT, &frames, s, &lang_rc);
 
             let cs = groth_prover.outer_synthesize(&multi_frames).unwrap();
 
@@ -655,8 +654,8 @@ mod tests {
 
         let fun = evaled.expr;
 
-        let cdr = s.sym("cdr");
-        let quote = s.sym("quote");
+        let cdr = s.lurk_sym("cdr");
+        let quote = s.lurk_sym("quote");
 
         let zero = s.num(0);
         let five = s.num(5);

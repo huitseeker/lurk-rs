@@ -118,7 +118,7 @@ impl<
         count: usize,
         frames: &[Frame<IO<F>, Witness<F>, C>],
         store: &'a Store<F>,
-        lang: Arc<Lang<F, C>>,
+        lang: &Arc<Lang<F, C>>,
     ) -> Vec<Self> {
         // `count` is the number of `Frames` to include per `MultiFrame`.
         let total_frames = frames.len();
@@ -1371,8 +1371,8 @@ fn reduce_sym<F: LurkField, CS: ConstraintSystem<F>>(
         &with_cons_binding_unmatched
     )?;
 
-    let output_expr_should_be_val = with_sym_binding_matched.clone();
-    let output_expr_should_be_val_to_use = with_cons_binding_matched.clone();
+    let output_expr_should_be_val = &with_sym_binding_matched;
+    let output_expr_should_be_val_to_use = &with_cons_binding_matched;
 
     // env
     let output_env_should_be_env = or!(
@@ -1409,10 +1409,10 @@ fn reduce_sym<F: LurkField, CS: ConstraintSystem<F>>(
 
     // expr
     implies!(cs, &output_expr_should_be_expr, &output_expr_is_expr);
-    implies!(cs, &output_expr_should_be_val, &output_expr_is_val);
+    implies!(cs, output_expr_should_be_val, &output_expr_is_val);
     implies!(
         cs,
-        &output_expr_should_be_val_to_use,
+        output_expr_should_be_val_to_use,
         &output_expr_is_val_to_use
     );
     implies!(cs, &output_cont_should_be_error, &output_expr_is_expr);
@@ -1580,13 +1580,13 @@ fn reduce_cons<F: LurkField, CS: ConstraintSystem<F>, C: Coprocessor<F>>(
 
     let mut head_is_coprocessor_bools = Vec::with_capacity(lang.coprocessors().len());
 
-    for (sym, (coproc, scalar_ptr)) in lang.coprocessors().iter() {
+    for (sym, (coproc, z_ptr)) in lang.coprocessors().iter() {
         if !coproc.has_circuit() {
             continue;
         };
-        let cs = &mut cs.namespace(|| format!("head is {}", sym.full_name()));
+        let cs = &mut cs.namespace(|| format!("head is {}", sym));
 
-        let allocated_boolean = head.alloc_hash_equal(cs, *scalar_ptr.value())?;
+        let allocated_boolean = head.alloc_hash_equal(cs, *z_ptr.value())?;
 
         head_is_coprocessor_bools.push(allocated_boolean);
     }
@@ -2806,12 +2806,12 @@ fn reduce_cons<F: LurkField, CS: ConstraintSystem<F>, C: Coprocessor<F>>(
                 &rest,
             )?;
 
-            for (sym, (coproc, scalar_ptr)) in lang.coprocessors().iter() {
+            for (sym, (coproc, z_ptr)) in lang.coprocessors().iter() {
                 if !coproc.has_circuit() {
                     continue;
                 };
 
-                let cs = &mut cs.namespace(|| format!("{} coprocessor", sym.full_name()));
+                let cs = &mut cs.namespace(|| format!("{} coprocessor", sym));
 
                 let arity = coproc.arity();
 
@@ -2830,7 +2830,7 @@ fn reduce_cons<F: LurkField, CS: ConstraintSystem<F>, C: Coprocessor<F>>(
                     pick_cont_ptr!(cs, &arity_is_correct, &result_cont, &g.error_ptr_cont)?;
 
                 // We can't just call `results.add_clauses_cons` here because of lifetime issues.
-                coprocessor_results.push((scalar_ptr, new_expr, new_env, new_cont));
+                coprocessor_results.push((z_ptr, new_expr, new_env, new_cont));
             }
         }
     }
@@ -3690,6 +3690,8 @@ fn apply_continuation<F: LurkField, CS: ConstraintSystem<F>>(
             let cont_is_call2_and_not_dummy_and_not_dummy_args =
                 and!(cs, &cont_is_call2_and_not_dummy, &args_is_not_dummy)?;
 
+            let body_t_is_nil = body_t.is_nil(&mut cs.namespace(|| "body_t_is_nil"), g)?;
+
             let (body_form, end) = car_cdr_named(
                 &mut cs.namespace(|| "body_form"),
                 g,
@@ -3700,9 +3702,8 @@ fn apply_continuation<F: LurkField, CS: ConstraintSystem<F>>(
                 store,
             )?;
 
-            let body_form_is_nil = body_form.is_nil(&mut cs.namespace(|| "body_form_is_nil"), g)?;
             let end_is_nil = end.is_nil(&mut cs.namespace(|| "end_is_nil"), g)?;
-            let body_is_well_formed = and!(cs, &body_form_is_nil.not(), &end_is_nil)?;
+            let body_is_well_formed = and!(cs, &body_t_is_nil.not(), &end_is_nil)?;
 
             let extend_not_dummy = and!(
                 cs,
@@ -3939,8 +3940,8 @@ fn apply_continuation<F: LurkField, CS: ConstraintSystem<F>>(
         let args_equal_ptr = AllocatedPtr::pick_const(
             &mut cs.namespace(|| "args_equal_ptr"),
             &args_equal,
-            &c.t.scalar_ptr(),
-            &c.nil.scalar_ptr(),
+            &c.t.z_ptr(),
+            &c.nil.z_ptr(),
         )?;
 
         let not_dummy = cont.alloc_tag_equal(
@@ -4413,12 +4414,8 @@ fn apply_continuation<F: LurkField, CS: ConstraintSystem<F>>(
 
         let cont_is_let =
             cont.alloc_tag_equal(&mut cs.namespace(|| "cont_is_let"), ContTag::Let.to_field())?;
-        let let_cont_is_let = let_cont.alloc_tag_equal(
-            &mut cs.namespace(|| "let_cont_is_let"),
-            ContTag::Let.to_field(),
-        )?;
 
-        let extended_env_not_dummy = and!(cs, &let_cont_is_let, not_dummy, &cont_is_let)?;
+        let extended_env_not_dummy = and!(cs, not_dummy, &cont_is_let)?;
 
         let extended_env = extend_named(
             &mut cs.namespace(|| "extend env"),
@@ -4426,7 +4423,7 @@ fn apply_continuation<F: LurkField, CS: ConstraintSystem<F>>(
             env,
             &var,
             result,
-            ConsName::Env,
+            ConsName::ClosedEnv,
             allocated_cons_witness,
             &extended_env_not_dummy,
         )?;
@@ -4464,12 +4461,12 @@ fn apply_continuation<F: LurkField, CS: ConstraintSystem<F>>(
         let body = AllocatedPtr::by_index(1, &continuation_components);
         let letrec_cont = AllocatedContPtr::by_index(3, &continuation_components);
 
-        let letrec_cont_is_letrec_cont = letrec_cont.alloc_tag_equal(
-            &mut cs.namespace(|| "letrec_cont_is_letrec_cont"),
+        let cont_is_letrec = cont.alloc_tag_equal(
+            &mut cs.namespace(|| "cont_is_letrec"),
             ContTag::LetRec.to_field(),
         )?;
 
-        let extend_rec_not_dummy = and!(cs, &letrec_cont_is_letrec_cont, not_dummy)?;
+        let extend_rec_not_dummy = and!(cs, &cont_is_letrec, not_dummy)?;
 
         let extended_env = extend_rec(
             &mut cs.namespace(|| "extend_rec env"),
@@ -4873,8 +4870,8 @@ fn comparison_helper<F: LurkField, CS: ConstraintSystem<F>>(
     let comp_val = AllocatedPtr::pick_const(
         &mut cs.namespace(|| "comp_val"),
         &comp_val_is_zero,
-        &c.nil.scalar_ptr(),
-        &c.t.scalar_ptr(),
+        &c.nil.z_ptr(),
+        &c.t.z_ptr(),
     )?;
 
     Ok((is_comparison_tag, comp_val, diff_is_negative))
@@ -5216,6 +5213,8 @@ fn extend_rec<F: LurkField, CS: ConstraintSystem<F>>(
         not_dummy,
     )?;
 
+    let cons_branch_not_dummy = and!(cs, &var_or_binding_is_cons, not_dummy)?;
+    let non_cons_branch_not_dummy = and!(cs, &var_or_binding_is_cons.not(), not_dummy)?;
     let list = AllocatedPtr::construct_cons_named(
         &mut cs.namespace(|| "list cons"),
         g,
@@ -5223,7 +5222,7 @@ fn extend_rec<F: LurkField, CS: ConstraintSystem<F>>(
         &g.nil_ptr,
         ConsName::NewRec,
         allocated_cons_witness,
-        not_dummy,
+        &non_cons_branch_not_dummy,
     )?;
 
     let new_env_if_sym_or_nil = AllocatedPtr::construct_cons_named(
@@ -5233,10 +5232,8 @@ fn extend_rec<F: LurkField, CS: ConstraintSystem<F>>(
         env,
         ConsName::ExtendedRec,
         allocated_cons_witness,
-        not_dummy,
+        &non_cons_branch_not_dummy,
     )?;
-
-    let cons_branch_not_dummy = and!(cs, &var_or_binding_is_cons, not_dummy)?;
 
     let cons2 = AllocatedPtr::construct_cons_named(
         &mut cs.namespace(|| "cons cons binding_or_env"),
@@ -5480,7 +5477,7 @@ mod tests {
                     _p: Default::default(),
                 }],
                 store,
-                lang.clone(),
+                &lang,
             );
 
             let multiframe = &multiframes[0];
@@ -5495,9 +5492,9 @@ mod tests {
             assert!(delta == Delta::Equal);
 
             //println!("{}", print_cs(&cs));
-            assert_eq!(12035, cs.num_constraints());
+            assert_eq!(12032, cs.num_constraints());
             assert_eq!(13, cs.num_inputs());
-            assert_eq!(11690, cs.aux().len());
+            assert_eq!(11688, cs.aux().len());
 
             let public_inputs = multiframe.public_inputs();
             let mut rng = rand::thread_rng();
@@ -5597,7 +5594,7 @@ mod tests {
                 DEFAULT_REDUCTION_COUNT,
                 &[frame],
                 store,
-                lang.clone(),
+                &lang,
             )[0]
             .clone()
             .synthesize(&mut cs)
@@ -5678,7 +5675,7 @@ mod tests {
                 DEFAULT_REDUCTION_COUNT,
                 &[frame],
                 store,
-                lang.clone(),
+                &lang,
             )[0]
             .clone()
             .synthesize(&mut cs)
@@ -5760,7 +5757,7 @@ mod tests {
                 DEFAULT_REDUCTION_COUNT,
                 &[frame],
                 store,
-                lang.clone(),
+                &lang,
             )[0]
             .clone()
             .synthesize(&mut cs)
@@ -5843,7 +5840,7 @@ mod tests {
                 DEFAULT_REDUCTION_COUNT,
                 &[frame],
                 store,
-                lang,
+                &lang,
             )[0]
             .clone()
             .synthesize(&mut cs)

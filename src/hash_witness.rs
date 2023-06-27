@@ -9,9 +9,10 @@ use crate::cont::Continuation;
 use crate::error::ReductionError;
 use crate::field::{FWrap, LurkField};
 use crate::hash::HashConst;
-use crate::ptr::{ContPtr, Ptr, ScalarContPtr, ScalarPtr};
+use crate::ptr::{ContPtr, Ptr};
 use crate::store::{self, Store};
 use crate::tag::ExprTag;
+use crate::z_ptr::{ZPtr, ZExprPtr, ZContPtr};
 
 pub const MAX_CONSES_PER_REDUCTION: usize = 11;
 pub const MAX_CONTS_PER_REDUCTION: usize = 2;
@@ -57,17 +58,18 @@ pub struct Cons<F: LurkField> {
     pub cons: Ptr<F>,
 }
 
+
 #[derive(Clone, Debug)]
 pub struct ScalarCons<F: LurkField> {
-    pub car: ScalarPtr<F>,
-    pub cdr: ScalarPtr<F>,
-    pub cons: Option<ScalarPtr<F>>,
+    pub car: ZExprPtr<F>,
+    pub cdr: ZExprPtr<F>,
+    pub cons: Option<ZExprPtr<F>>,
 }
 
 #[derive(Clone, Debug)]
 pub struct ScalarCont<F: LurkField> {
     pub components: [F; 8],
-    pub cont: Option<ScalarContPtr<F>>,
+    pub cont: Option<ZContPtr<F>>,
 }
 
 impl<F: LurkField, C: ContentAddressed<F, ScalarPtrRepr = T>, T: CAddr<F>> ContentAddressed<F>
@@ -93,15 +95,15 @@ impl<F: LurkField> ContentAddressed<F> for Cons<F> {
     }
 
     fn to_scalar_ptr_repr(&self, s: &Store<F>) -> Option<Self::ScalarPtrRepr> {
-        let car = s.get_expr_hash(&self.car)?;
-        let cdr = s.get_expr_hash(&self.cdr)?;
-        let cons = Some(s.get_expr_hash(&self.cons)?);
+        let car = s.hash_expr(&self.car)?;
+        let cdr = s.hash_expr(&self.cdr)?;
+        let cons = Some(s.hash_expr(&self.cons)?);
         Some(ScalarCons { car, cdr, cons })
     }
 
     fn to_dummy_scalar_ptr_repr() -> Option<Self::ScalarPtrRepr> {
-        let car = ScalarPtr::from_parts(ExprTag::Nil, F::ZERO);
-        let cdr = ScalarPtr::from_parts(ExprTag::Nil, F::ZERO);
+        let car = ZExprPtr::from_parts(ExprTag::Nil, F::ZERO);
+        let cdr = ZExprPtr::from_parts(ExprTag::Nil, F::ZERO);
         let cons = None;
         Some(ScalarCons { car, cdr, cons })
     }
@@ -156,6 +158,7 @@ impl<F: LurkField> CAddr<F> for ScalarCont<F> {
         self.components.to_vec()
     }
 }
+
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Cont<F: LurkField> {
@@ -604,7 +607,7 @@ impl<F: LurkField> Cons<F> {
     }
 
     fn get_car_cdr_mut(s: &mut Store<F>, cons: &Ptr<F>) -> Result<(Ptr<F>, Ptr<F>), store::Error> {
-        s.car_cdr_mut(cons)
+        s.car_cdr(cons)
     }
 }
 
