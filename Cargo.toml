@@ -19,6 +19,7 @@ base-x = "0.2.11"
 bellperson = { workspace = true }
 bincode = { workspace = true }
 blstrs = { workspace = true }
+byteorder = "1.4.3"
 clap = { version = "4.3.10", features = ["derive"] }
 config = "0.13.3"
 dashmap = "5.4.0"
@@ -52,6 +53,8 @@ serde_repr = "0.1.10"
 tap = "1.0.1"
 stable_deref_trait = "1.1.1"
 thiserror = { workspace = true }
+crossbeam = "0.8.2"
+nova-scotia = { git = "https://github.com/huitseeker/Nova-Scotia.git", branch="winston-main", features = ["circom-2"] }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 memmap = { version = "0.5.10", package = "memmap2" }

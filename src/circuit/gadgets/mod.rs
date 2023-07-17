@@ -6,3 +6,4 @@ pub(crate) mod constraints;
 pub mod data;
 pub(crate) mod hashes;
 pub mod pointer;
+pub mod circom;
