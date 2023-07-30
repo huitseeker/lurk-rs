@@ -1,10 +1,12 @@
+use ::nova::traits::Group;
+use abomonation::Abomonation;
 use serde::{Deserialize, Serialize};
 
 use lurk::{
     coprocessor::Coprocessor,
     eval::lang::{Coproc, Lang},
     field::LurkField,
-    proof::nova::{self, CurveCycleEquipped},
+    proof::nova::{self, CurveCycleEquipped, G1, G2},
     z_ptr::{ZContPtr, ZExprPtr},
     z_store::ZStore,
 };
@@ -40,6 +42,8 @@ impl<F: LurkField> HasFieldModulus for LurkProofMeta<F> {
 pub enum LurkProof<'a, F: CurveCycleEquipped>
 where
     Coproc<F>: Coprocessor<F>,
+    <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+    <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
 {
     Nova {
         proof: nova::Proof<'a, F, Coproc<F>>,
@@ -54,6 +58,8 @@ where
 impl<'a, F: CurveCycleEquipped> HasFieldModulus for LurkProof<'a, F>
 where
     Coproc<F>: Coprocessor<F>,
+    <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+    <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
 {
     fn field_modulus() -> String {
         F::MODULUS.to_owned()
@@ -66,11 +72,16 @@ mod non_wasm {
         field_data::non_wasm::{dump, load},
         paths::non_wasm::{proof_meta_path, proof_path},
     };
+    use abomonation::Abomonation;
     use anyhow::Result;
     use lurk::{
-        coprocessor::Coprocessor, eval::lang::Coproc, field::LurkField,
-        proof::nova::CurveCycleEquipped, public_parameters::public_params,
+        coprocessor::Coprocessor,
+        eval::lang::Coproc,
+        field::LurkField,
+        proof::nova::{CurveCycleEquipped, G1, G2},
+        public_parameters::public_params,
     };
+    use nova::traits::Group;
     use serde::Serialize;
 
     use super::{LurkProof, LurkProofMeta};
@@ -86,6 +97,8 @@ mod non_wasm {
     impl<'a, F: CurveCycleEquipped + Serialize> LurkProof<'a, F>
     where
         Coproc<F>: Coprocessor<F>,
+        <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+        <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
     {
         #[inline]
         pub fn persist(self, proof_key: &str) -> Result<()> {
@@ -105,7 +118,7 @@ mod non_wasm {
                     lang,
                 } => {
                     log::info!("Loading public parameters");
-                    let pp = public_params(rc, std::sync::Arc::new(lang))?;
+                    let pp = public_params(rc, true, std::sync::Arc::new(lang))?;
                     Ok(proof.verify(&pp, num_steps, &public_inputs, &public_outputs)?)
                 }
             }
