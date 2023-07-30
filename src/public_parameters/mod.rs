@@ -1,10 +1,12 @@
+use ::nova::traits::Group;
+use abomonation::{decode, Abomonation};
 use std::fs::File;
 use std::io::{self, BufReader, BufWriter};
 use std::path::Path;
 use std::sync::Arc;
 
 use crate::coprocessor::Coprocessor;
-use crate::proof::nova::CurveCycleEquipped;
+use crate::proof::nova::{CurveCycleEquipped, G1, G2};
 use crate::{
     eval::lang::Lang,
     proof::nova::{self, PublicParams},
@@ -19,14 +21,70 @@ use crate::public_parameters::error::Error;
 
 pub fn public_params<F: CurveCycleEquipped, C: Coprocessor<F> + 'static>(
     rc: usize,
+    abomonated: bool,
     lang: Arc<Lang<F, C>>,
 ) -> Result<Arc<PublicParams<'static, F, C>>, Error>
 where
     F::CK1: Sync + Send,
     F::CK2: Sync + Send,
+    <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+    <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
 {
     let f = |lang: Arc<Lang<F, C>>| Arc::new(nova::public_params(rc, lang));
-    registry::CACHE_REG.get_coprocessor_or_update_with(rc, f, lang)
+    registry::CACHE_REG.get_coprocessor_or_update_with(rc, abomonated, f, lang)
+}
+
+/// Attempts to extract abomonated public parameters.
+/// To avoid all copying overhead, we zerocopy all of the data within the file;
+/// this leads to extremely high performance, but restricts the lifetime of the data
+/// to the lifetime of the file. Thus, we cannot pass a reference out and must
+/// rely on a closure to capture the data and continue the computation in `bind`.
+pub fn with_public_params<C, F: CurveCycleEquipped, Fn, T>(
+    rc: usize,
+    lang: Arc<Lang<F, C>>,
+    bind: Fn,
+) -> Result<T, Error>
+where
+    C: Coprocessor<F> + 'static,
+    Fn: FnOnce(&PublicParams<'static, F, C>) -> T,
+    <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+    <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+{
+    let disk_cache = file_map::FileIndex::new("public_params").unwrap();
+    // use the cached language key
+    let lang_key = lang.key();
+    // Sanity-check: we're about to use a lang-dependent disk cache, which should be specialized
+    // for this lang/coprocessor.
+    let key = format!("public-params-rc-{rc}-coproc-{lang_key}-abomonated");
+
+    match disk_cache.get_raw_bytes(&key) {
+        Ok(mut bytes) => {
+            if let Some((pp, remaining)) = unsafe { decode(&mut bytes) } {
+                assert!(remaining.is_empty());
+                eprintln!("Using disk-cached public params for lang {}", lang_key);
+                Ok(bind(pp))
+            } else {
+                eprintln!("failed to decode bytes");
+                let pp = nova::public_params(rc, lang);
+                let mut bytes = Vec::new();
+                unsafe { abomonation::encode(&pp, &mut bytes)? };
+                // maybe just directly write
+                disk_cache
+                    .set_abomonated(&key, &pp)
+                    .map_err(|e| Error::CacheError(format!("Disk write error: {e}")))?;
+                Ok(bind(&pp))
+            }
+        }
+        Err(e) => {
+            eprintln!("{e}");
+            let pp = nova::public_params(rc, lang);
+            // maybe just directly write
+            disk_cache
+                .set_abomonated(&key, &pp)
+                .map_err(|e| Error::CacheError(format!("Disk write error: {e}")))?;
+            Ok(bind(&pp))
+        }
+    }
 }
 pub trait FileStore
 where
@@ -60,8 +118,7 @@ where
     fn read_from_path<P: AsRef<Path>>(path: P) -> Result<Self, Error> {
         let file = File::open(path)?;
         let reader = BufReader::new(file);
-        bincode::deserialize_from(reader)
-            .map_err(|e| Error::CacheError(format!("Cache deserialization error: {}", e)))
+        bincode::deserialize_from(reader).map_err(|e| Error::CacheError(format!("{}", e)))
     }
 
     fn read_from_json_path<P: AsRef<Path>>(path: P) -> Result<Self, Error> {

@@ -1018,6 +1018,7 @@ dependencies = [
 name = "fcomm"
 version = "0.1.1"
 dependencies = [
+ "abomonation",
  "anyhow",
  "assert_cmd",
  "base64",
@@ -1033,6 +1034,7 @@ dependencies = [
  "log",
  "lurk",
  "lurk-macros",
+ "nova-snark",
  "num_cpus",
  "once_cell",
  "pairing",
@@ -1514,6 +1516,8 @@ checksum = "b06a4cde4c0f271a446782e3eff8de789548ce57dbc8eca9292c27f4a42004b4"
 name = "lurk"
 version = "0.2.0"
 dependencies = [
+ "abomonation",
+ "abomonation_derive",
  "ahash 0.7.6",
  "anyhow",
  "anymap",
