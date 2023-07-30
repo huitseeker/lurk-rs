@@ -184,7 +184,7 @@ fn main() {
     let coproc_expr = format!("({})", sym_str);
     let ptr = store.read(&coproc_expr).unwrap();
 
-    let nova_prover = NovaProver::<Fr, Sha256Coproc<Fr>>::new(REDUCTION_COUNT, lang.clone());
+    let nova_prover = NovaProver::<Fr, Sha256Coproc<Fr>>::new(REDUCTION_COUNT, lang);
 
     println!("Setting up public parameters (rc = {REDUCTION_COUNT})...");
 
@@ -211,7 +211,7 @@ fn main() {
         println!("Verifying proof...");
 
         let verify_start = Instant::now();
-        let res = proof.verify(&pp, num_steps, &z0, &zi).unwrap();
+        let res = proof.verify(pp, num_steps, &z0, &zi).unwrap();
         let verify_end = verify_start.elapsed();
 
         println!("Verify took {:?}", verify_end);
