@@ -244,10 +244,40 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9e1b586273c5702936fe7b7d6896644d8be71e6314cfe09d3167c95f712589e8"
 
 [[package]]
+name = "bellpepper"
+version = "0.2.0"
+source = "git+https://github.com/lurk-lab/bellpepper?branch=dev#f204c59d717a17a85cf4d2c3456ed78ef3bfd5e0"
+dependencies = [
+ "bellpepper-core",
+ "blake2s_simd 1.0.1",
+ "byteorder",
+ "ff",
+ "group",
+ "rand_core",
+ "serde",
+ "thiserror",
+]
+
+[[package]]
+name = "bellpepper-core"
+version = "0.2.0"
+source = "git+https://github.com/lurk-lab/bellpepper?branch=dev#f204c59d717a17a85cf4d2c3456ed78ef3bfd5e0"
+dependencies = [
+ "blake2s_simd 1.0.1",
+ "byteorder",
+ "ff",
+ "group",
+ "rand_core",
+ "serde",
+ "thiserror",
+]
+
+[[package]]
 name = "bellperson"
 version = "0.25.0"
-source = "git+https://github.com/lurk-lab/bellperson?branch=dev#4739084474533e54be1e39659649311651f7ebbc"
+source = "git+https://github.com/lurk-lab/bellperson?branch=dev#dc12b65982856d2da513d359dec84c97ebee39cd"
 dependencies = [
+ "bellpepper-core",
  "bincode",
  "blake2s_simd 1.0.1",
  "blstrs",
@@ -1029,7 +1059,7 @@ dependencies = [
  "anyhow",
  "assert_cmd",
  "base64",
- "bellperson",
+ "bellpepper-core",
  "bincode",
  "blstrs",
  "camino",
@@ -1533,6 +1563,8 @@ dependencies = [
  "base-x",
  "base32ct",
  "base64",
+ "bellpepper",
+ "bellpepper-core",
  "bellperson",
  "bincode",
  "blstrs",
@@ -1742,11 +1774,13 @@ checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 
 [[package]]
 name = "nova-snark"
-version = "0.22.0"
-source = "git+https://github.com/lurk-lab/nova?branch=dev#cbb78f5a8c25ab12aff639a5544f4d40d5cc7712"
+version = "0.23.0"
+source = "git+https://github.com/lurk-lab/nova?branch=dev#721a5ec11c06b7f7323cb6eb6c6d17b2a6c1cbe8"
 dependencies = [
  "abomonation",
  "abomonation_derive",
+ "bellpepper",
+ "bellpepper-core",
  "bellperson",
  "bincode",
  "bitvec",
@@ -2838,18 +2872,18 @@ checksum = "222a222a5bfe1bba4a77b45ec488a741b3cb8872e5e499451fd7d0129c9c7c3d"
 
 [[package]]
 name = "thiserror"
-version = "1.0.43"
+version = "1.0.44"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a35fc5b8971143ca348fa6df4f024d4d55264f3468c71ad1c2f365b0a4d58c42"
+checksum = "611040a08a0439f8248d1990b111c95baa9c704c805fa1f62104b39655fd7f90"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.43"
+version = "1.0.44"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "463fe12d7993d3b327787537ce8dd4dfa058de32fc2b195ef3cde03dc4771e8f"
+checksum = "090198534930841fab3a5d1bb637cde49e339654e606195f8d9c76eeb081dc96"
 dependencies = [
  "proc-macro2 1.0.66",
  "quote 1.0.31",

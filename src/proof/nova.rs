@@ -4,9 +4,8 @@ use std::marker::PhantomData;
 use std::sync::Mutex;
 
 use abomonation::Abomonation;
-use bellperson::{
-    gadgets::num::AllocatedNum, util_cs::witness_cs::WitnessCS, ConstraintSystem, SynthesisError,
-};
+use bellpepper::util_cs::witness_cs::WitnessCS;
+use bellpepper_core::{num::AllocatedNum, ConstraintSystem, SynthesisError};
 use ff::Field;
 use nova::{
     errors::NovaError,
@@ -511,7 +510,7 @@ where
                 );
                 if debug {
                     // For debugging purposes, synthesize the circuit and check that the constraint system is satisfied.
-                    use bellperson::util_cs::test_cs::TestConstraintSystem;
+                    use bellpepper_core::test_cs::TestConstraintSystem;
                     let mut cs = TestConstraintSystem::<<G1<F> as Group>::Scalar>::new();
 
                     let zi = circuit_primary.frames.as_ref().unwrap()[0]
@@ -612,11 +611,10 @@ pub mod tests {
     use crate::ptr::ContPtr;
     use crate::tag::{Op, Op1, Op2};
 
-    use bellperson::util_cs::witness_cs::WitnessCS;
-    use bellperson::{
-        util_cs::{metric_cs::MetricCS, test_cs::TestConstraintSystem, Comparable, Delta},
-        Circuit,
-    };
+    use bellpepper::util_cs::witness_cs::WitnessCS;
+    use bellpepper::util_cs::{metric_cs::MetricCS, Comparable};
+    use bellpepper_core::test_cs::TestConstraintSystem;
+    use bellpepper_core::{Circuit, Delta};
     use pallas::Scalar as Fr;
 
     const DEFAULT_REDUCTION_COUNT: usize = 5;

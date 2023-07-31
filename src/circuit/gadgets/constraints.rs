@@ -1,12 +1,10 @@
 // Initially taken from: rust-fil-proofs/storage-proofs-core/src/gadgets/
 
 use crate::field::LurkField;
-use bellperson::LinearCombination;
-use bellperson::{
-    gadgets::{
-        boolean::{AllocatedBit, Boolean},
-        num::{AllocatedNum, Num},
-    },
+use bellpepper_core::LinearCombination;
+use bellpepper_core::{
+    boolean::{AllocatedBit, Boolean},
+    num::{AllocatedNum, Num},
     ConstraintSystem, SynthesisError, Variable,
 };
 use ff::PrimeField;

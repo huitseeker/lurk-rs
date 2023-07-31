@@ -2,10 +2,9 @@ use std::collections::HashMap;
 use std::fmt::Debug;
 use std::marker::PhantomData;
 
-use bellperson::{
-    gadgets::{boolean::Boolean, num::AllocatedNum},
-    util_cs::{witness_cs::WitnessCS, Comparable},
-    Circuit, ConstraintSystem, SynthesisError,
+use bellpepper::util_cs::{witness_cs::WitnessCS, Comparable};
+use bellpepper_core::{
+    boolean::Boolean, num::AllocatedNum, Circuit, ConstraintSystem, SynthesisError,
 };
 use rayon::prelude::*;
 
@@ -5414,10 +5413,10 @@ mod tests {
     use crate::proof::groth16::Groth16Prover;
     use crate::proof::{Provable, Prover};
     use crate::store::Store;
+    use bellpepper::util_cs::metric_cs::MetricCS;
+    use bellpepper_core::test_cs::TestConstraintSystem;
+    use bellpepper_core::{Comparable, Delta};
     use bellperson::groth16;
-    use bellperson::util_cs::{
-        metric_cs::MetricCS, test_cs::TestConstraintSystem, Comparable, Delta,
-    };
     use blstrs::{Bls12, Scalar as Fr};
     use ff::{Field, PrimeField};
     use pairing::Engine;

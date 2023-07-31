@@ -129,10 +129,7 @@
 use std::collections::{HashMap, HashSet};
 
 use anyhow::{bail, Context, Result};
-use bellperson::{
-    gadgets::{boolean::Boolean, num::AllocatedNum},
-    ConstraintSystem,
-};
+use bellpepper_core::{boolean::Boolean, num::AllocatedNum, ConstraintSystem};
 
 use crate::circuit::gadgets::{
     constraints::{alloc_equal_const, and, enforce_selector_with_premise, implies_equal},

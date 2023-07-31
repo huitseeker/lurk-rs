@@ -56,7 +56,7 @@ mod tests {
     use crate::lem::{
         circuit::SlotsCounter, pointers::Ptr, store::Store, symbol::Symbol, tag::Tag,
     };
-    use bellperson::util_cs::{test_cs::TestConstraintSystem, Comparable};
+    use bellpepper_core::{test_cs::TestConstraintSystem, Comparable};
     use blstrs::Scalar as Fr;
 
     const NUM_INPUTS: usize = 1;

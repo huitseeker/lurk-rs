@@ -16,6 +16,8 @@ anymap = "1.0.0-beta.2"
 base32ct = { version = "0.2.0", features = ["std"] }
 base64 = { workspace = true }
 base-x = "0.2.11"
+bellpepper = { workspace = true }
+bellpepper-core = { workspace = true }
 bellperson = { workspace = true }
 bincode = { workspace = true }
 blstrs = { workspace = true }
@@ -110,6 +112,8 @@ members = [
 abomonation = "0.7.3"
 anyhow = "1.0.72"
 base64 = "0.13.1"
+bellpepper = { git = "https://github.com/lurk-lab/bellpepper", branch = "dev" }
+bellpepper-core = { git = "https://github.com/lurk-lab/bellpepper", branch = "dev" }
 bellperson = { git = "https://github.com/lurk-lab/bellperson", branch = "dev" }
 bincode = "1.3.3"
 blstrs = { git = "https://github.com/lurk-lab/blstrs", branch = "dev" }
