@@ -125,3 +125,9 @@ pub trait Prover<'a, 'b, F: LurkField, C: Coprocessor<F>> {
             .collect::<Result<_, _>>()
     }
 }
+
+pub trait MultiFrameTrait<F: LurkField> {
+    type Store;
+    type Ptr;
+    type Frame;
+}

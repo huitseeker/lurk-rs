@@ -137,9 +137,9 @@ where
     <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
     <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
 {
-    pp: NovaPublicParams<'a, F, C>,
-    pk: ProverKey<G1<F>, G2<F>, C1<'a, F, C>, C2<F>, SS1<F>, SS2<F>>,
-    vk: VerifierKey<G1<F>, G2<F>, C1<'a, F, C>, C2<F>, SS1<F>, SS2<F>>,
+    pub(in super) pp: NovaPublicParams<'a, F, C>,
+    pub(in super) pk: ProverKey<G1<F>, G2<F>, C1<'a, F, C>, C2<F>, SS1<F>, SS2<F>>,
+    pub(in super) vk: VerifierKey<G1<F>, G2<F>, C1<'a, F, C>, C2<F>, SS1<F>, SS2<F>>,
 }
 
 impl<'c, F: CurveCycleEquipped, C: Coprocessor<F>> Abomonation for PublicParams<'c, F, C>
@@ -219,8 +219,8 @@ impl<'a, F: CurveCycleEquipped, C: Coprocessor<F>> C1<'a, F, C> {
 #[derive(Debug)]
 pub struct NovaProver<F: CurveCycleEquipped, C: Coprocessor<F>> {
     // `reduction_count` specifies the number of small-step reductions are performed in each recursive step.
-    reduction_count: usize,
-    lang: Lang<F, C>,
+    pub(in super) reduction_count: usize,
+    pub(in super) lang: Lang<F, C>,
     _p: PhantomData<(F, C)>,
 }
 
@@ -597,7 +597,7 @@ where
         Ok(zi_primary == zi_primary_verified && zi_secondary == zi_secondary_verified)
     }
 
-    fn z0_secondary() -> Vec<<F::G2 as Group>::Scalar> {
+    pub(in super) fn z0_secondary() -> Vec<<F::G2 as Group>::Scalar> {
         vec![<G2<F> as Group>::Scalar::ZERO]
     }
 }

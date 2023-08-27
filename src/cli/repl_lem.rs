@@ -25,8 +25,7 @@ use crate::{
     package::{Package, SymbolRef},
     parser,
     proof::{
-        nova_lem::{public_params, NovaProver},
-        Prover,
+        Prover, nova::NovaProver, nova_lem::public_params,
     },
     state::State,
     tag::ContTag::*,
@@ -177,7 +176,7 @@ impl ReplLEM<F> {
 
                         info!("Proving");
                         let (proof, public_inputs, public_outputs, num_steps) =
-                            prover.prove(eval_step, &pp, frames, &mut self.store)?;
+                            prover.prove_lem(eval_step, &pp, frames, &mut self.store)?;
                         assert_eq!(self.rc * num_steps, pad(n_frames, self.rc));
 
                         info!("Compressing proof");
