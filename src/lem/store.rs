@@ -14,7 +14,7 @@ use crate::{
     symbol::Symbol,
     syntax::Syntax,
     tag::ExprTag::*,
-    uint::UInt,
+    uint::UInt, store,
 };
 
 use super::pointers::{Ptr, ZPtr};
@@ -553,7 +553,7 @@ impl<F: LurkField> Store<F> {
     pub fn to_vector(&self, ptrs: &[Ptr<F>]) -> Result<Vec<F>> {
         ptrs.iter()
             .try_fold(Vec::with_capacity(2 * ptrs.len()), |mut acc, ptr| {
-                let z_ptr = self.hash_ptr(ptr)?;
+                let z_ptr = self.hash_ptr(ptr).map_err(|e| store::Error(e.to_string()))?;
                 acc.push(z_ptr.tag.to_field());
                 acc.push(z_ptr.hash);
                 Ok(acc)
