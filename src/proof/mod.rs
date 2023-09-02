@@ -12,9 +12,9 @@ pub mod nova;
 /// An adapter to a Nova proving system implementation in LEM.
 pub mod nova_lem;
 
-use crate::{coprocessor::Coprocessor, error::ProofError};
 use crate::eval::lang::Lang;
 use crate::field::LurkField;
+use crate::{coprocessor::Coprocessor, error::ProofError};
 
 use ::nova::traits::circuit::StepCircuit;
 use bellpepper::util_cs::witness_cs::WitnessCS;
@@ -65,7 +65,10 @@ pub trait MultiFrameTrait<F: LurkField, C: Coprocessor<F>>:
     ) -> Result<Vec<Self::EvalFrame>, ProofError>;
 
     /// Returns a public IO vector when equipped with the local store, and the Self::Frame's IO
-    fn to_io_vector(store: &Self::Store, frames: &<Self::EvalFrame as FrameLike>::Ptr) -> Result<Vec<F>, Self::StoreError>;
+    fn to_io_vector(
+        store: &Self::Store,
+        frames: &<Self::EvalFrame as FrameLike>::Ptr,
+    ) -> Result<Vec<F>, Self::StoreError>;
 
     /// Returns true if the supplied instance directly precedes this one in a sequential computation trace.
     fn precedes(&self, maybe_next: &Self) -> bool;
@@ -73,7 +76,7 @@ pub trait MultiFrameTrait<F: LurkField, C: Coprocessor<F>>:
     /// Populates a WitnessCS with the witness values for the given store.
     fn compute_witness(&self, s: &Self::Store) -> WitnessCS<F>;
 
-    /// Returns a reference to the cached witness values 
+    /// Returns a reference to the cached witness values
     fn cached_witness(&mut self) -> &mut Option<WitnessCS<F>>;
 
     /// Iterates through the Self::CircuitFrame instances

@@ -8,7 +8,8 @@ use crate::{
     coprocessor::Coprocessor,
     eval::lang::Lang,
     field::LurkField,
-    proof::{MultiFrameTrait, Provable, FrameLike, Prover}, store,
+    proof::{FrameLike, MultiFrameTrait, Provable, Prover},
+    store,
 };
 
 use super::{
@@ -33,7 +34,7 @@ pub struct MultiFrame<'a, F: LurkField, C: Coprocessor<F>> {
 
 impl<F: LurkField> FrameLike for Frame<F> {
     type Ptr = Vec<Ptr<F>>;
-    
+
     fn input(&self) -> &Self::Ptr {
         &self.input
     }
@@ -52,10 +53,14 @@ impl<'a, F: LurkField, C: Coprocessor<F>> MultiFrameTrait<F, C> for MultiFrame<'
     type AllocatedIO = Vec<AllocatedPtr<F>>;
     type FrameIter = <Self::FrameIntoIter as IntoIterator>::IntoIter;
     type FrameIntoIter = Vec<Self::CircuitFrame>;
-    
 
-    fn to_io_vector(store: &Self::Store, frames: &<Self::EvalFrame as FrameLike>::Ptr) -> Result<Vec<F>, Self::StoreError> {
-        store.to_vector(frames).map_err(|e| store::Error(e.to_string()))
+    fn to_io_vector(
+        store: &Self::Store,
+        frames: &<Self::EvalFrame as FrameLike>::Ptr,
+    ) -> Result<Vec<F>, Self::StoreError> {
+        store
+            .to_vector(frames)
+            .map_err(|e| store::Error(e.to_string()))
     }
 
     fn compute_witness(&self, s: &Store<F>) -> WitnessCS<F> {

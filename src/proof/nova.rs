@@ -20,8 +20,8 @@ use nova::{
 use pasta_curves::{pallas, vesta};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
-use std::sync::Arc;
 use std::iter::ExactSizeIterator;
+use std::sync::Arc;
 
 use crate::circuit::{
     gadgets::{
@@ -484,7 +484,12 @@ where
                     let mut cs = TestConstraintSystem::<<G1<F> as Group>::Scalar>::new();
 
                     // This is a CircuitFrame, not an EvalFrame
-                    let first_frame = circuit_primary.frames().unwrap().into_iter().next().unwrap();
+                    let first_frame = circuit_primary
+                        .frames()
+                        .unwrap()
+                        .into_iter()
+                        .next()
+                        .unwrap();
                     let zi = M::to_io_vector(store, first_frame.input()).map_err(|e| e.into())?;
                     let zi_allocated: Vec<_> = zi
                         .iter()
@@ -529,10 +534,7 @@ where
     }
 
     /// Compresses the proof using a (Spartan) Snark (finishing step)
-    pub fn compress(
-        self,
-        pp: &'a PublicParams<F, M>,
-    ) -> Result<Self, ProofError> {
+    pub fn compress(self, pp: &'a PublicParams<F, M>) -> Result<Self, ProofError> {
         match &self {
             Self::Recursive(recursive_snark, _) => Ok(Self::Compressed(
                 Box::new(CompressedSNARK::<_, _, _, _, SS1<F>, SS2<F>>::prove(
@@ -560,7 +562,9 @@ where
 
         let (zi_primary_verified, zi_secondary_verified) = match self {
             Self::Recursive(p, _) => p.verify(&pp.pp, num_steps, z0_primary, &z0_secondary),
-            Self::Compressed(p, _) => p.verify(&pp.vk, num_steps, z0_primary.to_vec(), z0_secondary),
+            Self::Compressed(p, _) => {
+                p.verify(&pp.vk, num_steps, z0_primary.to_vec(), z0_secondary)
+            }
         }?;
 
         Ok(zi_primary == zi_primary_verified && zi_secondary == zi_secondary_verified)
@@ -715,8 +719,8 @@ pub mod tests {
             assert!(res2.unwrap());
         }
 
-        let frames = MultiFrame::get_evaluation_frames(&nova_prover, expr, e, s, limit, &lang)
-            .unwrap();
+        let frames =
+            MultiFrame::get_evaluation_frames(&nova_prover, expr, e, s, limit, &lang).unwrap();
 
         let multiframes =
             MultiFrame::from_frames(nova_prover.reduction_count(), &frames, s, lang.clone());

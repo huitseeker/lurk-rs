@@ -294,8 +294,8 @@ pub mod tests {
     use crate::eval::lang::Coproc;
     use crate::lem::eval::{eval_step, evaluate};
     use crate::num::Num;
-    use crate::proof::Prover;
     use crate::proof::nova::public_params;
+    use crate::proof::Prover;
     use crate::state::{user_sym, State};
 
     use super::*;

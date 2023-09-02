@@ -20,8 +20,9 @@ use crate::{
     hash_witness::{
         ConsCircuitWitness, ConsName, ContCircuitWitness, ContName, HashCircuitWitnessCache,
     },
-    store::{NamedConstants, self},
-    tag::Tag, proof::Prover,
+    proof::Prover,
+    store::{self, NamedConstants},
+    tag::Tag,
 };
 
 use super::gadgets::constraints::{
@@ -38,7 +39,7 @@ use crate::eval::{lang::Lang, Frame, Witness, IO};
 use crate::expr::Thunk;
 use crate::hash_witness::HashWitness;
 use crate::lurk_sym_ptr;
-use crate::proof::{MultiFrameTrait, Provable, FrameLike};
+use crate::proof::{FrameLike, MultiFrameTrait, Provable};
 use crate::ptr::Ptr;
 use crate::store::Store;
 use crate::tag::{ContTag, ExprTag, Op1, Op2};
@@ -109,14 +110,24 @@ impl<'a, F: LurkField, C: Coprocessor<F>> MultiFrameTrait<F, C> for MultiFrame<'
     ) -> Result<Vec<Frame<IO<F>, Witness<F>, C>>, crate::error::ProofError> {
         let padding_predicate = |count| prover.needs_frame_padding(count);
 
-        let frames = crate::eval::Evaluator::generate_frames(expr, env, store, limit, padding_predicate, lang)?;
+        let frames = crate::eval::Evaluator::generate_frames(
+            expr,
+            env,
+            store,
+            limit,
+            padding_predicate,
+            lang,
+        )?;
 
         store.hydrate_scalar_cache();
 
         Ok(frames)
     }
 
-    fn to_io_vector(store: &Self::Store, frame: &<Self::EvalFrame as FrameLike>::Ptr) -> Result<Vec<F>, Self::StoreError> {
+    fn to_io_vector(
+        store: &Self::Store,
+        frame: &<Self::EvalFrame as FrameLike>::Ptr,
+    ) -> Result<Vec<F>, Self::StoreError> {
         frame.to_vector(store)
     }
 
