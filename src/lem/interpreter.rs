@@ -5,7 +5,7 @@ use super::{path::Path, pointers::Ptr, store::Store, var_map::VarMap, Block, Ctr
 
 use crate::{field::LurkField, num::Num, state::initial_lurk_state, tag::ExprTag::*};
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum PreimageData<F: LurkField> {
     PtrVec(Vec<Ptr<F>>),
     FPtr(F, Ptr<F>),
@@ -17,6 +17,7 @@ pub enum PreimageData<F: LurkField> {
 /// The hash preimages must have the same shape as the allocated slots for the
 /// `Func`, and the `None` values are used to fill the unused slots, which are
 /// later filled by dummy values.
+#[derive(Debug)]
 pub struct Preimages<F: LurkField> {
     pub hash2: Vec<Option<PreimageData<F>>>,
     pub hash3: Vec<Option<PreimageData<F>>>,
@@ -69,7 +70,7 @@ impl<F: LurkField> Preimages<F> {
 /// running one iteration as a HashMap of variables to pointers.
 ///
 /// This information is used to generate the witness.
-#[derive(Clone, Default)]
+#[derive(Clone, Default, Debug)]
 pub struct Frame<F: LurkField> {
     pub input: Vec<Ptr<F>>,
     pub output: Vec<Ptr<F>>,

@@ -238,12 +238,8 @@ where
 {
 }
 
-impl<
-        'a,
-        F: CurveCycleEquipped,
-        C: Coprocessor<F> + 'a,
-        M: StepCircuit<F> + MultiFrameTrait<F, C>,
-    > Prover<F, C, M> for NovaProver<F, C, M>
+impl<F: CurveCycleEquipped, C: Coprocessor<F>, M: MultiFrameTrait<F, C>> Prover<F, C, M>
+    for NovaProver<F, C, M>
 where
     <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
     <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
@@ -305,7 +301,7 @@ where
         limit: usize,
         lang: &Arc<Lang<F, C>>,
     ) -> Result<(Proof<F, C, M>, Vec<F>, Vec<F>, usize), ProofError> {
-        let frames = M::get_evaluation_frames(self, expr, env, store, limit, lang)?;
+        let frames = M::get_evaluation_frames(self, expr, env, store, limit)?;
         self.prove(pp, &frames, store, lang)
     }
 }
@@ -585,12 +581,13 @@ pub mod tests {
     use crate::state::{user_sym, State};
 
     use super::*;
-    use crate::eval::empty_sym_env;
     use crate::eval::lang::Coproc;
-    use crate::proof::Provable;
+    use crate::eval::Frame;
+    use crate::proof::{EvaluationStore, Provable};
     use crate::ptr::ContPtr;
     use crate::tag::{Op, Op1, Op2};
 
+    use super::FrameLike;
     use bellpepper::util_cs::witness_cs::WitnessCS;
     use bellpepper::util_cs::{metric_cs::MetricCS, Comparable};
     use bellpepper_core::test_cs::TestConstraintSystem;
@@ -615,18 +612,23 @@ pub mod tests {
         }
     }
 
-    pub fn test_aux<C: Coprocessor<Fr>>(
-        s: &mut Store<Fr>,
+    pub fn test_aux<F: CurveCycleEquipped, C: Coprocessor<F>, M: MultiFrameTrait<F, C>>(
+        s: &mut M::Store,
         expr: &str,
-        expected_result: Option<Ptr<Fr>>,
-        expected_env: Option<Ptr<Fr>>,
-        expected_cont: Option<ContPtr<Fr>>,
-        expected_emitted: Option<Vec<Ptr<Fr>>>,
+        expected_result: Option<M::Ptr>,
+        expected_env: Option<M::Ptr>,
+        expected_cont: Option<ContPtr<F>>,
+        expected_emitted: Option<Vec<M::Ptr>>,
         expected_iterations: usize,
-        lang: Option<Arc<Lang<Fr, C>>>,
-    ) {
+        lang: Option<Arc<Lang<F, C>>>,
+    )
+    // technical bounds that would disappear once associated_type_bounds stabilizes
+    where
+        <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+        <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+    {
         for chunk_size in REDUCTION_COUNTS_TO_TEST {
-            nova_test_full_aux(
+            nova_test_full_aux::<_, _, M>(
                 s,
                 expr,
                 expected_result,
@@ -637,28 +639,33 @@ pub mod tests {
                 chunk_size,
                 false,
                 None,
-                lang.clone(),
+                lang,
             )
         }
     }
 
-    fn nova_test_full_aux<C: Coprocessor<Fr>>(
-        s: &mut Store<Fr>,
+    fn nova_test_full_aux<F: CurveCycleEquipped, C: Coprocessor<F>, M: MultiFrameTrait<F, C>>(
+        s: &mut M::Store,
         expr: &str,
-        expected_result: Option<Ptr<Fr>>,
-        expected_env: Option<Ptr<Fr>>,
-        expected_cont: Option<ContPtr<Fr>>,
-        expected_emitted: Option<&Vec<Ptr<Fr>>>,
+        expected_result: Option<M::Ptr>,
+        expected_env: Option<M::Ptr>,
+        expected_cont: Option<ContPtr<F>>,
+        expected_emitted: Option<&Vec<M::Ptr>>,
         expected_iterations: usize,
         reduction_count: usize,
         check_nova: bool,
         limit: Option<usize>,
-        lang: Option<Arc<Lang<Fr, C>>>,
-    ) {
+        lang: Option<Arc<Lang<F, C>>>,
+    )
+    // technical bounds that would disappear once associated_type_bounds stabilizes
+    where
+        <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+        <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+    {
         let expr = s.read(expr).unwrap();
 
         let mut f = |l| {
-            nova_test_full_aux2(
+            nova_test_full_aux2::<_, _, M>(
                 s,
                 expr,
                 expected_result,
@@ -681,30 +688,34 @@ pub mod tests {
         };
     }
 
-    fn nova_test_full_aux2<C: Coprocessor<Fr>>(
-        s: &mut Store<Fr>,
-        expr: Ptr<Fr>,
-        expected_result: Option<Ptr<Fr>>,
-        expected_env: Option<Ptr<Fr>>,
-        expected_cont: Option<ContPtr<Fr>>,
-        expected_emitted: Option<&Vec<Ptr<Fr>>>,
+    fn nova_test_full_aux2<F: CurveCycleEquipped, C: Coprocessor<F>, M: MultiFrameTrait<F, C>>(
+        s: &mut M::Store,
+        expr: M::Ptr,
+        expected_result: Option<M::Ptr>,
+        expected_env: Option<M::Ptr>,
+        expected_cont: Option<ContPtr<F>>,
+        expected_emitted: Option<&Vec<M::Ptr>>,
         expected_iterations: usize,
         reduction_count: usize,
         check_nova: bool,
         limit: Option<usize>,
-        lang: Arc<Lang<Fr, C>>,
-    ) {
+        lang: Arc<Lang<F, C>>,
+    )
+    // technical bounds that would disappear once associated_type_bounds stabilizes
+    where
+        <<G1<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+        <<G2<F> as Group>::Scalar as ff::PrimeField>::Repr: Abomonation,
+    {
         let limit = limit.unwrap_or(10000);
 
-        let e = empty_sym_env(s);
+        let e = s.initial_empty_env();
 
-        let nova_prover =
-            NovaProver::<Fr, C, MultiFrame<'_, Fr, C>>::new(reduction_count, (*lang).clone());
+        let nova_prover = NovaProver::<F, C, M>::new(reduction_count, (*lang).clone());
 
         if check_nova {
-            let pp = public_params(reduction_count, lang.clone());
+            let pp = public_params::<_, _, M>(reduction_count, lang.clone());
             let (proof, z0, zi, num_steps) = nova_prover
-                .evaluate_and_prove(&pp, expr, empty_sym_env(s), s, limit, &lang)
+                .evaluate_and_prove(&pp, expr, e, s, limit, &lang)
                 .unwrap();
 
             let res = proof.verify(&pp, num_steps, &z0, &zi);
@@ -719,19 +730,17 @@ pub mod tests {
             assert!(res2.unwrap());
         }
 
-        let frames =
-            MultiFrame::get_evaluation_frames(&nova_prover, expr, e, s, limit, &lang).unwrap();
+        let frames = M::get_evaluation_frames(&nova_prover, expr, e, s, limit).unwrap();
 
-        let multiframes =
-            MultiFrame::from_frames(nova_prover.reduction_count(), &frames, s, lang.clone());
+        let multiframes = M::from_frames(nova_prover.reduction_count(), &frames, s, lang.clone());
         let len = multiframes.len();
 
         let adjusted_iterations = nova_prover.expected_total_iterations(expected_iterations);
-        let mut previous_frame: Option<MultiFrame<'_, Fr, C>> = None;
+        let mut previous_frame: Option<&M> = None;
 
-        let mut cs_blank = MetricCS::<Fr>::new();
+        let mut cs_blank = MetricCS::<F>::new();
 
-        let blank = MultiFrame::<Fr, C>::blank(reduction_count, lang);
+        let blank = M::blank(reduction_count, lang);
         blank
             .synthesize(&mut cs_blank)
             .expect("failed to synthesize blank");
@@ -767,18 +776,18 @@ pub mod tests {
             assert_eq!(None, mismatch(&cs_inputs, &wcs_inputs));
             assert_eq!(None, mismatch(&cs_aux, &wcs_aux));
 
-            previous_frame = Some(multiframe.clone());
+            previous_frame = Some(multiframe);
 
             let delta = cs.delta(&cs_blank, true);
 
             assert!(delta == Delta::Equal);
         }
-        let output = previous_frame.unwrap().output.unwrap();
+        let output = previous_frame.unwrap().output();
 
         if let Some(expected_emitted) = expected_emitted {
             let emitted_vec: Vec<_> = frames
                 .iter()
-                .filter_map(|frame| frame.output.maybe_emitted_expression(s))
+                .filter_map(|frame| frame.output().maybe_emitted_expression(s))
                 .collect();
             assert_eq!(expected_emitted, &emitted_vec);
         }
@@ -795,7 +804,7 @@ pub mod tests {
             assert_eq!(s.get_cont_terminal(), output.cont);
         }
 
-        assert_eq!(expected_iterations, Frame::significant_frame_count(&frames));
+        assert_eq!(expected_iterations, M::significant_frame_count(&frames));
         assert_eq!(adjusted_iterations, len);
     }
 
@@ -809,7 +818,7 @@ pub mod tests {
         let s = &mut Store::<Fr>::default();
         let expected = s.num(3);
         let terminal = s.get_cont_terminal();
-        test_aux::<Coproc<Fr>>(
+        test_aux::<_, Coproc<Fr>>(
             s,
             "(+ 1 2)",
             Some(expected),
