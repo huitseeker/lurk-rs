@@ -597,7 +597,7 @@ impl Repl<F> {
                 Some(i) => {
                     println!("{} - {}", i.name, i.description);
                     println!("  Usage: {}", i.format);
-                    if i.example.len() > 0 {
+                    if !i.example.is_empty() {
                         println!("  Example:");
                     }
                     for &e in i.example.iter() {
@@ -605,7 +605,7 @@ impl Repl<F> {
                     }
                 }
                 None => println!("unknown command {}", c),
-            }
+            },
             None => {
                 use itertools::Itertools;
                 println!("Available commands:");
@@ -853,7 +853,7 @@ impl Repl<F> {
             "help" => {
                 let first = self.peek1(cmd, args)?;
                 match first.tag {
-                    ExprTag::Str =>  {
+                    ExprTag::Str => {
                         let name = self.get_string(&first)?;
                         Self::cmd_help(Some(&name));
                     }
