@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["verify_sequential_css"],"mod":["groth16","nova"],"trait":["Provable","Prover","PublicParameters"]};
+window.SIDEBAR_ITEMS = {"mod":["nova","supernova"],"trait":["CEKState","EvaluationStore","FrameLike","MultiFrameTrait","NIVCProver","Provable","Prover"]};

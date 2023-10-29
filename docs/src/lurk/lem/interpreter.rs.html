@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/interpreter.rs`."><title>interpreter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9bb858ba049f1f21.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.72.0-nightly (83964c156 2023-07-08)" data-channel="nightly" data-search-js="search-f6292fe389d70017.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ><script src="../../../static.files/storage-59fd9b8ccb335783.js"></script><script defer src="../../../static.files/source-script-106908c7a7964ba4.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../lurk/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/interpreter.rs`."><title>interpreter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (e5cfc5547 2023-10-28)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -248,206 +248,810 @@
 <a href="#248" id="248">248</a>
 <a href="#249" id="249">249</a>
 <a href="#250" id="250">250</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::field::{FWrap, LurkField};
-<span class="kw">use </span>anyhow::{bail, <span class="prelude-ty">Result</span>};
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+<a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
+<a href="#482" id="482">482</a>
+<a href="#483" id="483">483</a>
+<a href="#484" id="484">484</a>
+<a href="#485" id="485">485</a>
+<a href="#486" id="486">486</a>
+<a href="#487" id="487">487</a>
+<a href="#488" id="488">488</a>
+<a href="#489" id="489">489</a>
+<a href="#490" id="490">490</a>
+<a href="#491" id="491">491</a>
+<a href="#492" id="492">492</a>
+<a href="#493" id="493">493</a>
+<a href="#494" id="494">494</a>
+<a href="#495" id="495">495</a>
+<a href="#496" id="496">496</a>
+<a href="#497" id="497">497</a>
+<a href="#498" id="498">498</a>
+<a href="#499" id="499">499</a>
+<a href="#500" id="500">500</a>
+<a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
+<a href="#503" id="503">503</a>
+<a href="#504" id="504">504</a>
+<a href="#505" id="505">505</a>
+<a href="#506" id="506">506</a>
+<a href="#507" id="507">507</a>
+<a href="#508" id="508">508</a>
+<a href="#509" id="509">509</a>
+<a href="#510" id="510">510</a>
+<a href="#511" id="511">511</a>
+<a href="#512" id="512">512</a>
+<a href="#513" id="513">513</a>
+<a href="#514" id="514">514</a>
+<a href="#515" id="515">515</a>
+<a href="#516" id="516">516</a>
+<a href="#517" id="517">517</a>
+<a href="#518" id="518">518</a>
+<a href="#519" id="519">519</a>
+<a href="#520" id="520">520</a>
+<a href="#521" id="521">521</a>
+<a href="#522" id="522">522</a>
+<a href="#523" id="523">523</a>
+<a href="#524" id="524">524</a>
+<a href="#525" id="525">525</a>
+<a href="#526" id="526">526</a>
+<a href="#527" id="527">527</a>
+<a href="#528" id="528">528</a>
+<a href="#529" id="529">529</a>
+<a href="#530" id="530">530</a>
+<a href="#531" id="531">531</a>
+<a href="#532" id="532">532</a>
+<a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
+<a href="#544" id="544">544</a>
+<a href="#545" id="545">545</a>
+<a href="#546" id="546">546</a>
+<a href="#547" id="547">547</a>
+<a href="#548" id="548">548</a>
+<a href="#549" id="549">549</a>
+<a href="#550" id="550">550</a>
+<a href="#551" id="551">551</a>
+<a href="#552" id="552">552</a>
+<a href="#553" id="553">553</a>
+<a href="#554" id="554">554</a>
+<a href="#555" id="555">555</a>
+<a href="#556" id="556">556</a>
+<a href="#557" id="557">557</a>
+<a href="#558" id="558">558</a>
+<a href="#559" id="559">559</a>
+<a href="#560" id="560">560</a>
+<a href="#561" id="561">561</a>
+<a href="#562" id="562">562</a>
+<a href="#563" id="563">563</a>
+<a href="#564" id="564">564</a>
+<a href="#565" id="565">565</a>
+<a href="#566" id="566">566</a>
+<a href="#567" id="567">567</a>
+<a href="#568" id="568">568</a>
+<a href="#569" id="569">569</a>
+<a href="#570" id="570">570</a>
+<a href="#571" id="571">571</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span>std::collections::VecDeque;
 
 <span class="kw">use super</span>::{
-    path::Path, pointers::Ptr, store::Store, symbol::Symbol, tag::Tag, var_map::VarMap, LEM,
-    LEMCTL, LEMOP,
+    path::Path, pointers::Ptr, slot::SlotData, store::Store, var_map::VarMap, Block, Ctrl, Func,
+    Op, Tag, Var,
 };
 
-<span class="attr">#[derive(Clone, Default)]
-</span><span class="kw">pub struct </span>Preimages&lt;F: LurkField&gt; {
-    <span class="kw">pub </span>hash2_ptrs: Vec&lt;Vec&lt;Ptr&lt;F&gt;&gt;&gt;,
-    <span class="kw">pub </span>hash3_ptrs: Vec&lt;Vec&lt;Ptr&lt;F&gt;&gt;&gt;,
-    <span class="kw">pub </span>hash4_ptrs: Vec&lt;Vec&lt;Ptr&lt;F&gt;&gt;&gt;,
+<span class="kw">use crate</span>::{
+    coprocessor::Coprocessor,
+    eval::lang::Lang,
+    field::LurkField,
+    num::Num <span class="kw">as </span>BaseNum,
+    state::initial_lurk_state,
+    tag::ExprTag::{Comm, Nil, Num, Sym},
+};
+
+<span class="attr">#[derive(Clone)]
+</span><span class="kw">pub enum </span>Val&lt;F: LurkField&gt; {
+    Pointer(Ptr&lt;F&gt;),
+    Boolean(bool),
+}
+
+<span class="kw">impl</span>&lt;F: LurkField&gt; VarMap&lt;Val&lt;F&gt;&gt; {
+    <span class="kw">fn </span>get_many_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="kw-2">&amp;</span>[Var]) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Ptr&lt;F&gt;&gt;&gt; {
+        args.iter().map(|arg| <span class="self">self</span>.get_ptr(arg)).collect()
+    }
+
+    <span class="kw">fn </span>get_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>, var: <span class="kw-2">&amp;</span>Var) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;&gt; {
+        <span class="kw">if let </span>Val::Pointer(ptr) = <span class="self">self</span>.get(var)<span class="question-mark">? </span>{
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw-2">*</span>ptr);
+        }
+        <span class="macro">bail!</span>(<span class="string">&quot;Expected {var} to be a pointer&quot;</span>)
+    }
+
+    <span class="kw">fn </span>insert_ptr(<span class="kw-2">&amp;mut </span><span class="self">self</span>, var: Var, ptr: Ptr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Val&lt;F&gt;&gt; {
+        <span class="self">self</span>.insert(var, Val::Pointer(ptr))
+    }
+
+    <span class="kw">fn </span>get_bool(<span class="kw-2">&amp;</span><span class="self">self</span>, var: <span class="kw-2">&amp;</span>Var) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt; {
+        <span class="kw">if let </span>Val::Boolean(b) = <span class="self">self</span>.get(var)<span class="question-mark">? </span>{
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw-2">*</span>b);
+        }
+        <span class="macro">bail!</span>(<span class="string">&quot;Expected {var} to be a boolean&quot;</span>)
+    }
+
+    <span class="kw">fn </span>insert_bool(<span class="kw-2">&amp;mut </span><span class="self">self</span>, var: Var, b: bool) -&gt; <span class="prelude-ty">Option</span>&lt;Val&lt;F&gt;&gt; {
+        <span class="self">self</span>.insert(var, Val::Boolean(b))
+    }
+}
+
+<span class="attr">#[derive(Clone, Debug, Default)]
+</span><span class="doccomment">/// `Hints` hold the non-deterministic hints for hashes and `Func` calls.
+/// The hash preimages must have the same shape as the allocated slots for the
+/// `Func`, and the `None` values are used to fill the unused slots, which are
+/// later filled by dummy values.
+</span><span class="kw">pub struct </span>Hints&lt;F: LurkField&gt; {
+    <span class="kw">pub </span>hash4: Vec&lt;<span class="prelude-ty">Option</span>&lt;SlotData&lt;F&gt;&gt;&gt;,
+    <span class="kw">pub </span>hash6: Vec&lt;<span class="prelude-ty">Option</span>&lt;SlotData&lt;F&gt;&gt;&gt;,
+    <span class="kw">pub </span>hash8: Vec&lt;<span class="prelude-ty">Option</span>&lt;SlotData&lt;F&gt;&gt;&gt;,
+    <span class="kw">pub </span>commitment: Vec&lt;<span class="prelude-ty">Option</span>&lt;SlotData&lt;F&gt;&gt;&gt;,
+    <span class="kw">pub </span>bit_decomp: Vec&lt;<span class="prelude-ty">Option</span>&lt;SlotData&lt;F&gt;&gt;&gt;,
+    <span class="kw">pub </span>call_outputs: VecDeque&lt;Vec&lt;Ptr&lt;F&gt;&gt;&gt;,
+    <span class="kw">pub </span>cproc_outputs: Vec&lt;Vec&lt;Ptr&lt;F&gt;&gt;&gt;,
+}
+
+<span class="kw">impl</span>&lt;F: LurkField&gt; Hints&lt;F&gt; {
+    <span class="kw">pub fn </span>new_from_func(func: <span class="kw-2">&amp;</span>Func) -&gt; Hints&lt;F&gt; {
+        <span class="kw">let </span>slot = func.slot;
+        <span class="kw">let </span>hash4 = Vec::with_capacity(slot.hash4);
+        <span class="kw">let </span>hash6 = Vec::with_capacity(slot.hash6);
+        <span class="kw">let </span>hash8 = Vec::with_capacity(slot.hash8);
+        <span class="kw">let </span>commitment = Vec::with_capacity(slot.commitment);
+        <span class="kw">let </span>bit_decomp = Vec::with_capacity(slot.bit_decomp);
+        <span class="kw">let </span>call_outputs = VecDeque::new();
+        <span class="kw">let </span>cproc_outputs = Vec::new();
+        Hints {
+            hash4,
+            hash6,
+            hash8,
+            commitment,
+            bit_decomp,
+            call_outputs,
+            cproc_outputs,
+        }
+    }
+
+    <span class="kw">pub fn </span>blank(func: <span class="kw-2">&amp;</span>Func) -&gt; Hints&lt;F&gt; {
+        <span class="kw">let </span>slot = func.slot;
+        <span class="kw">let </span>hash4 = <span class="macro">vec!</span>[<span class="prelude-val">None</span>; slot.hash4];
+        <span class="kw">let </span>hash6 = <span class="macro">vec!</span>[<span class="prelude-val">None</span>; slot.hash6];
+        <span class="kw">let </span>hash8 = <span class="macro">vec!</span>[<span class="prelude-val">None</span>; slot.hash8];
+        <span class="kw">let </span>commitment = <span class="macro">vec!</span>[<span class="prelude-val">None</span>; slot.commitment];
+        <span class="kw">let </span>bit_decomp = <span class="macro">vec!</span>[<span class="prelude-val">None</span>; slot.bit_decomp];
+        <span class="kw">let </span>call_outputs = VecDeque::new();
+        <span class="kw">let </span>cproc_outputs = Vec::new();
+        Hints {
+            hash4,
+            hash6,
+            hash8,
+            commitment,
+            bit_decomp,
+            call_outputs,
+            cproc_outputs,
+        }
+    }
 }
 
 <span class="doccomment">/// A `Frame` carries the data that results from interpreting a LEM. That is,
 /// it contains the input, the output and all the assignments resulting from
 /// running one iteration as a HashMap of variables to pointers.
 ///
-/// This information is used to generte the witness.
-</span><span class="attr">#[derive(Clone)]
+/// This information is used to generate the witness.
+</span><span class="attr">#[derive(Clone, Debug, Default)]
 </span><span class="kw">pub struct </span>Frame&lt;F: LurkField&gt; {
-    <span class="kw">pub </span>input: [Ptr&lt;F&gt;; <span class="number">3</span>],
-    <span class="kw">pub </span>output: [Ptr&lt;F&gt;; <span class="number">3</span>],
-    <span class="kw">pub </span>preimages: Preimages&lt;F&gt;,
+    <span class="kw">pub </span>input: Vec&lt;Ptr&lt;F&gt;&gt;,
+    <span class="kw">pub </span>output: Vec&lt;Ptr&lt;F&gt;&gt;,
+    <span class="kw">pub </span>emitted: Vec&lt;Ptr&lt;F&gt;&gt;,
+    <span class="kw">pub </span>hints: Hints&lt;F&gt;,
+    <span class="kw">pub </span>blank: bool,
+    <span class="kw">pub </span>pc: usize,
 }
 
-<span class="kw">impl </span>LEMOP {
-    <span class="kw">fn </span>run&lt;F: LurkField&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
-        bindings: <span class="kw-2">&amp;mut </span>VarMap&lt;Ptr&lt;F&gt;&gt;,
-        preimages: <span class="kw-2">&amp;mut </span>Preimages&lt;F&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">match </span><span class="self">self </span>{
-            LEMOP::Null(tgt, tag) =&gt; {
-                bindings.insert(tgt.clone(), Ptr::null(<span class="kw-2">*</span>tag));
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Hash2(img, tag, preimg) =&gt; {
-                <span class="kw">let </span>preimg_ptrs = bindings.get_many_cloned(preimg)<span class="question-mark">?</span>;
-                <span class="kw">let </span>tgt_ptr = store.intern_2_ptrs(<span class="kw-2">*</span>tag, preimg_ptrs[<span class="number">0</span>], preimg_ptrs[<span class="number">1</span>]);
-                bindings.insert(img.clone(), tgt_ptr);
-                preimages.hash2_ptrs.push(preimg_ptrs);
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Hash3(img, tag, preimg) =&gt; {
-                <span class="kw">let </span>preimg_ptrs = bindings.get_many_cloned(preimg)<span class="question-mark">?</span>;
-                <span class="kw">let </span>tgt_ptr =
-                    store.intern_3_ptrs(<span class="kw-2">*</span>tag, preimg_ptrs[<span class="number">0</span>], preimg_ptrs[<span class="number">1</span>], preimg_ptrs[<span class="number">2</span>]);
-                bindings.insert(img.clone(), tgt_ptr);
-                preimages.hash3_ptrs.push(preimg_ptrs);
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Hash4(img, tag, preimg) =&gt; {
-                <span class="kw">let </span>preimg_ptrs = bindings.get_many_cloned(preimg)<span class="question-mark">?</span>;
-                <span class="kw">let </span>tgt_ptr = store.intern_4_ptrs(
-                    <span class="kw-2">*</span>tag,
-                    preimg_ptrs[<span class="number">0</span>],
-                    preimg_ptrs[<span class="number">1</span>],
-                    preimg_ptrs[<span class="number">2</span>],
-                    preimg_ptrs[<span class="number">3</span>],
-                );
-                bindings.insert(img.clone(), tgt_ptr);
-                preimages.hash4_ptrs.push(preimg_ptrs);
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Unhash2(preimg, img) =&gt; {
-                <span class="kw">let </span>img_ptr = bindings.get(img)<span class="question-mark">?</span>;
-                <span class="kw">let </span><span class="prelude-val">Some</span>(idx) = img_ptr.get_index2() <span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;{img} isn&#39;t a Tree2 pointer&quot;</span>);
-                };
-                <span class="kw">let </span><span class="prelude-val">Some</span>((a, b)) = store.fetch_2_ptrs(idx) <span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t fetch {img}&#39;s children&quot;</span>)
-                };
-                <span class="kw">let </span>preimg_ptrs = [<span class="kw-2">*</span>a, <span class="kw-2">*</span>b];
-                <span class="kw">for </span>(var, ptr) <span class="kw">in </span>preimg.iter().zip(preimg_ptrs.iter()) {
-                    bindings.insert(var.clone(), <span class="kw-2">*</span>ptr);
-                }
-                preimages.hash2_ptrs.push(preimg_ptrs.to_vec());
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Unhash3(preimg, img) =&gt; {
-                <span class="kw">let </span>img_ptr = bindings.get(img)<span class="question-mark">?</span>;
-                <span class="kw">let </span><span class="prelude-val">Some</span>(idx) = img_ptr.get_index3() <span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;{img} isn&#39;t a Tree3 pointer&quot;</span>);
-                };
-                <span class="kw">let </span><span class="prelude-val">Some</span>((a, b, c)) = store.fetch_3_ptrs(idx) <span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t fetch {img}&#39;s children&quot;</span>)
-                };
-                <span class="kw">let </span>preimg_ptrs = [<span class="kw-2">*</span>a, <span class="kw-2">*</span>b, <span class="kw-2">*</span>c];
-                <span class="kw">for </span>(var, ptr) <span class="kw">in </span>preimg.iter().zip(preimg_ptrs.iter()) {
-                    bindings.insert(var.clone(), <span class="kw-2">*</span>ptr);
-                }
-                preimages.hash3_ptrs.push(preimg_ptrs.to_vec());
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Unhash4(preimg, img) =&gt; {
-                <span class="kw">let </span>img_ptr = bindings.get(img)<span class="question-mark">?</span>;
-                <span class="kw">let </span><span class="prelude-val">Some</span>(idx) = img_ptr.get_index4() <span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;{img} isn&#39;t a Tree4 pointer&quot;</span>);
-                };
-                <span class="kw">let </span><span class="prelude-val">Some</span>((a, b, c, d)) = store.fetch_4_ptrs(idx) <span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t fetch {img}&#39;s children&quot;</span>)
-                };
-                <span class="kw">let </span>preimg_ptrs = [<span class="kw-2">*</span>a, <span class="kw-2">*</span>b, <span class="kw-2">*</span>c, <span class="kw-2">*</span>d];
-                <span class="kw">for </span>(var, ptr) <span class="kw">in </span>preimg.iter().zip(preimg_ptrs.iter()) {
-                    bindings.insert(var.clone(), <span class="kw-2">*</span>ptr);
-                }
-                preimages.hash4_ptrs.push(preimg_ptrs.to_vec());
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Hide(tgt, sec, src) =&gt; {
-                <span class="kw">let </span>src_ptr = bindings.get(src)<span class="question-mark">?</span>;
-                <span class="kw">let </span>Ptr::Leaf(Tag::Num, secret) = bindings.get(sec)<span class="question-mark">? </span><span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;{sec} is not a numeric pointer&quot;</span>)
-                };
-                <span class="kw">let </span>z_ptr = store.hash_ptr(src_ptr)<span class="question-mark">?</span>;
-                <span class="kw">let </span>hash = store
-                    .poseidon_cache
-                    .hash3(<span class="kw-2">&amp;</span>[<span class="kw-2">*</span>secret, z_ptr.tag.to_field(), z_ptr.hash]);
-                <span class="kw">let </span>tgt_ptr = Ptr::comm(hash);
-                store.comms.insert(FWrap::&lt;F&gt;(hash), (<span class="kw-2">*</span>secret, <span class="kw-2">*</span>src_ptr));
-                bindings.insert(tgt.clone(), tgt_ptr);
-                <span class="prelude-val">Ok</span>(())
-            }
-            LEMOP::Open(tgt_secret, tgt_ptr, comm_or_num) =&gt; <span class="kw">match </span>bindings.get(comm_or_num)<span class="question-mark">? </span>{
-                Ptr::Leaf(Tag::Num, hash) | Ptr::Leaf(Tag::Comm, hash) =&gt; {
-                    <span class="kw">let </span><span class="prelude-val">Some</span>((secret, ptr)) = store.comms.get(<span class="kw-2">&amp;</span>FWrap::&lt;F&gt;(<span class="kw-2">*</span>hash)) <span class="kw">else </span>{
-                        <span class="macro">bail!</span>(<span class="string">&quot;No committed data for hash {}&quot;</span>, <span class="kw-2">&amp;</span>hash.hex_digits())
-                    };
-                    bindings.insert(tgt_ptr.clone(), <span class="kw-2">*</span>ptr);
-                    bindings.insert(tgt_secret.clone(), Ptr::Leaf(Tag::Num, <span class="kw-2">*</span>secret));
-                    <span class="prelude-val">Ok</span>(())
-                }
-                <span class="kw">_ </span>=&gt; {
-                    <span class="macro">bail!</span>(<span class="string">&quot;{comm_or_num} is not a num/comm pointer&quot;</span>)
-                }
-            },
+<span class="kw">impl</span>&lt;F: LurkField&gt; Frame&lt;F&gt; {
+    <span class="kw">pub fn </span>blank(func: <span class="kw-2">&amp;</span>Func, pc: usize) -&gt; Frame&lt;F&gt; {
+        <span class="kw">let </span>input = <span class="macro">vec!</span>[Ptr::null(Tag::Expr(Nil)); func.input_params.len()];
+        <span class="kw">let </span>output = <span class="macro">vec!</span>[Ptr::null(Tag::Expr(Nil)); func.output_size];
+        <span class="kw">let </span>hints = Hints::blank(func);
+        Frame {
+            input,
+            output,
+            emitted: Vec::default(),
+            hints,
+            blank: <span class="bool-val">true</span>,
+            pc,
         }
     }
 }
 
-<span class="kw">impl </span>LEMCTL {
+<span class="kw">impl </span>Block {
     <span class="doccomment">/// Interprets a LEM while i) modifying a `Store`, ii) binding `Var`s to
     /// `Ptr`s and iii) collecting the preimages from visited slots (more on this
     /// in `circuit.rs`)
-    </span><span class="kw">fn </span>run&lt;F: LurkField&gt;(
+    </span><span class="kw">fn </span>run&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        input: [Ptr&lt;F&gt;; <span class="number">3</span>],
-        store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
-        <span class="kw-2">mut </span>bindings: VarMap&lt;Ptr&lt;F&gt;&gt;,
-        <span class="kw-2">mut </span>preimages: Preimages&lt;F&gt;,
+        input: <span class="kw-2">&amp;</span>[Ptr&lt;F&gt;],
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        <span class="kw-2">mut </span>bindings: VarMap&lt;Val&lt;F&gt;&gt;,
+        <span class="kw-2">mut </span>hints: Hints&lt;F&gt;,
         <span class="kw-2">mut </span>path: Path,
+        emitted: <span class="kw-2">&amp;mut </span>Vec&lt;Ptr&lt;F&gt;&gt;,
+        lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;,
+        pc: usize,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(Frame&lt;F&gt;, Path)&gt; {
-        <span class="kw">match </span><span class="self">self </span>{
-            LEMCTL::MatchTag(match_var, cases) =&gt; {
-                <span class="kw">let </span>ptr = bindings.get(match_var)<span class="question-mark">?</span>;
+        <span class="kw">for </span>op <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.ops {
+            <span class="kw">match </span>op {
+                Op::Cproc(out, sym, inp) =&gt; {
+                    <span class="kw">let </span>inp_ptrs = bindings.get_many_ptr(inp)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>cproc = lang
+                        .lookup_by_sym(sym)
+                        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Coprocessor for {sym} not found&quot;</span>))<span class="question-mark">?</span>;
+                    <span class="kw">let </span>out_ptrs = cproc.evaluate_lem_internal(store, <span class="kw-2">&amp;</span>inp_ptrs);
+                    <span class="kw">if </span>out.len() != out_ptrs.len() {
+                        <span class="macro">bail!</span>(<span class="string">&quot;Incompatible output length for coprocessor {sym}&quot;</span>)
+                    }
+                    <span class="kw">for </span>(var, ptr) <span class="kw">in </span>out.iter().zip(<span class="kw-2">&amp;</span>out_ptrs) {
+                        bindings.insert(var.clone(), Val::Pointer(<span class="kw-2">*</span>ptr));
+                    }
+                    hints.cproc_outputs.push(out_ptrs);
+                }
+                Op::Call(out, func, inp) =&gt; {
+                    <span class="comment">// Get the argument values
+                    </span><span class="kw">let </span>inp_ptrs = bindings.get_many_ptr(inp)<span class="question-mark">?</span>;
+
+                    <span class="comment">// To save lexical order of `call_outputs` we need to push the output
+                    // of the call *before* the inner calls of the `func`. To do this, we
+                    // save all the inner call outputs, push the output of the call in front
+                    // of it, then extend `call_outputs`
+                    </span><span class="kw">let </span><span class="kw-2">mut </span>inner_call_outputs = VecDeque::new();
+                    std::mem::swap(<span class="kw-2">&amp;mut </span>inner_call_outputs, <span class="kw-2">&amp;mut </span>hints.call_outputs);
+                    <span class="kw">let </span>(<span class="kw-2">mut </span>frame, func_path) =
+                        func.call(<span class="kw-2">&amp;</span>inp_ptrs, store, hints, emitted, lang, pc)<span class="question-mark">?</span>;
+                    std::mem::swap(<span class="kw-2">&amp;mut </span>inner_call_outputs, <span class="kw-2">&amp;mut </span>frame.hints.call_outputs);
+
+                    <span class="comment">// Extend the path and bind the output variables to the output values
+                    </span>path.extend_from_path(<span class="kw-2">&amp;</span>func_path);
+                    <span class="kw">for </span>(var, ptr) <span class="kw">in </span>out.iter().zip(frame.output.iter()) {
+                        bindings.insert_ptr(var.clone(), <span class="kw-2">*</span>ptr);
+                    }
+
+                    <span class="comment">// Update `hints` correctly
+                    </span>inner_call_outputs.push_front(frame.output);
+                    hints = frame.hints;
+                    hints.call_outputs.extend(inner_call_outputs);
+                }
+                Op::Copy(tgt, src) =&gt; {
+                    bindings.insert(tgt.clone(), bindings.get_cloned(src)<span class="question-mark">?</span>);
+                }
+                Op::Null(tgt, tag) =&gt; {
+                    bindings.insert_ptr(tgt.clone(), Ptr::null(<span class="kw-2">*</span>tag));
+                }
+                Op::Lit(tgt, lit) =&gt; {
+                    bindings.insert_ptr(tgt.clone(), lit.to_ptr(store));
+                }
+                Op::Cast(tgt, tag, src) =&gt; {
+                    <span class="kw">let </span>src_ptr = bindings.get_ptr(src)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt_ptr = src_ptr.cast(<span class="kw-2">*</span>tag);
+                    bindings.insert_ptr(tgt.clone(), tgt_ptr);
+                }
+                Op::EqTag(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>c = a.tag() == b.tag();
+                    bindings.insert_bool(tgt.clone(), c);
+                }
+                Op::EqVal(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="comment">// In order to compare Ptrs, we *must* resolve the hashes. Otherwise, we risk failing to recognize equality of
+                    // compound data with opaque data in either element&#39;s transitive closure.
+                    </span><span class="kw">let </span>c = store.hash_ptr(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>.value() == store.hash_ptr(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>.value();
+                    bindings.insert_bool(tgt.clone(), c);
+                }
+                Op::Not(tgt, a) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_bool(a)<span class="question-mark">?</span>;
+                    bindings.insert_bool(tgt.clone(), !a);
+                }
+                Op::And(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_bool(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_bool(b)<span class="question-mark">?</span>;
+                    bindings.insert_bool(tgt.clone(), a &amp;&amp; b);
+                }
+                Op::Or(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_bool(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_bool(b)<span class="question-mark">?</span>;
+                    bindings.insert_bool(tgt.clone(), a || b);
+                }
+                Op::Add(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>c = <span class="kw">if let </span>(Ptr::Atom(<span class="kw">_</span>, f), Ptr::Atom(<span class="kw">_</span>, g)) = (a, b) {
+                        Ptr::Atom(Tag::Expr(Num), f + g)
+                    } <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;`Add` only works on atoms&quot;</span>)
+                    };
+                    bindings.insert_ptr(tgt.clone(), c);
+                }
+                Op::Sub(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>c = <span class="kw">if let </span>(Ptr::Atom(<span class="kw">_</span>, f), Ptr::Atom(<span class="kw">_</span>, g)) = (a, b) {
+                        Ptr::Atom(Tag::Expr(Num), f - g)
+                    } <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;`Sub` only works on atoms&quot;</span>)
+                    };
+                    bindings.insert_ptr(tgt.clone(), c);
+                }
+                Op::Mul(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>c = <span class="kw">if let </span>(Ptr::Atom(<span class="kw">_</span>, f), Ptr::Atom(<span class="kw">_</span>, g)) = (a, b) {
+                        Ptr::Atom(Tag::Expr(Num), f * g)
+                    } <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;`Mul` only works on atoms&quot;</span>)
+                    };
+                    bindings.insert_ptr(tgt.clone(), c);
+                }
+                Op::Div(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>c = <span class="kw">if let </span>(Ptr::Atom(<span class="kw">_</span>, f), Ptr::Atom(<span class="kw">_</span>, g)) = (a, b) {
+                        <span class="kw">if </span>g == F::ZERO {
+                            <span class="macro">bail!</span>(<span class="string">&quot;Can&#39;t divide by zero&quot;</span>)
+                        }
+                        Ptr::Atom(Tag::Expr(Num), f * g.invert().expect(<span class="string">&quot;not zero&quot;</span>))
+                    } <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;`Div` only works on numbers&quot;</span>)
+                    };
+                    bindings.insert_ptr(tgt.clone(), c);
+                }
+                Op::Lt(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>c = <span class="kw">if let </span>(Ptr::Atom(<span class="kw">_</span>, f), Ptr::Atom(<span class="kw">_</span>, g)) = (a, b) {
+                        <span class="kw">let </span>diff = f - g;
+                        hints.bit_decomp.push(<span class="prelude-val">Some</span>(SlotData::F(f + f)));
+                        hints.bit_decomp.push(<span class="prelude-val">Some</span>(SlotData::F(g + g)));
+                        hints.bit_decomp.push(<span class="prelude-val">Some</span>(SlotData::F(diff + diff)));
+                        <span class="kw">let </span>f = BaseNum::Scalar(f);
+                        <span class="kw">let </span>g = BaseNum::Scalar(g);
+                        f &lt; g
+                    } <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;`Lt` only works on atoms&quot;</span>)
+                    };
+                    bindings.insert_bool(tgt.clone(), c);
+                }
+                Op::Trunc(tgt, a, n) =&gt; {
+                    <span class="macro">assert!</span>(<span class="kw-2">*</span>n &lt;= <span class="number">64</span>);
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>c = <span class="kw">if let </span>Ptr::Atom(<span class="kw">_</span>, f) = a {
+                        hints.bit_decomp.push(<span class="prelude-val">Some</span>(SlotData::F(f)));
+                        <span class="kw">let </span>b = <span class="kw">if </span><span class="kw-2">*</span>n &lt; <span class="number">64 </span>{ (<span class="number">1 </span>&lt;&lt; <span class="kw-2">*</span>n) - <span class="number">1 </span>} <span class="kw">else </span>{ u64::MAX };
+                        Ptr::Atom(Tag::Expr(Num), F::from_u64(f.to_u64_unchecked() &amp; b))
+                    } <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;`Trunc` only works on atoms&quot;</span>)
+                    };
+                    bindings.insert_ptr(tgt.clone(), c);
+                }
+                Op::DivRem64(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = bindings.get_ptr(b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>(c1, c2) = <span class="kw">if let </span>(Ptr::Atom(<span class="kw">_</span>, f), Ptr::Atom(<span class="kw">_</span>, g)) = (a, b) {
+                        <span class="kw">if </span>g == F::ZERO {
+                            <span class="macro">bail!</span>(<span class="string">&quot;Can&#39;t divide by zero&quot;</span>)
+                        }
+                        <span class="kw">let </span>f = f.to_u64_unchecked();
+                        <span class="kw">let </span>g = g.to_u64_unchecked();
+                        <span class="kw">let </span>c1 = Ptr::Atom(Tag::Expr(Num), F::from_u64(f / g));
+                        <span class="kw">let </span>c2 = Ptr::Atom(Tag::Expr(Num), F::from_u64(f % g));
+                        (c1, c2)
+                    } <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;`DivRem64` only works on atoms&quot;</span>)
+                    };
+                    bindings.insert_ptr(tgt[<span class="number">0</span>].clone(), c1);
+                    bindings.insert_ptr(tgt[<span class="number">1</span>].clone(), c2);
+                }
+                Op::Emit(a) =&gt; {
+                    <span class="kw">let </span>a = bindings.get_ptr(a)<span class="question-mark">?</span>;
+                    <span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, a.fmt_to_string(store, initial_lurk_state()));
+                    emitted.push(a);
+                }
+                Op::Cons2(img, tag, preimg) =&gt; {
+                    <span class="kw">let </span>preimg_ptrs = bindings.get_many_ptr(preimg)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt_ptr = store.intern_2_ptrs(<span class="kw-2">*</span>tag, preimg_ptrs[<span class="number">0</span>], preimg_ptrs[<span class="number">1</span>]);
+                    bindings.insert_ptr(img.clone(), tgt_ptr);
+                    hints.hash4.push(<span class="prelude-val">Some</span>(SlotData::PtrVec(preimg_ptrs)));
+                }
+                Op::Cons3(img, tag, preimg) =&gt; {
+                    <span class="kw">let </span>preimg_ptrs = bindings.get_many_ptr(preimg)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt_ptr =
+                        store.intern_3_ptrs(<span class="kw-2">*</span>tag, preimg_ptrs[<span class="number">0</span>], preimg_ptrs[<span class="number">1</span>], preimg_ptrs[<span class="number">2</span>]);
+                    bindings.insert_ptr(img.clone(), tgt_ptr);
+                    hints.hash6.push(<span class="prelude-val">Some</span>(SlotData::PtrVec(preimg_ptrs)));
+                }
+                Op::Cons4(img, tag, preimg) =&gt; {
+                    <span class="kw">let </span>preimg_ptrs = bindings.get_many_ptr(preimg)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt_ptr = store.intern_4_ptrs(
+                        <span class="kw-2">*</span>tag,
+                        preimg_ptrs[<span class="number">0</span>],
+                        preimg_ptrs[<span class="number">1</span>],
+                        preimg_ptrs[<span class="number">2</span>],
+                        preimg_ptrs[<span class="number">3</span>],
+                    );
+                    bindings.insert_ptr(img.clone(), tgt_ptr);
+                    hints.hash8.push(<span class="prelude-val">Some</span>(SlotData::PtrVec(preimg_ptrs)));
+                }
+                Op::Decons2(preimg, img) =&gt; {
+                    <span class="kw">let </span>img_ptr = bindings.get_ptr(img)<span class="question-mark">?</span>;
+                    <span class="kw">let </span><span class="prelude-val">Some</span>(idx) = img_ptr.get_index2() <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;{img} isn&#39;t a Tree2 pointer&quot;</span>);
+                    };
+                    <span class="kw">let </span><span class="prelude-val">Some</span>((a, b)) = store.fetch_2_ptrs(idx) <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t fetch {img}&#39;s children&quot;</span>)
+                    };
+                    <span class="kw">let </span>preimg_ptrs = [<span class="kw-2">*</span>a, <span class="kw-2">*</span>b];
+                    <span class="kw">for </span>(var, ptr) <span class="kw">in </span>preimg.iter().zip(preimg_ptrs.iter()) {
+                        bindings.insert_ptr(var.clone(), <span class="kw-2">*</span>ptr);
+                    }
+                    hints
+                        .hash4
+                        .push(<span class="prelude-val">Some</span>(SlotData::PtrVec(preimg_ptrs.to_vec())));
+                }
+                Op::Decons3(preimg, img) =&gt; {
+                    <span class="kw">let </span>img_ptr = bindings.get_ptr(img)<span class="question-mark">?</span>;
+                    <span class="kw">let </span><span class="prelude-val">Some</span>(idx) = img_ptr.get_index3() <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;{img} isn&#39;t a Tree3 pointer&quot;</span>);
+                    };
+                    <span class="kw">let </span><span class="prelude-val">Some</span>((a, b, c)) = store.fetch_3_ptrs(idx) <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t fetch {img}&#39;s children&quot;</span>)
+                    };
+                    <span class="kw">let </span>preimg_ptrs = [<span class="kw-2">*</span>a, <span class="kw-2">*</span>b, <span class="kw-2">*</span>c];
+                    <span class="kw">for </span>(var, ptr) <span class="kw">in </span>preimg.iter().zip(preimg_ptrs.iter()) {
+                        bindings.insert_ptr(var.clone(), <span class="kw-2">*</span>ptr);
+                    }
+                    hints
+                        .hash6
+                        .push(<span class="prelude-val">Some</span>(SlotData::PtrVec(preimg_ptrs.to_vec())));
+                }
+                Op::Decons4(preimg, img) =&gt; {
+                    <span class="kw">let </span>img_ptr = bindings.get_ptr(img)<span class="question-mark">?</span>;
+                    <span class="kw">let </span><span class="prelude-val">Some</span>(idx) = img_ptr.get_index4() <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;{img} isn&#39;t a Tree4 pointer&quot;</span>);
+                    };
+                    <span class="kw">let </span><span class="prelude-val">Some</span>((a, b, c, d)) = store.fetch_4_ptrs(idx) <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t fetch {img}&#39;s children&quot;</span>)
+                    };
+                    <span class="kw">let </span>preimg_ptrs = [<span class="kw-2">*</span>a, <span class="kw-2">*</span>b, <span class="kw-2">*</span>c, <span class="kw-2">*</span>d];
+                    <span class="kw">for </span>(var, ptr) <span class="kw">in </span>preimg.iter().zip(preimg_ptrs.iter()) {
+                        bindings.insert_ptr(var.clone(), <span class="kw-2">*</span>ptr);
+                    }
+                    hints
+                        .hash8
+                        .push(<span class="prelude-val">Some</span>(SlotData::PtrVec(preimg_ptrs.to_vec())));
+                }
+                Op::Hide(tgt, sec, src) =&gt; {
+                    <span class="kw">let </span>src_ptr = bindings.get_ptr(src)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>Ptr::Atom(Tag::Expr(Num), secret) = bindings.get_ptr(sec)<span class="question-mark">? </span><span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;{sec} is not a numeric pointer&quot;</span>)
+                    };
+                    <span class="kw">let </span>tgt_ptr = store.hide(secret, src_ptr)<span class="question-mark">?</span>;
+                    hints.commitment.push(<span class="prelude-val">Some</span>(SlotData::FPtr(secret, src_ptr)));
+                    bindings.insert_ptr(tgt.clone(), tgt_ptr);
+                }
+                Op::Open(tgt_secret, tgt_ptr, comm) =&gt; {
+                    <span class="kw">let </span>Ptr::Atom(Tag::Expr(Comm), hash) = bindings.get_ptr(comm)<span class="question-mark">? </span><span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;{comm} is not a comm pointer&quot;</span>)
+                    };
+                    <span class="kw">let </span><span class="prelude-val">Some</span>((secret, ptr)) = store.open(hash) <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;No committed data for hash {}&quot;</span>, <span class="kw-2">&amp;</span>hash.hex_digits())
+                    };
+                    bindings.insert_ptr(tgt_ptr.clone(), <span class="kw-2">*</span>ptr);
+                    bindings.insert_ptr(tgt_secret.clone(), Ptr::Atom(Tag::Expr(Num), <span class="kw-2">*</span>secret));
+                    hints.commitment.push(<span class="prelude-val">Some</span>(SlotData::FPtr(<span class="kw-2">*</span>secret, <span class="kw-2">*</span>ptr)))
+                }
+            }
+        }
+        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.ctrl {
+            Ctrl::MatchTag(match_var, cases, def) =&gt; {
+                <span class="kw">let </span>ptr = bindings.get_ptr(match_var)<span class="question-mark">?</span>;
                 <span class="kw">let </span>tag = ptr.tag();
-                <span class="kw">match </span>cases.get(tag) {
-                    <span class="prelude-val">Some</span>(ctl) =&gt; {
-                        path.push_tag_inplace(tag);
-                        ctl.run(input, store, bindings, preimages, path)
-                    }
-                    <span class="prelude-val">None </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;No match for tag {}&quot;</span>, tag),
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(block) = cases.get(tag) {
+                    path.push_tag_inplace(<span class="kw-2">*</span>tag);
+                    block.run(input, store, bindings, hints, path, emitted, lang, pc)
+                } <span class="kw">else </span>{
+                    path.push_default_inplace();
+                    <span class="kw">let </span><span class="prelude-val">Some</span>(def) = def <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;No match for tag {}&quot;</span>, tag)
+                    };
+                    def.run(input, store, bindings, hints, path, emitted, lang, pc)
                 }
             }
-            LEMCTL::MatchSymbol(match_var, cases, def) =&gt; {
-                <span class="kw">let </span>ptr = bindings.get(match_var)<span class="question-mark">?</span>;
-                <span class="kw">let </span><span class="prelude-val">Some</span>(symbol) = store.fetch_symbol(ptr) <span class="kw">else </span>{
-                    <span class="macro">bail!</span>(<span class="string">&quot;Symbol not found for {match_var}&quot;</span>);
+            Ctrl::MatchSymbol(match_var, cases, def) =&gt; {
+                <span class="kw">let </span>ptr = bindings.get_ptr(match_var)<span class="question-mark">?</span>;
+                <span class="kw">if </span>ptr.tag() != <span class="kw-2">&amp;</span>Tag::Expr(Sym) {
+                    <span class="macro">bail!</span>(<span class="string">&quot;{match_var} is not a symbol&quot;</span>);
+                }
+                <span class="kw">let </span><span class="prelude-val">Some</span>(sym) = store.fetch_symbol(<span class="kw-2">&amp;</span>ptr) <span class="kw">else </span>{
+                    <span class="macro">bail!</span>(<span class="string">&quot;Symbol bound to {match_var} wasn&#39;t interned&quot;</span>);
                 };
-                <span class="kw">match </span>cases.get(<span class="kw-2">&amp;</span>symbol) {
-                    <span class="prelude-val">Some</span>(ctl) =&gt; {
-                        path.push_symbol_inplace(<span class="kw-2">&amp;</span>symbol);
-                        ctl.run(input, store, bindings, preimages, path)
-                    }
-                    <span class="prelude-val">None </span>=&gt; {
-                        path.push_default_inplace();
-                        def.run(input, store, bindings, preimages, path)
-                    }
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(block) = cases.get(<span class="kw-2">&amp;</span>sym) {
+                    path.push_symbol_inplace(sym);
+                    block.run(input, store, bindings, hints, path, emitted, lang, pc)
+                } <span class="kw">else </span>{
+                    path.push_default_inplace();
+                    <span class="kw">let </span><span class="prelude-val">Some</span>(def) = def <span class="kw">else </span>{
+                        <span class="macro">bail!</span>(<span class="string">&quot;No match for symbol {sym}&quot;</span>)
+                    };
+                    def.run(input, store, bindings, hints, path, emitted, lang, pc)
                 }
             }
-            LEMCTL::Seq(ops, rest) =&gt; {
-                <span class="kw">for </span>op <span class="kw">in </span>ops {
-                    op.run(store, <span class="kw-2">&amp;mut </span>bindings, <span class="kw-2">&amp;mut </span>preimages)<span class="question-mark">?</span>;
+            Ctrl::If(b, true_block, false_block) =&gt; {
+                <span class="kw">let </span>b = bindings.get_bool(b)<span class="question-mark">?</span>;
+                path.push_bool_inplace(b);
+                <span class="kw">if </span>b {
+                    true_block.run(input, store, bindings, hints, path, emitted, lang, pc)
+                } <span class="kw">else </span>{
+                    false_block.run(input, store, bindings, hints, path, emitted, lang, pc)
                 }
-                rest.run(input, store, bindings, preimages, path)
             }
-            LEMCTL::Return(o) =&gt; {
-                <span class="kw">let </span>output = [
-                    <span class="kw-2">*</span>bindings.get(<span class="kw-2">&amp;</span>o[<span class="number">0</span>])<span class="question-mark">?</span>,
-                    <span class="kw-2">*</span>bindings.get(<span class="kw-2">&amp;</span>o[<span class="number">1</span>])<span class="question-mark">?</span>,
-                    <span class="kw-2">*</span>bindings.get(<span class="kw-2">&amp;</span>o[<span class="number">2</span>])<span class="question-mark">?</span>,
-                ];
+            Ctrl::Return(output_vars) =&gt; {
+                <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::with_capacity(output_vars.len());
+                <span class="kw">for </span>var <span class="kw">in </span>output_vars.iter() {
+                    output.push(bindings.get_ptr(var)<span class="question-mark">?</span>)
+                }
+                <span class="kw">let </span>input = input.to_vec();
                 <span class="prelude-val">Ok</span>((
                     Frame {
                         input,
                         output,
-                        preimages,
+                        emitted: emitted.clone(),
+                        hints,
+                        blank: <span class="bool-val">false</span>,
+                        pc,
                     },
                     path,
                 ))
@@ -456,46 +1060,84 @@
     }
 }
 
-<span class="kw">impl </span>LEM {
-    <span class="doccomment">/// Calls `run` until the stop contidion is satisfied, using the output of one
-    /// iteration as the input of the next one.
-    </span><span class="kw">pub fn </span>eval&lt;F: LurkField&gt;(
+<span class="kw">impl </span>Func {
+    <span class="kw">pub fn </span>call&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        expr: Ptr&lt;F&gt;,
-        store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;Frame&lt;F&gt;&gt;, Vec&lt;Path&gt;)&gt; {
-        <span class="comment">// Lurk constants
-        </span><span class="kw">let </span>outermost = Ptr::null(Tag::Outermost);
-        <span class="kw">let </span>terminal = <span class="kw-2">&amp;</span>Ptr::null(Tag::Terminal);
-        <span class="kw">let </span>error = <span class="kw-2">&amp;</span>Ptr::null(Tag::Error);
-        <span class="kw">let </span>nil = store.intern_symbol(<span class="kw-2">&amp;</span>Symbol::lurk_sym(<span class="string">&quot;nil&quot;</span>));
-
-        <span class="comment">// Initial input and initial frames
-        </span><span class="kw">let </span><span class="kw-2">mut </span>input = [expr, nil, outermost];
-        <span class="kw">let </span><span class="kw-2">mut </span>frames = <span class="macro">vec!</span>[];
-        <span class="kw">let </span><span class="kw-2">mut </span>paths = <span class="macro">vec!</span>[];
-
-        <span class="kw">loop </span>{
-            <span class="comment">// Map of names to pointers (its key/val pairs should never be overwritten)
-            </span><span class="kw">let </span><span class="kw-2">mut </span>bindings = VarMap::new();
-            <span class="kw">for </span>(i, var) <span class="kw">in </span><span class="self">self</span>.input_vars.iter().enumerate() {
-                bindings.insert(var.clone(), input[i]);
-            }
-
-            <span class="kw">let </span>preimages = Preimages::default();
-            <span class="kw">let </span>(frame, path) = <span class="self">self
-                </span>.ctl
-                .run(input, store, bindings, preimages, Path::default())<span class="question-mark">?</span>;
-            <span class="kw">if </span><span class="kw-2">&amp;</span>frame.output[<span class="number">2</span>] == terminal || <span class="kw-2">&amp;</span>frame.output[<span class="number">2</span>] == error {
-                frames.push(frame);
-                paths.push(path);
-                <span class="kw">break</span>;
-            }
-            input = frame.output;
-            frames.push(frame);
-            paths.push(path);
+        args: <span class="kw-2">&amp;</span>[Ptr&lt;F&gt;],
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        hints: Hints&lt;F&gt;,
+        emitted: <span class="kw-2">&amp;mut </span>Vec&lt;Ptr&lt;F&gt;&gt;,
+        lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;,
+        pc: usize,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Frame&lt;F&gt;, Path)&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>bindings = VarMap::new();
+        <span class="kw">for </span>(i, param) <span class="kw">in </span><span class="self">self</span>.input_params.iter().enumerate() {
+            bindings.insert_ptr(param.clone(), args[i]);
         }
-        <span class="prelude-val">Ok</span>((frames, paths))
+
+        <span class="comment">// We must fill any unused slots with `None` values so we save
+        // the initial size of hints, which might not be zero
+        </span><span class="kw">let </span>hash4_init = hints.hash4.len();
+        <span class="kw">let </span>hash6_init = hints.hash6.len();
+        <span class="kw">let </span>hash8_init = hints.hash8.len();
+        <span class="kw">let </span>commitment_init = hints.commitment.len();
+        <span class="kw">let </span>bit_decomp_init = hints.bit_decomp.len();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>res = <span class="self">self</span>.body.run(
+            args,
+            store,
+            bindings,
+            hints,
+            Path::default(),
+            emitted,
+            lang,
+            pc,
+        )<span class="question-mark">?</span>;
+        <span class="kw">let </span>hints = <span class="kw-2">&amp;mut </span>res.<span class="number">0</span>.hints;
+
+        <span class="kw">let </span>hash4_used = hints.hash4.len() - hash4_init;
+        <span class="kw">let </span>hash6_used = hints.hash6.len() - hash6_init;
+        <span class="kw">let </span>hash8_used = hints.hash8.len() - hash8_init;
+        <span class="kw">let </span>commitment_used = hints.commitment.len() - commitment_init;
+        <span class="kw">let </span>bit_decomp_used = hints.bit_decomp.len() - bit_decomp_init;
+
+        <span class="kw">for _ in </span>hash4_used..<span class="self">self</span>.slot.hash4 {
+            hints.hash4.push(<span class="prelude-val">None</span>);
+        }
+        <span class="kw">for _ in </span>hash6_used..<span class="self">self</span>.slot.hash6 {
+            hints.hash6.push(<span class="prelude-val">None</span>);
+        }
+        <span class="kw">for _ in </span>hash8_used..<span class="self">self</span>.slot.hash8 {
+            hints.hash8.push(<span class="prelude-val">None</span>);
+        }
+        <span class="kw">for _ in </span>commitment_used..<span class="self">self</span>.slot.commitment {
+            hints.commitment.push(<span class="prelude-val">None</span>);
+        }
+        <span class="kw">for _ in </span>bit_decomp_used..<span class="self">self</span>.slot.bit_decomp {
+            hints.bit_decomp.push(<span class="prelude-val">None</span>);
+        }
+
+        <span class="prelude-val">Ok</span>(res)
+    }
+
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>call_simple&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        args: <span class="kw-2">&amp;</span>[Ptr&lt;F&gt;],
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;,
+        pc: usize,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Frame&lt;F&gt;&gt; {
+        <span class="prelude-val">Ok</span>(<span class="self">self
+            </span>.call(
+                args,
+                store,
+                Hints::new_from_func(<span class="self">self</span>),
+                <span class="kw-2">&amp;mut </span><span class="macro">vec!</span>[],
+                lang,
+                pc,
+            )<span class="question-mark">?
+            </span>.<span class="number">0</span>)
     }
 }
 </code></pre></div></section></main></body></html>

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["lurk_default_dir"]};

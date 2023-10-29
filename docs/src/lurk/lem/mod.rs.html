@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9bb858ba049f1f21.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.72.0-nightly (83964c156 2023-07-08)" data-channel="nightly" data-search-js="search-f6292fe389d70017.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ><script src="../../../static.files/storage-59fd9b8ccb335783.js"></script><script defer src="../../../static.files/source-script-106908c7a7964ba4.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../lurk/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (e5cfc5547 2023-10-28)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -495,15 +495,304 @@
 <a href="#495" id="495">495</a>
 <a href="#496" id="496">496</a>
 <a href="#497" id="497">497</a>
+<a href="#498" id="498">498</a>
+<a href="#499" id="499">499</a>
+<a href="#500" id="500">500</a>
+<a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
+<a href="#503" id="503">503</a>
+<a href="#504" id="504">504</a>
+<a href="#505" id="505">505</a>
+<a href="#506" id="506">506</a>
+<a href="#507" id="507">507</a>
+<a href="#508" id="508">508</a>
+<a href="#509" id="509">509</a>
+<a href="#510" id="510">510</a>
+<a href="#511" id="511">511</a>
+<a href="#512" id="512">512</a>
+<a href="#513" id="513">513</a>
+<a href="#514" id="514">514</a>
+<a href="#515" id="515">515</a>
+<a href="#516" id="516">516</a>
+<a href="#517" id="517">517</a>
+<a href="#518" id="518">518</a>
+<a href="#519" id="519">519</a>
+<a href="#520" id="520">520</a>
+<a href="#521" id="521">521</a>
+<a href="#522" id="522">522</a>
+<a href="#523" id="523">523</a>
+<a href="#524" id="524">524</a>
+<a href="#525" id="525">525</a>
+<a href="#526" id="526">526</a>
+<a href="#527" id="527">527</a>
+<a href="#528" id="528">528</a>
+<a href="#529" id="529">529</a>
+<a href="#530" id="530">530</a>
+<a href="#531" id="531">531</a>
+<a href="#532" id="532">532</a>
+<a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
+<a href="#544" id="544">544</a>
+<a href="#545" id="545">545</a>
+<a href="#546" id="546">546</a>
+<a href="#547" id="547">547</a>
+<a href="#548" id="548">548</a>
+<a href="#549" id="549">549</a>
+<a href="#550" id="550">550</a>
+<a href="#551" id="551">551</a>
+<a href="#552" id="552">552</a>
+<a href="#553" id="553">553</a>
+<a href="#554" id="554">554</a>
+<a href="#555" id="555">555</a>
+<a href="#556" id="556">556</a>
+<a href="#557" id="557">557</a>
+<a href="#558" id="558">558</a>
+<a href="#559" id="559">559</a>
+<a href="#560" id="560">560</a>
+<a href="#561" id="561">561</a>
+<a href="#562" id="562">562</a>
+<a href="#563" id="563">563</a>
+<a href="#564" id="564">564</a>
+<a href="#565" id="565">565</a>
+<a href="#566" id="566">566</a>
+<a href="#567" id="567">567</a>
+<a href="#568" id="568">568</a>
+<a href="#569" id="569">569</a>
+<a href="#570" id="570">570</a>
+<a href="#571" id="571">571</a>
+<a href="#572" id="572">572</a>
+<a href="#573" id="573">573</a>
+<a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
+<a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
+<a href="#594" id="594">594</a>
+<a href="#595" id="595">595</a>
+<a href="#596" id="596">596</a>
+<a href="#597" id="597">597</a>
+<a href="#598" id="598">598</a>
+<a href="#599" id="599">599</a>
+<a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
+<a href="#640" id="640">640</a>
+<a href="#641" id="641">641</a>
+<a href="#642" id="642">642</a>
+<a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
+<a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
+<a href="#770" id="770">770</a>
+<a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
+<a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
+<a href="#782" id="782">782</a>
+<a href="#783" id="783">783</a>
+<a href="#784" id="784">784</a>
+<a href="#785" id="785">785</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ## Lurk Evaluation Model (LEM)
 //!
-//! A LEM is a description of Lurk&#39;s evaluation algorithm, encoded as data. In
-//! other words, it&#39;s a meta-representation of Lurk&#39;s step function.
+//! LEM is a simple, first order, referentially transparent language, designed to
+//! allow writing Lurk&#39;s step function and Lurk coprocessors in a convenient way.
 //!
 //! The motivation behind LEM is the fact that hand-writing the circuit is a
 //! fragile process that hinders experimentation and safety. Thus we would like
-//! to bootstrap the circuit automatically, given a higher level description of
-//! the step function.
+//! to bootstrap the circuit automatically, as well as an interpretation
+//! algorithm that computes all non-deterministic hints for the circuit, given a
+//! higher level description of the step function.
 //!
 //! LEM also allows the `Store` API to be completely abstracted away from the
 //! responsibilities of LEM authors. Indeed, we want the implementation details
@@ -511,81 +800,196 @@
 //!
 //! ### Data semantics
 //!
-//! A LEM describes how to handle pointers with variables, which are
-//! basically named references. Instead of saying `let foo ...` in Rust, we
-//! use a `Var(&quot;foo&quot;)` in LEM.
+//! The main data type that represents LEM code is the `Func` type. A `Func` is
+//! much like a function: it contains input parameters, output size, and a
+//! function body. The body of a function is a `Block` which is a sequence of
+//! operations `Op` followed by a control `Ctrl` statement.
 //!
-//! The actual algorithm is encoded with a LEM operation (`LEMOP`). It&#39;s worth
-//! noting that one of the LEM operators is in fact a vector of operators, which
-//! allows imperative/sequenced expressiveness.
+//! Operations are much like `let` statements in functional languages. For
+//! example, a `Op::Cons2(x, t, ys)` is to be understood as `let x = cons2(ys)`.
+//! If a second operation binds its result to the same variable as a previous
+//! operation, we shadow the previous value. There is no mutation, thus the
+//! language is referentially transparent.
+//!
+//! A control statement is either a `Return(xs)`, which exits a function and
+//! returns the values of the specified variables, or a match statement, which
+//! will do case analysis on the value of a variable and select the appropriate
+//! block to continue to.
 //!
 //! ### Interpretation
 //!
-//! Running a LEM is done via interpretation, which might be a bit slower than
-//! calling Rust functions directly. But it also has its advantages:
+//! The interpreter runs a LEM function given input values. Interpreting a LEM
+//! function will compute the values of each variable in the path of execution.
+//! In particular, it will compute all the non-deterministic hints that are
+//! needed to solve the circuit.
 //!
-//! 1. The logic to collect data during execution can be factored out from the
-//! definition of the step function. This process is needed in order to evidence
-//! the inputs for the circuit at proving time;
+//! ### Synthesizing
 //!
-//! 2. Actually, such logic to collect data is a natural consequence of the fact
-//! that we&#39;re on a higher level of abstraction. Relevant data is not simply
-//! stored on rust variables that die after the function ends. On the contrary,
-//! all relevant data lives on data structures that are also a product of the
-//! interpreted LEM.
+//! Synthesizing is the process of building the circuit and solving it for a
+//! particular instance (i.e. finding a witness). All valid LEM functions can be
+//! synthesized if they were previously interpreted.
 //!
-//! ### Constraining
+//! ### Code transformations and static checks of correctness
 //!
-//! This is the process of creating the circuit, which we want to be done
-//! automatically for whoever creates a LEM. Each `LEMOP` has to be precisely
-//! constrained in such a way that the resulting circuits accepts a witness iff
-//! it was generated by a valid interpretation of the LEM at play.
+//! Here are some simple transformations and static checks of correctness we
+//! want to perform on a LEM function before interpreting and synthesizing it
 //!
-//! ### Static checks of correctness
-//!
-//! Since a LEM is an algorithm encoded as data, we can perform static checks of
-//! correctness as some form of (automated) formal verification. Here are some
-//! (WIP) properties we want a LEM to have before we can adopt it as a proper
-//! Lurk step function:
-//!
-//! 1. Non-duplicated input labels: right at the start of interpretation, the
-//! input labels are bound to the actual pointers that represent the expression,
-//! environment and continuation. If some label is repeated, semantics become
-//! confusing;
-//!
-//! 2. Assign first, use later: this prevents obvious errors such as &quot;x not
-//! defined&quot; during interpretation or &quot;x not allocated&quot; during constraining.
+//! 1. All variables must be bound, no variable can be used before being bound
+//! 2. All returns within a block must be of the same size and equal to the
+//!    function&#39;s output size
+//! 3. Function calls must have the correct number of arguments and must bind
+//!    the correct number of variables
+//! 4. No match statements should have conflicting cases
+//! 5. LEM should be transformed to SSA to make it simple to synthesize
+//! 6. We also check for variables that are not used. If intended they should
+//!    be prefixed by &quot;_&quot;
 
-</span><span class="kw">mod </span>circuit;
-<span class="kw">mod </span>eval;
-<span class="kw">mod </span>interpreter;
+</span><span class="kw">pub mod </span>circuit;
+<span class="kw">pub mod </span>eval;
+<span class="kw">pub mod </span>interpreter;
 <span class="kw">mod </span>macros;
+<span class="kw">pub mod </span>multiframe;
 <span class="kw">mod </span>path;
-<span class="kw">mod </span>pointers;
-<span class="kw">mod </span>store;
-<span class="kw">mod </span>symbol;
-<span class="kw">mod </span>tag;
+<span class="kw">pub mod </span>pointers;
+<span class="kw">mod </span>slot;
+<span class="kw">pub mod </span>store;
 <span class="kw">mod </span>var_map;
-
-<span class="kw">use </span><span class="kw">crate</span>::field::LurkField;
-<span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>anyhow::{bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>indexmap::IndexMap;
+<span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::sync::Arc;
 
-<span class="kw">use </span><span class="self">self</span>::{path::Path, store::Store, symbol::Symbol, tag::Tag, var_map::VarMap};
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests;
+
+<span class="kw">use crate</span>::{
+    field::LurkField,
+    symbol::Symbol,
+    tag::{ContTag, ExprTag, Op1, Op2, Tag <span class="kw">as </span>TagTrait},
+};
+
+<span class="kw">use </span><span class="self">self</span>::{pointers::Ptr, slot::SlotsCounter, store::Store, var_map::VarMap};
 
 <span class="kw">pub type </span>AString = Arc&lt;str&gt;;
-<span class="kw">pub type </span>AVec&lt;A&gt; = Arc&lt;[A]&gt;;
 
-<span class="doccomment">/// A `LEM` has the name for the inputs and its characteristic control node
-</span><span class="kw">pub struct </span>LEM {
-    input_vars: [Var; <span class="number">3</span>],
-    ctl: LEMCTL,
+<span class="doccomment">/// A `Func` is a LEM function. It consist of input params, output size and a
+/// function body, which is a `Block`
+</span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Func {
+    <span class="kw">pub </span>name: String,
+    <span class="kw">pub </span>input_params: Vec&lt;Var&gt;,
+    <span class="kw">pub </span>output_size: usize,
+    <span class="kw">pub </span>body: Block,
+    <span class="kw">pub </span>slot: SlotsCounter,
 }
 
-<span class="doccomment">/// Named references to be bound to `Ptr`s.
+<span class="doccomment">/// LEM variables
 </span><span class="attr">#[derive(Debug, PartialEq, Clone, Eq, Hash)]
 </span><span class="kw">pub struct </span>Var(AString);
+
+<span class="doccomment">/// LEM tags
+</span><span class="attr">#[derive(Copy, Debug, PartialEq, Clone, Eq, Hash, Serialize, Deserialize)]
+</span><span class="kw">pub enum </span>Tag {
+    Expr(ExprTag),
+    Cont(ContTag),
+    Op1(Op1),
+    Op2(Op2),
+}
+
+<span class="kw">impl </span>TryFrom&lt;u16&gt; <span class="kw">for </span>Tag {
+    <span class="kw">type </span>Error = anyhow::Error;
+
+    <span class="kw">fn </span>try_from(val: u16) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(tag) = ExprTag::try_from(val) {
+            <span class="prelude-val">Ok</span>(Tag::Expr(tag))
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(tag) = ContTag::try_from(val) {
+            <span class="prelude-val">Ok</span>(Tag::Cont(tag))
+        } <span class="kw">else </span>{
+            <span class="macro">bail!</span>(<span class="string">&quot;Invalid u16 for Tag: {val}&quot;</span>)
+        }
+    }
+}
+
+<span class="kw">impl </span>From&lt;Tag&gt; <span class="kw">for </span>u16 {
+    <span class="kw">fn </span>from(val: Tag) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>val {
+            Tag::Expr(tag) =&gt; tag.into(),
+            Tag::Cont(tag) =&gt; tag.into(),
+            Tag::Op1(tag) =&gt; tag.into(),
+            Tag::Op2(tag) =&gt; tag.into(),
+        }
+    }
+}
+
+<span class="kw">impl </span>TagTrait <span class="kw">for </span>Tag {
+    <span class="kw">fn </span>from_field&lt;F: LurkField&gt;(f: <span class="kw-2">&amp;</span>F) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::try_from(f.to_u16()<span class="question-mark">?</span>).ok()
+    }
+
+    <span class="kw">fn </span>to_field&lt;F: LurkField&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; F {
+        Tag::to_field(<span class="self">self</span>)
+    }
+}
+
+<span class="kw">impl </span>Tag {
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>to_field&lt;F: LurkField&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; F {
+        <span class="kw">match </span><span class="self">self </span>{
+            Tag::Expr(tag) =&gt; tag.to_field(),
+            Tag::Cont(tag) =&gt; tag.to_field(),
+            Tag::Op1(tag) =&gt; tag.to_field(),
+            Tag::Op2(tag) =&gt; tag.to_field(),
+        }
+    }
+}
+
+<span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>Tag {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="kw">use </span>Tag::{Cont, Expr, Op1, Op2};
+        <span class="kw">match </span><span class="self">self </span>{
+            Expr(tag) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;expr.{}&quot;</span>, tag),
+            Cont(tag) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;cont.{}&quot;</span>, tag),
+            Op1(tag) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;op1.{}&quot;</span>, tag),
+            Op2(tag) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;op2.{}&quot;</span>, tag),
+        }
+    }
+}
+
+<span class="doccomment">/// LEM literals
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, Eq, Hash)]
+</span><span class="kw">pub enum </span>Lit {
+    <span class="comment">// TODO maybe it should be a LurkField instead of u128
+    </span>Num(u128),
+    String(String),
+    Symbol(Symbol),
+}
+
+<span class="kw">impl </span>Lit {
+    <span class="kw">pub fn </span>to_ptr&lt;F: LurkField&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;</span>Store&lt;F&gt;) -&gt; Ptr&lt;F&gt; {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Symbol(s) =&gt; store.intern_symbol(s),
+            <span class="self">Self</span>::String(s) =&gt; store.intern_string(s),
+            <span class="self">Self</span>::Num(num) =&gt; Ptr::num(F::from_u128(<span class="kw-2">*</span>num)),
+        }
+    }
+
+    <span class="kw">pub fn </span>from_ptr&lt;F: LurkField&gt;(ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;, store: <span class="kw-2">&amp;</span>Store&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">use </span>ExprTag::{Num, Str, Sym};
+        <span class="kw">use </span>Tag::Expr;
+        <span class="kw">match </span>ptr.tag() {
+            Expr(Num) =&gt; <span class="kw">match </span>ptr {
+                Ptr::Atom(<span class="kw">_</span>, f) =&gt; {
+                    <span class="kw">let </span>num = LurkField::to_u128_unchecked(f);
+                    <span class="prelude-val">Some</span>(<span class="self">Self</span>::Num(num))
+                }
+                <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
+            },
+            Expr(Str) =&gt; store.fetch_string(ptr).map(Lit::String),
+            Expr(Sym) =&gt; store.fetch_symbol(ptr).map(Lit::Symbol),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+        }
+    }
+}
 
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>Var {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
@@ -600,47 +1004,86 @@
     </span>}
 }
 
+<span class="doccomment">/// A block is a sequence of operations followed by a control. Each block
+/// delimits their variables&#39; scope.
+</span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Block {
+    ops: Vec&lt;Op&gt;,
+    ctrl: Ctrl,
+}
+
 <span class="doccomment">/// The basic control nodes for LEM logical paths.
 </span><span class="attr">#[non_exhaustive]
 #[derive(Debug, Clone, PartialEq, Eq)]
-</span><span class="kw">pub enum </span>LEMCTL {
-    <span class="doccomment">/// `MatchTag(x, cases)` performs a match on the tag of `x`, considering only
-    /// the appropriate `LEM` among the ones provided in `cases`
-    </span>MatchTag(Var, IndexMap&lt;Tag, LEMCTL&gt;),
-    <span class="doccomment">/// `MatchSymbol(x, cases, def)` checks whether `x` matches some symbol among
-    /// the ones provided in `cases`. If so, run the corresponding `LEM`. Run
-    /// The default `def` `LEM` otherwise
-    </span>MatchSymbol(Var, IndexMap&lt;Symbol, LEMCTL&gt;, Box&lt;LEMCTL&gt;),
-    <span class="doccomment">/// `Seq(ops, lem)` executes `ops: Vec&lt;LEMOP&gt;` then `lem: LEM` sequentially
-    </span>Seq(Vec&lt;LEMOP&gt;, Box&lt;LEMCTL&gt;),
+</span><span class="kw">pub enum </span>Ctrl {
+    <span class="doccomment">/// `MatchTag(x, cases, def)` checks whether the tag of `x` matches some tag
+    /// among the ones provided in `cases`. If so, run the corresponding `Block`.
+    /// Run `def` otherwise
+    </span>MatchTag(Var, IndexMap&lt;Tag, Block&gt;, <span class="prelude-ty">Option</span>&lt;Box&lt;Block&gt;&gt;),
+    <span class="doccomment">/// `MatchSymbol(x, cases, def)` requires that `x` is a symbol and checks
+    /// whether `x` matches some symbol among the ones provided in `cases`. If so,
+    /// run the corresponding `Block`. Run `def` otherwise
+    </span>MatchSymbol(Var, IndexMap&lt;Symbol, Block&gt;, <span class="prelude-ty">Option</span>&lt;Box&lt;Block&gt;&gt;),
+    <span class="doccomment">/// `If(x, true_block, false_block)` runs `true_block` if `x` is true, and
+    /// otherwise runs `false_block`
+    </span>If(Var, Box&lt;Block&gt;, Box&lt;Block&gt;),
     <span class="doccomment">/// `Return(rets)` sets the output to `rets`
-    </span>Return([Var; <span class="number">3</span>]),
-}
-
-<span class="kw">impl </span>std::hash::Hash <span class="kw">for </span>LEMCTL {
-    <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
-        <span class="comment">// TODO: this was generated automatically for me (Arthur). Is it efficient?
-        </span>core::mem::discriminant(<span class="self">self</span>).hash(state);
-    }
+    </span>Return(Vec&lt;Var&gt;),
 }
 
 <span class="doccomment">/// The atomic operations of LEMs.
-</span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-</span><span class="kw">pub enum </span>LEMOP {
+</span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub enum </span>Op {
+    <span class="doccomment">/// `Cproc(ys, c, xs)` binds `ys` to the results of coprocessor `c` applied to `xs`
+    </span>Cproc(Vec&lt;Var&gt;, Symbol, Vec&lt;Var&gt;),
+    <span class="doccomment">/// `Call(ys, f, xs)` binds `ys` to the results of `f` applied to `xs`
+    </span>Call(Vec&lt;Var&gt;, Box&lt;Func&gt;, Vec&lt;Var&gt;),
+    <span class="doccomment">/// `Copy(x, y)` binds `x` to a copy of what `y` is bound to
+    </span>Copy(Var, Var),
     <span class="doccomment">/// `Null(x, t)` binds `x` to a `Ptr::Leaf(t, F::zero())`
     </span>Null(Var, Tag),
-    <span class="doccomment">/// `Hash2(x, t, ys)` binds `x` to a `Ptr` with tag `t` and 2 children `ys`
-    </span>Hash2(Var, Tag, [Var; <span class="number">2</span>]),
-    <span class="doccomment">/// `Hash3(x, t, ys)` binds `x` to a `Ptr` with tag `t` and 3 children `ys`
-    </span>Hash3(Var, Tag, [Var; <span class="number">3</span>]),
-    <span class="doccomment">/// `Hash4(x, t, ys)` binds `x` to a `Ptr` with tag `t` and 4 children `ys`
-    </span>Hash4(Var, Tag, [Var; <span class="number">4</span>]),
-    <span class="doccomment">/// `Unhash2([a, b], x)` binds `a` and `b` to the 2 children of `x`
-    </span>Unhash2([Var; <span class="number">2</span>], Var),
-    <span class="doccomment">/// `Unhash3([a, b, c], x)` binds `a`, `b` and `c` to the 3 children of `x`
-    </span>Unhash3([Var; <span class="number">3</span>], Var),
-    <span class="doccomment">/// `Unhash4([a, b, c, d], x)` binds `a`, `b`, `c` and `d` to the 4 children of `x`
-    </span>Unhash4([Var; <span class="number">4</span>], Var),
+    <span class="doccomment">/// `Lit(x, l)` binds `x` to the pointer representing that `Lit`
+    </span>Lit(Var, Lit),
+    <span class="doccomment">/// `Cast(y, t, x)` binds `y` to a pointer with tag `t` and the hash of `x`
+    </span>Cast(Var, Tag, Var),
+    <span class="doccomment">/// `EqTag(y, a, b)` binds `y` to the boolean `a.tag == b.tag`
+    </span>EqTag(Var, Var, Var),
+    <span class="doccomment">/// `EqVal(y, a, b)` binds `y` to the boolean `a.val == b.val`
+    </span>EqVal(Var, Var, Var),
+    <span class="doccomment">/// `Not(y, a)` binds `y` to the negation of `a`
+    </span>Not(Var, Var),
+    <span class="doccomment">/// `And(y, a, b)` binds `y` to the conjunction of `a` and `b`
+    </span>And(Var, Var, Var),
+    <span class="doccomment">/// `Or(y, a, b)` binds `y` to the disjunction of `a` and `b`
+    </span>Or(Var, Var, Var),
+    <span class="doccomment">/// `Add(y, a, b)` binds `y` to the sum of `a` and `b`
+    </span>Add(Var, Var, Var),
+    <span class="doccomment">/// `Sub(y, a, b)` binds `y` to the sum of `a` and `b`
+    </span>Sub(Var, Var, Var),
+    <span class="doccomment">/// `Mul(y, a, b)` binds `y` to the sum of `a` and `b`
+    </span>Mul(Var, Var, Var),
+    <span class="doccomment">/// `Div(y, a, b)` binds `y` to the sum of `a` and `b`
+    </span>Div(Var, Var, Var),
+    <span class="doccomment">/// `Lt(y, a, b)` binds `y` to `1` if `a &lt; b`, or to `0` otherwise
+    </span>Lt(Var, Var, Var),
+    <span class="doccomment">/// `Trunc(y, a, n)` binds `y` to `a` truncated to `n` bits, up to 64 bits
+    </span>Trunc(Var, Var, u32),
+    <span class="doccomment">/// `DivRem64(ys, a, b)` binds `ys` to `(a / b, a % b)` as if they were u64
+    </span>DivRem64([Var; <span class="number">2</span>], Var, Var),
+    <span class="doccomment">/// `Emit(v)` simply prints out the value of `v` when interpreting the code
+    </span>Emit(Var),
+    <span class="doccomment">/// `Cons2(x, t, ys)` binds `x` to a `Ptr` with tag `t` and 2 children `ys`
+    </span>Cons2(Var, Tag, [Var; <span class="number">2</span>]),
+    <span class="doccomment">/// `Cons3(x, t, ys)` binds `x` to a `Ptr` with tag `t` and 3 children `ys`
+    </span>Cons3(Var, Tag, [Var; <span class="number">3</span>]),
+    <span class="doccomment">/// `Cons4(x, t, ys)` binds `x` to a `Ptr` with tag `t` and 4 children `ys`
+    </span>Cons4(Var, Tag, [Var; <span class="number">4</span>]),
+    <span class="doccomment">/// `Decons2([a, b], x)` binds `a` and `b` to the 2 children of `x`
+    </span>Decons2([Var; <span class="number">2</span>], Var),
+    <span class="doccomment">/// `Decons3([a, b, c], x)` binds `a`, `b` and `c` to the 3 children of `x`
+    </span>Decons3([Var; <span class="number">3</span>], Var),
+    <span class="doccomment">/// `Decons4([a, b, c, d], x)` binds `a`, `b`, `c` and `d` to the 4 children of `x`
+    </span>Decons4([Var; <span class="number">4</span>], Var),
     <span class="doccomment">/// `Hide(x, s, p)` binds `x` to a (comm) `Ptr` resulting from hiding the
     /// payload `p` with (num) secret `s`
     </span>Hide(Var, Var, Var),
@@ -649,347 +1092,480 @@
     </span>Open(Var, Var, Var),
 }
 
-<span class="kw">impl </span>LEMCTL {
-    <span class="doccomment">/// Intern all symbol paths that are matched on `MatchSymPath`s
-    </span><span class="kw">pub fn </span>intern_matched_symbols&lt;F: LurkField&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;) {
-        <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::MatchSymbol(<span class="kw">_</span>, cases, def) =&gt; {
-                cases.iter().for_each(|(symbol, block)| {
-                    store.intern_symbol(symbol);
-                    block.intern_matched_symbols(store)
-                });
-                def.intern_matched_symbols(store);
-            }
-            <span class="self">Self</span>::MatchTag(<span class="kw">_</span>, cases) =&gt; cases
-                .values()
-                .for_each(|block| block.intern_matched_symbols(store)),
-            <span class="self">Self</span>::Seq(<span class="kw">_</span>, rest) =&gt; rest.intern_matched_symbols(store),
-            <span class="self">Self</span>::Return(..) =&gt; (),
+<span class="kw">impl </span>Func {
+    <span class="doccomment">/// Instantiates a `Func` with the appropriate transformations and checks
+    </span><span class="kw">pub fn </span>new(
+        name: String,
+        input_params: Vec&lt;Var&gt;,
+        output_size: usize,
+        body: Block,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Func&gt; {
+        <span class="kw">let </span>slot = body.count_slots();
+        <span class="kw">let </span>func = Func {
+            slot,
+            name,
+            input_params,
+            output_size,
+            body,
         }
+        .deconflict(<span class="kw-2">&amp;mut </span>VarMap::new(), <span class="kw-2">&amp;mut </span><span class="number">0</span>)<span class="question-mark">?</span>;
+        func.check()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(func)
+    }
+
+    <span class="doccomment">/// Performs the static checks described in LEM&#39;s docstring.
+    </span><span class="kw">pub fn </span>check(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">use </span>std::collections::{HashMap, HashSet};
+
+        <span class="doccomment">/// Check if variable has already been defined. Panics
+        /// if it is repeated (means `deconflict` is broken)
+        </span><span class="attr">#[inline]
+        </span><span class="kw">fn </span>is_unique(var: <span class="kw-2">&amp;</span>Var, map: <span class="kw-2">&amp;mut </span>HashMap&lt;Var, bool&gt;) {
+            <span class="macro">assert!</span>(
+                map.insert(var.clone(), <span class="bool-val">false</span>).is_none(),
+                <span class="string">&quot;Variable {var} already defined. `deconflict` implementation broken.&quot;
+            </span>);
+        }
+
+        <span class="doccomment">/// Check if variable is bound and sets it as &quot;used&quot;
+        </span><span class="attr">#[inline]
+        </span><span class="kw">fn </span>is_bound(var: <span class="kw-2">&amp;</span>Var, map: <span class="kw-2">&amp;mut </span>HashMap&lt;Var, bool&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+            <span class="kw">if </span>map.insert(var.clone(), <span class="bool-val">true</span>).is_none() {
+                <span class="macro">bail!</span>(<span class="string">&quot;Variable {var} is unbound.&quot;</span>);
+            }
+            <span class="prelude-val">Ok</span>(())
+        }
+
+        <span class="kw">fn </span>recurse(block: <span class="kw-2">&amp;</span>Block, return_size: usize, map: <span class="kw-2">&amp;mut </span>HashMap&lt;Var, bool&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+            <span class="kw">for </span>op <span class="kw">in </span><span class="kw-2">&amp;</span>block.ops {
+                <span class="kw">match </span>op {
+                    Op::Cproc(out, <span class="kw">_</span>, inp) =&gt; {
+                        inp.iter().try_for_each(|arg| is_bound(arg, map))<span class="question-mark">?</span>;
+                        out.iter().for_each(|var| is_unique(var, map));
+                    }
+                    Op::Call(out, func, inp) =&gt; {
+                        <span class="kw">if </span>out.len() != func.output_size {
+                            <span class="macro">bail!</span>(
+                                <span class="string">&quot;Function&#39;s return size {} different from number of variables {} bound by the call&quot;</span>,
+                                out.len(),
+                                func.output_size
+                            )
+                        }
+                        <span class="kw">if </span>inp.len() != func.input_params.len() {
+                            <span class="macro">bail!</span>(
+                                <span class="string">&quot;The number of arguments {} differs from the function&#39;s input size {}&quot;</span>,
+                                inp.len(),
+                                func.input_params.len()
+                            )
+                        }
+                        inp.iter().try_for_each(|arg| is_bound(arg, map))<span class="question-mark">?</span>;
+                        out.iter().for_each(|var| is_unique(var, map));
+                        func.input_params.iter().for_each(|var| is_unique(var, map));
+                        recurse(<span class="kw-2">&amp;</span>func.body, func.output_size, map)<span class="question-mark">?</span>;
+                    }
+                    Op::Copy(tgt, src) =&gt; {
+                        is_bound(src, map)<span class="question-mark">?</span>;
+                        is_unique(tgt, map);
+                    }
+                    Op::Null(tgt, _tag) =&gt; {
+                        is_unique(tgt, map);
+                    }
+                    Op::Lit(tgt, _lit) =&gt; {
+                        is_unique(tgt, map);
+                    }
+                    Op::Cast(tgt, _tag, src) =&gt; {
+                        is_bound(src, map)<span class="question-mark">?</span>;
+                        is_unique(tgt, map);
+                    }
+                    Op::Not(tgt, a) =&gt; {
+                        is_bound(a, map)<span class="question-mark">?</span>;
+                        is_unique(tgt, map);
+                    }
+                    Op::EqTag(tgt, a, b)
+                    | Op::EqVal(tgt, a, b)
+                    | Op::And(tgt, a, b)
+                    | Op::Or(tgt, a, b)
+                    | Op::Add(tgt, a, b)
+                    | Op::Sub(tgt, a, b)
+                    | Op::Mul(tgt, a, b)
+                    | Op::Div(tgt, a, b)
+                    | Op::Lt(tgt, a, b) =&gt; {
+                        is_bound(a, map)<span class="question-mark">?</span>;
+                        is_bound(b, map)<span class="question-mark">?</span>;
+                        is_unique(tgt, map);
+                    }
+                    Op::Trunc(tgt, a, n) =&gt; {
+                        <span class="kw">if </span><span class="kw-2">*</span>n &gt; <span class="number">64 </span>{
+                            <span class="macro">bail!</span>(<span class="string">&quot;Cannot yet truncate over 64 bits&quot;</span>)
+                        }
+                        is_bound(a, map)<span class="question-mark">?</span>;
+                        is_unique(tgt, map);
+                    }
+                    Op::DivRem64(tgt, a, b) =&gt; {
+                        is_bound(a, map)<span class="question-mark">?</span>;
+                        is_bound(b, map)<span class="question-mark">?</span>;
+                        tgt.iter().for_each(|var| is_unique(var, map))
+                    }
+                    Op::Emit(a) =&gt; {
+                        is_bound(a, map)<span class="question-mark">?</span>;
+                    }
+                    Op::Cons2(img, _tag, preimg) =&gt; {
+                        preimg.iter().try_for_each(|arg| is_bound(arg, map))<span class="question-mark">?</span>;
+                        is_unique(img, map);
+                    }
+                    Op::Cons3(img, _tag, preimg) =&gt; {
+                        preimg.iter().try_for_each(|arg| is_bound(arg, map))<span class="question-mark">?</span>;
+                        is_unique(img, map);
+                    }
+                    Op::Cons4(img, _tag, preimg) =&gt; {
+                        preimg.iter().try_for_each(|arg| is_bound(arg, map))<span class="question-mark">?</span>;
+                        is_unique(img, map);
+                    }
+                    Op::Decons2(preimg, img) =&gt; {
+                        is_bound(img, map)<span class="question-mark">?</span>;
+                        preimg.iter().for_each(|var| is_unique(var, map))
+                    }
+                    Op::Decons3(preimg, img) =&gt; {
+                        is_bound(img, map)<span class="question-mark">?</span>;
+                        preimg.iter().for_each(|var| is_unique(var, map))
+                    }
+                    Op::Decons4(preimg, img) =&gt; {
+                        is_bound(img, map)<span class="question-mark">?</span>;
+                        preimg.iter().for_each(|var| is_unique(var, map))
+                    }
+                    Op::Hide(tgt, sec, src) =&gt; {
+                        is_bound(sec, map)<span class="question-mark">?</span>;
+                        is_bound(src, map)<span class="question-mark">?</span>;
+                        is_unique(tgt, map);
+                    }
+                    Op::Open(tgt_secret, tgt_ptr, comm_or_num) =&gt; {
+                        is_bound(comm_or_num, map)<span class="question-mark">?</span>;
+                        is_unique(tgt_secret, map);
+                        is_unique(tgt_ptr, map);
+                    }
+                }
+            }
+            <span class="kw">match </span><span class="kw-2">&amp;</span>block.ctrl {
+                Ctrl::Return(return_vars) =&gt; {
+                    return_vars.iter().try_for_each(|arg| is_bound(arg, map))<span class="question-mark">?</span>;
+                    <span class="kw">if </span>return_vars.len() != return_size {
+                        <span class="macro">bail!</span>(
+                            <span class="string">&quot;Return size {} different from expected size of return {}&quot;</span>,
+                            return_vars.len(),
+                            return_size
+                        )
+                    }
+                }
+                Ctrl::MatchTag(var, cases, def) =&gt; {
+                    is_bound(var, map)<span class="question-mark">?</span>;
+                    <span class="kw">let </span><span class="kw-2">mut </span>tags = HashSet::new();
+                    <span class="kw">let </span><span class="kw-2">mut </span>kind = <span class="prelude-val">None</span>;
+                    <span class="kw">for </span>(tag, block) <span class="kw">in </span>cases {
+                        <span class="comment">// make sure that this `MatchTag` doesn&#39;t have weird semantics
+                        </span><span class="kw">let </span>tag_kind = <span class="kw">match </span>tag {
+                            Tag::Expr(..) =&gt; <span class="number">0</span>,
+                            Tag::Cont(..) =&gt; <span class="number">1</span>,
+                            Tag::Op1(..) =&gt; <span class="number">2</span>,
+                            Tag::Op2(..) =&gt; <span class="number">3</span>,
+                        };
+                        <span class="kw">if let </span><span class="prelude-val">Some</span>(kind) = kind {
+                            <span class="kw">if </span>kind != tag_kind {
+                                <span class="macro">bail!</span>(<span class="string">&quot;Only tags of the same kind allowed.&quot;</span>);
+                            }
+                        } <span class="kw">else </span>{
+                            kind = <span class="prelude-val">Some</span>(tag_kind)
+                        }
+                        <span class="kw">if </span>!tags.insert(tag) {
+                            <span class="macro">bail!</span>(<span class="string">&quot;Tag {tag} already defined.&quot;</span>);
+                        }
+                        recurse(block, return_size, map)<span class="question-mark">?</span>;
+                    }
+                    <span class="kw">match </span>def {
+                        <span class="prelude-val">Some</span>(def) =&gt; recurse(def, return_size, map)<span class="question-mark">?</span>,
+                        <span class="prelude-val">None </span>=&gt; (),
+                    }
+                }
+                Ctrl::MatchSymbol(var, cases, def) =&gt; {
+                    is_bound(var, map)<span class="question-mark">?</span>;
+                    <span class="kw">for </span>block <span class="kw">in </span>cases.values() {
+                        recurse(block, return_size, map)<span class="question-mark">?</span>;
+                    }
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(def) = def {
+                        recurse(def, return_size, map)<span class="question-mark">?</span>;
+                    }
+                }
+                Ctrl::If(x, true_block, false_block) =&gt; {
+                    is_bound(x, map)<span class="question-mark">?</span>;
+                    recurse(true_block, return_size, map)<span class="question-mark">?</span>;
+                    recurse(false_block, return_size, map)<span class="question-mark">?</span>;
+                }
+            }
+            <span class="prelude-val">Ok</span>(())
+        }
+        <span class="kw">let </span>map = <span class="kw-2">&amp;mut </span>HashMap::new();
+        <span class="self">self</span>.input_params.iter().for_each(|var| is_unique(var, map));
+        recurse(<span class="kw-2">&amp;</span><span class="self">self</span>.body, <span class="self">self</span>.output_size, map)<span class="question-mark">?</span>;
+        <span class="kw">for </span>(var, u) <span class="kw">in </span>map.iter() {
+            <span class="kw">let </span>ch = var.<span class="number">0</span>.chars().next().unwrap();
+            <span class="kw">if </span>!u &amp;&amp; ch != <span class="string">&#39;_&#39; </span>{
+                <span class="macro">bail!</span>(<span class="string">&quot;Variable {var} not used. If intended, please prefix it with \&quot;_\&quot;&quot;</span>)
+            }
+        }
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="doccomment">/// Deconflict will replace conflicting names and make the function SSA. The
+    /// conflict resolution is achieved by prepending conflicting variables by
+    /// a unique identifier.
+    ///
+    /// Note: this function is not supposed to be called manually. It&#39;s used by
+    /// `Func::new`, which is the API that should be used directly.
+    </span><span class="kw">fn </span>deconflict(<span class="kw-2">mut </span><span class="self">self</span>, map: <span class="kw-2">&amp;mut </span>VarMap&lt;Var&gt;, uniq: <span class="kw-2">&amp;mut </span>usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="self">self</span>.input_params = <span class="self">self
+            </span>.input_params
+            .into_iter()
+            .map(|var| {
+                <span class="kw">let </span>new_var = var.make_unique(uniq);
+                map.insert(var, new_var.clone());
+                new_var
+            })
+            .collect();
+        <span class="self">self</span>.body = <span class="self">self</span>.body.deconflict(map, uniq)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
+    }
+
+    <span class="doccomment">/// Unrolls a function of equal input/output sizes `n` times
+    </span><span class="kw">pub fn </span>unroll(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">if </span><span class="self">self</span>.output_size != <span class="self">self</span>.input_params.len() {
+            <span class="macro">bail!</span>(<span class="string">&quot;Cannot unroll a function with different number of inputs and outputs&quot;</span>)
+        }
+        <span class="kw">let </span><span class="kw-2">mut </span>ops = <span class="macro">vec!</span>[];
+        <span class="comment">// This loop will create a sequence of n-1
+        // let x1, ... xn = f(x1, ..., xn);
+        </span><span class="kw">for _ in </span><span class="number">0</span>..n - <span class="number">1 </span>{
+            <span class="kw">let </span>inp = <span class="self">self</span>.input_params.clone();
+            <span class="kw">let </span>func = Box::new(<span class="self">self</span>.clone());
+            <span class="kw">let </span>out = <span class="self">self</span>.input_params.clone();
+            ops.push(Op::Call(inp, func, out))
+        }
+        <span class="comment">// The last call can be inlined by just extending ops
+        // and using the same control statement
+        </span>ops.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.body.ops);
+        <span class="kw">let </span>ctrl = <span class="self">self</span>.body.ctrl.clone();
+        <span class="kw">let </span>body = Block { ops, ctrl };
+        <span class="self">Self</span>::new(
+            <span class="self">self</span>.name.clone(),
+            <span class="self">self</span>.input_params.clone(),
+            <span class="self">self</span>.output_size,
+            body,
+        )
     }
 }
 
-<span class="kw">impl </span>LEM {
-    <span class="doccomment">/// Performs the static checks described in `LEM`&#39;s docstring.
-    </span><span class="kw">pub fn </span>check(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="comment">// TODO
-    </span>}
-
-    <span class="doccomment">/// Instantiates a `LEM` with the appropriate transformations to make sure
-    /// that constraining will be smooth.
-    </span><span class="kw">pub fn </span>new(input: [Var; <span class="number">3</span>], lem: <span class="kw-2">&amp;</span>LEMCTL) -&gt; <span class="prelude-ty">Result</span>&lt;LEM&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = VarMap::new();
-        <span class="kw">for </span>i <span class="kw">in </span>input.iter() {
-            map.insert(i.clone(), i.clone())
+<span class="kw">impl </span>Block {
+    <span class="kw">fn </span>deconflict(<span class="self">self</span>, map: <span class="kw-2">&amp;mut </span>VarMap&lt;Var&gt;, uniq: <span class="kw-2">&amp;mut </span>usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="attr">#[inline]
+        </span><span class="kw">fn </span>insert_one(map: <span class="kw-2">&amp;mut </span>VarMap&lt;Var&gt;, uniq: <span class="kw-2">&amp;mut </span>usize, var: <span class="kw-2">&amp;</span>Var) -&gt; Var {
+            <span class="kw">let </span>new_var = var.make_unique(uniq);
+            map.insert(var.clone(), new_var.clone());
+            new_var
         }
-        <span class="prelude-val">Ok</span>(LEM {
-            input_vars: input,
-            ctl: lem.deconflict(<span class="kw-2">&amp;</span>Path::default(), <span class="kw-2">&amp;mut </span>map)<span class="question-mark">?</span>,
-        })
-    }
 
-    <span class="doccomment">/// Intern all symbols that are matched on `MatchSymbol`s
-    </span><span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>intern_matched_symbols&lt;F: LurkField&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;) {
-        <span class="self">self</span>.ctl.intern_matched_symbols(store);
-    }
+        <span class="attr">#[inline]
+        </span><span class="kw">fn </span>insert_many(map: <span class="kw-2">&amp;mut </span>VarMap&lt;Var&gt;, uniq: <span class="kw-2">&amp;mut </span>usize, vars: <span class="kw-2">&amp;</span>[Var]) -&gt; Vec&lt;Var&gt; {
+            vars.iter().map(|var| insert_one(map, uniq, var)).collect()
+        }
 
-    <span class="doccomment">/// Asserts that all paths were visited by a set of frames. This is mostly
-    /// for testing purposes.
-    </span><span class="kw">pub fn </span>assert_all_paths_taken(<span class="kw-2">&amp;</span><span class="self">self</span>, paths: <span class="kw-2">&amp;</span>[Path]) {
-        <span class="macro">assert_eq!</span>(
-            <span class="self">self</span>.ctl.num_paths_taken(paths).unwrap(),
-            <span class="self">self</span>.ctl.num_paths()
-        );
+        <span class="kw">let </span><span class="kw-2">mut </span>ops = Vec::with_capacity(<span class="self">self</span>.ops.len());
+        <span class="kw">for </span>op <span class="kw">in </span><span class="self">self</span>.ops {
+            <span class="kw">match </span>op {
+                Op::Cproc(out, sym, inp) =&gt; {
+                    <span class="kw">let </span>inp = map.get_many_cloned(<span class="kw-2">&amp;</span>inp)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>out = insert_many(map, uniq, <span class="kw-2">&amp;</span>out);
+                    ops.push(Op::Cproc(out, sym, inp))
+                }
+                Op::Call(out, func, inp) =&gt; {
+                    <span class="kw">let </span>inp = map.get_many_cloned(<span class="kw-2">&amp;</span>inp)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>out = insert_many(map, uniq, <span class="kw-2">&amp;</span>out);
+                    <span class="kw">let </span>func = Box::new(func.deconflict(map, uniq)<span class="question-mark">?</span>);
+                    ops.push(Op::Call(out, func, inp))
+                }
+                Op::Copy(tgt, src) =&gt; {
+                    ops.push(Op::Copy(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), map.get_cloned(<span class="kw-2">&amp;</span>src)<span class="question-mark">?</span>))
+                }
+                Op::Null(tgt, tag) =&gt; ops.push(Op::Null(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), tag)),
+                Op::Lit(tgt, lit) =&gt; ops.push(Op::Lit(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), lit)),
+                Op::Cast(tgt, tag, src) =&gt; {
+                    <span class="kw">let </span>src = map.get_cloned(<span class="kw-2">&amp;</span>src)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Cast(tgt, tag, src))
+                }
+                Op::EqTag(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::EqTag(tgt, a, b))
+                }
+                Op::EqVal(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::EqVal(tgt, a, b))
+                }
+                Op::Not(tgt, a) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Not(tgt, a))
+                }
+                Op::And(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::And(tgt, a, b))
+                }
+                Op::Or(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Or(tgt, a, b))
+                }
+                Op::Add(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Add(tgt, a, b))
+                }
+                Op::Sub(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Sub(tgt, a, b))
+                }
+                Op::Mul(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Mul(tgt, a, b))
+                }
+                Op::Div(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Div(tgt, a, b))
+                }
+                Op::Lt(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Lt(tgt, a, b))
+                }
+                Op::Trunc(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Trunc(tgt, a, b))
+                }
+                Op::DivRem64(tgt, a, b) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>b = map.get_cloned(<span class="kw-2">&amp;</span>b)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_many(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::DivRem64(tgt.try_into().unwrap(), a, b))
+                }
+                Op::Emit(a) =&gt; {
+                    <span class="kw">let </span>a = map.get_cloned(<span class="kw-2">&amp;</span>a)<span class="question-mark">?</span>;
+                    ops.push(Op::Emit(a))
+                }
+                Op::Cons2(img, tag, preimg) =&gt; {
+                    <span class="kw">let </span>preimg = map.get_many_cloned(<span class="kw-2">&amp;</span>preimg)<span class="question-mark">?</span>.try_into().unwrap();
+                    <span class="kw">let </span>img = insert_one(map, uniq, <span class="kw-2">&amp;</span>img);
+                    ops.push(Op::Cons2(img, tag, preimg))
+                }
+                Op::Cons3(img, tag, preimg) =&gt; {
+                    <span class="kw">let </span>preimg = map.get_many_cloned(<span class="kw-2">&amp;</span>preimg)<span class="question-mark">?</span>.try_into().unwrap();
+                    <span class="kw">let </span>img = insert_one(map, uniq, <span class="kw-2">&amp;</span>img);
+                    ops.push(Op::Cons3(img, tag, preimg))
+                }
+                Op::Cons4(img, tag, preimg) =&gt; {
+                    <span class="kw">let </span>preimg = map.get_many_cloned(<span class="kw-2">&amp;</span>preimg)<span class="question-mark">?</span>.try_into().unwrap();
+                    <span class="kw">let </span>img = insert_one(map, uniq, <span class="kw-2">&amp;</span>img);
+                    ops.push(Op::Cons4(img, tag, preimg))
+                }
+                Op::Decons2(preimg, img) =&gt; {
+                    <span class="kw">let </span>img = map.get_cloned(<span class="kw-2">&amp;</span>img)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>preimg = insert_many(map, uniq, <span class="kw-2">&amp;</span>preimg);
+                    ops.push(Op::Decons2(preimg.try_into().unwrap(), img))
+                }
+                Op::Decons3(preimg, img) =&gt; {
+                    <span class="kw">let </span>img = map.get_cloned(<span class="kw-2">&amp;</span>img)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>preimg = insert_many(map, uniq, <span class="kw-2">&amp;</span>preimg);
+                    ops.push(Op::Decons3(preimg.try_into().unwrap(), img))
+                }
+                Op::Decons4(preimg, img) =&gt; {
+                    <span class="kw">let </span>img = map.get_cloned(<span class="kw-2">&amp;</span>img)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>preimg = insert_many(map, uniq, <span class="kw-2">&amp;</span>preimg);
+                    ops.push(Op::Decons4(preimg.try_into().unwrap(), img))
+                }
+                Op::Hide(tgt, sec, pay) =&gt; {
+                    <span class="kw">let </span>sec = map.get_cloned(<span class="kw-2">&amp;</span>sec)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>pay = map.get_cloned(<span class="kw-2">&amp;</span>pay)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>tgt = insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt);
+                    ops.push(Op::Hide(tgt, sec, pay))
+                }
+                Op::Open(sec, pay, comm_or_num) =&gt; {
+                    <span class="kw">let </span>comm_or_num = map.get_cloned(<span class="kw-2">&amp;</span>comm_or_num)<span class="question-mark">?</span>;
+                    <span class="kw">let </span>sec = insert_one(map, uniq, <span class="kw-2">&amp;</span>sec);
+                    <span class="kw">let </span>pay = insert_one(map, uniq, <span class="kw-2">&amp;</span>pay);
+                    ops.push(Op::Open(sec, pay, comm_or_num))
+                }
+            }
+        }
+        <span class="kw">let </span>ctrl = <span class="kw">match </span><span class="self">self</span>.ctrl {
+            Ctrl::MatchTag(var, cases, def) =&gt; {
+                <span class="kw">let </span>var = map.get_cloned(<span class="kw-2">&amp;</span>var)<span class="question-mark">?</span>;
+                <span class="kw">let </span><span class="kw-2">mut </span>new_cases = Vec::with_capacity(cases.len());
+                <span class="kw">for </span>(tag, case) <span class="kw">in </span>cases {
+                    <span class="kw">let </span>new_case = case.deconflict(<span class="kw-2">&amp;mut </span>map.clone(), uniq)<span class="question-mark">?</span>;
+                    new_cases.push((tag, new_case));
+                }
+                <span class="kw">let </span>new_def = <span class="kw">match </span>def {
+                    <span class="prelude-val">Some</span>(def) =&gt; <span class="prelude-val">Some</span>(Box::new(def.deconflict(map, uniq)<span class="question-mark">?</span>)),
+                    <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+                };
+                Ctrl::MatchTag(var, IndexMap::from_iter(new_cases), new_def)
+            }
+            Ctrl::MatchSymbol(var, cases, def) =&gt; {
+                <span class="kw">let </span>var = map.get_cloned(<span class="kw-2">&amp;</span>var)<span class="question-mark">?</span>;
+                <span class="kw">let </span><span class="kw-2">mut </span>new_cases = Vec::with_capacity(cases.len());
+                <span class="kw">for </span>(sym, case) <span class="kw">in </span>cases {
+                    <span class="kw">let </span>new_case = case.deconflict(<span class="kw-2">&amp;mut </span>map.clone(), uniq)<span class="question-mark">?</span>;
+                    new_cases.push((sym.clone(), new_case));
+                }
+                <span class="kw">let </span>new_def = <span class="kw">match </span>def {
+                    <span class="prelude-val">Some</span>(def) =&gt; <span class="prelude-val">Some</span>(Box::new(def.deconflict(map, uniq)<span class="question-mark">?</span>)),
+                    <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+                };
+                Ctrl::MatchSymbol(var, IndexMap::from_iter(new_cases), new_def)
+            }
+            Ctrl::If(x, true_block, false_block) =&gt; {
+                <span class="kw">let </span>x = map.get_cloned(<span class="kw-2">&amp;</span>x)<span class="question-mark">?</span>;
+                <span class="kw">let </span>true_block = Box::new(true_block.deconflict(<span class="kw-2">&amp;mut </span>map.clone(), uniq)<span class="question-mark">?</span>);
+                <span class="kw">let </span>false_block = Box::new(false_block.deconflict(<span class="kw-2">&amp;mut </span>map.clone(), uniq)<span class="question-mark">?</span>);
+                Ctrl::If(x, true_block, false_block)
+            }
+            Ctrl::Return(o) =&gt; Ctrl::Return(map.get_many_cloned(<span class="kw-2">&amp;</span>o)<span class="question-mark">?</span>),
+        };
+        <span class="prelude-val">Ok</span>(Block { ops, ctrl })
     }
 }
 
-<span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-    <span class="kw">use </span><span class="kw">super</span>::circuit::SlotsCounter;
-    <span class="kw">use super</span>::{store::Store, <span class="kw-2">*</span>};
-    <span class="kw">use crate</span>::{lem, lem::pointers::Ptr};
-    <span class="kw">use </span>bellperson::util_cs::{test_cs::TestConstraintSystem, Comparable, Delta};
-    <span class="kw">use </span>blstrs::Scalar <span class="kw">as </span>Fr;
-
-    <span class="doccomment">/// Helper function for testing circuit synthesis.
-    ///   - `lem` is the input LEM program.
-    ///   - `exprs` is a set of input expressions that can exercise different LEM paths,
-    ///   therefore this parameter can be used to test circuit uniformity among all the
-    ///   provided expressions.
-    ///   - `expected_slots` gives the number of expected slots for each type of hash.
-    </span><span class="kw">fn </span>synthesize_test_helper(lem: <span class="kw-2">&amp;</span>LEM, exprs: <span class="kw-2">&amp;</span>[Ptr&lt;Fr&gt;], expected_num_slots: SlotsCounter) {
-        <span class="kw">let </span>slots_count = lem.ctl.count_slots();
-
-        <span class="macro">assert_eq!</span>(slots_count, expected_num_slots);
-
-        <span class="kw">let </span>computed_num_constraints = lem.num_constraints::&lt;Fr&gt;(<span class="kw-2">&amp;</span>slots_count);
-
-        <span class="kw">let </span><span class="kw-2">mut </span>store = Store::default();
-
-        <span class="kw">let </span><span class="kw-2">mut </span>cs_prev = <span class="prelude-val">None</span>;
-        <span class="kw">for </span>expr <span class="kw">in </span>exprs {
-            <span class="kw">let </span>(frames, <span class="kw">_</span>) = lem.eval(<span class="kw-2">*</span>expr, <span class="kw-2">&amp;mut </span>store).unwrap();
-
-            <span class="kw">let </span><span class="kw-2">mut </span>cs;
-
-            <span class="kw">for </span>frame <span class="kw">in </span>frames.clone() {
-                cs = TestConstraintSystem::&lt;Fr&gt;::new();
-                lem.synthesize(<span class="kw-2">&amp;mut </span>cs, <span class="kw-2">&amp;mut </span>store, <span class="kw-2">&amp;</span>slots_count, <span class="kw-2">&amp;</span>frame)
-                    .unwrap();
-                <span class="macro">assert!</span>(cs.is_satisfied());
-                <span class="macro">assert_eq!</span>(computed_num_constraints, cs.num_constraints());
-                <span class="kw">if let </span><span class="prelude-val">Some</span>(cs_prev) = cs_prev {
-                    <span class="comment">// Check for all input expresssions that all frames are uniform.
-                    </span><span class="macro">assert_eq!</span>(cs.delta(<span class="kw-2">&amp;</span>cs_prev, <span class="bool-val">true</span>), Delta::Equal);
-                }
-                cs_prev = <span class="prelude-val">Some</span>(cs);
-            }
-        }
+<span class="kw">impl </span>Var {
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>new(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>(name.into())
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>accepts_virtual_nested_match_tag() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            match_tag expr_in {
-                Num =&gt; {
-                    <span class="kw">let </span>cont_out_terminal: Terminal;
-                    <span class="kw">return </span>(expr_in, env_in, cont_out_terminal);
-                },
-                Char =&gt; {
-                    match_tag expr_in {
-                        <span class="comment">// This nested match excercises the need to pass on the
-                        // information that we are on a virtual branch, because a
-                        // constraint will be created for `cont_out_error` and it
-                        // will need to be relaxed by an implication with a false
-                        // premise.
-                        </span>Num =&gt; {
-                            <span class="kw">let </span>cont_out_error: Error;
-                            <span class="kw">return </span>(env_in, expr_in, cont_out_error);
-                        }
-                    };
-                },
-                Sym =&gt; {
-                    match_tag expr_in {
-                        <span class="comment">// This nested match exercises the need to relax `popcount`
-                        // because there is no match but it&#39;s on a virtual path, so
-                        // we don&#39;t want to be too restrictive and demand that at
-                        // least one path must be taken.
-                        </span>Char =&gt; {
-                            <span class="kw">return </span>(cont_in, cont_in, cont_in);
-                        }
-                    };
-                }
-            };
-        })
-        .unwrap();
-
-        synthesize_test_helper(<span class="kw-2">&amp;</span>lem, <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>))], SlotsCounter::default());
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>resolves_conflicts_of_clashing_names_in_parallel_branches() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            match_tag expr_in {
-                <span class="comment">// This match is creating `cont_out_terminal` on two different
-                // branches, which, in theory, would cause troubles at allocation
-                // time. We solve this problem by calling `LEMOP::deconflict`,
-                // which turns one into `Num.cont_out_terminal` and the other into
-                // `Char.cont_out_terminal`.
-                </span>Num =&gt; {
-                    <span class="kw">let </span>cont_out_terminal: Terminal;
-                    <span class="kw">return </span>(expr_in, env_in, cont_out_terminal);
-                },
-                Char =&gt; {
-                    <span class="kw">let </span>cont_out_terminal: Terminal;
-                    <span class="kw">return </span>(expr_in, env_in, cont_out_terminal);
-                }
-            };
-        })
-        .unwrap();
-
-        synthesize_test_helper(<span class="kw-2">&amp;</span>lem, <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>))], SlotsCounter::default());
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>handles_non_ssa() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            <span class="kw">let </span>x: Cons = hash2(expr_in, expr_in);
-            <span class="comment">// The next line rewrites `x` and it should move on smoothly, matching
-            // the expected number of constraints accordingly
-            </span><span class="kw">let </span>x: Cons = hash2(x, x);
-            <span class="kw">let </span>cont_out_terminal: Terminal;
-            <span class="kw">return </span>(x, x, cont_out_terminal);
-        })
-        .unwrap();
-
-        synthesize_test_helper(
-            <span class="kw-2">&amp;</span>lem,
-            <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>))],
-            SlotsCounter::new((<span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>)),
-        );
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_simple_all_paths_delta() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            <span class="kw">let </span>cont_out_terminal: Terminal;
-            <span class="kw">return </span>(expr_in, env_in, cont_out_terminal);
-        })
-        .unwrap();
-
-        synthesize_test_helper(
-            <span class="kw-2">&amp;</span>lem,
-            <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>)), Ptr::char(<span class="string">&#39;c&#39;</span>)],
-            SlotsCounter::default(),
-        );
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_match_all_paths_delta() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            match_tag expr_in {
-                Num =&gt; {
-                    <span class="kw">let </span>cont_out_terminal: Terminal;
-                    <span class="kw">return </span>(expr_in, env_in, cont_out_terminal);
-                },
-                Char =&gt; {
-                    <span class="kw">let </span>cont_out_error: Error;
-                    <span class="kw">return </span>(expr_in, env_in, cont_out_error);
-                }
-            };
-        })
-        .unwrap();
-
-        synthesize_test_helper(
-            <span class="kw-2">&amp;</span>lem,
-            <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>)), Ptr::char(<span class="string">&#39;c&#39;</span>)],
-            SlotsCounter::default(),
-        );
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_hash_slots() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            <span class="kw">let </span>x: Cons = hash2(expr_in, env_in);
-            <span class="kw">let </span>y: Cons = hash3(expr_in, env_in, cont_in);
-            <span class="kw">let </span>z: Cons = hash4(expr_in, env_in, cont_in, cont_in);
-            <span class="kw">let </span>t: Terminal;
-            <span class="kw">let </span>p: Nil;
-            match_tag expr_in {
-                Num =&gt; {
-                    <span class="kw">let </span>m: Cons = hash2(env_in, expr_in);
-                    <span class="kw">let </span>n: Cons = hash3(cont_in, env_in, expr_in);
-                    <span class="kw">let </span>k: Cons = hash4(expr_in, cont_in, env_in, expr_in);
-                    <span class="kw">return </span>(m, n, t);
-                },
-                Char =&gt; {
-                    <span class="kw">return </span>(p, p, t);
-                },
-                Cons =&gt; {
-                    <span class="kw">return </span>(p, p, t);
-                },
-                Nil =&gt; {
-                    <span class="kw">return </span>(p, p, t);
-                }
-            };
-        })
-        .unwrap();
-
-        synthesize_test_helper(
-            <span class="kw-2">&amp;</span>lem,
-            <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>)), Ptr::char(<span class="string">&#39;c&#39;</span>)],
-            SlotsCounter::new((<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)),
-        );
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_unhash_slots() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            <span class="kw">let </span>x: Cons = hash2(expr_in, env_in);
-            <span class="kw">let </span>y: Cons = hash3(expr_in, env_in, cont_in);
-            <span class="kw">let </span>z: Cons = hash4(expr_in, env_in, cont_in, cont_in);
-            <span class="kw">let </span>t: Terminal;
-            <span class="kw">let </span>p: Nil;
-            match_tag expr_in {
-                Num =&gt; {
-                    <span class="kw">let </span>m: Cons = hash2(env_in, expr_in);
-                    <span class="kw">let </span>n: Cons = hash3(cont_in, env_in, expr_in);
-                    <span class="kw">let </span>k: Cons = hash4(expr_in, cont_in, env_in, expr_in);
-                    <span class="kw">let </span>(m1, m2) = unhash2(m);
-                    <span class="kw">let </span>(n1, n2, n3) = unhash3(n);
-                    <span class="kw">let </span>(k1, k2, k3, k4) = unhash4(k);
-                    <span class="kw">return </span>(m, n, t);
-                },
-                Char =&gt; {
-                    <span class="kw">return </span>(p, p, t);
-                },
-                Cons =&gt; {
-                    <span class="kw">return </span>(p, p, p);
-                },
-                Nil =&gt; {
-                    <span class="kw">return </span>(p, p, p);
-                }
-            };
-        })
-        .unwrap();
-
-        synthesize_test_helper(
-            <span class="kw-2">&amp;</span>lem,
-            <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>)), Ptr::char(<span class="string">&#39;c&#39;</span>)],
-            SlotsCounter::new((<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>)),
-        );
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_unhash_nested_slots() {
-        <span class="kw">let </span>lem = <span class="macro">lem!</span>(expr_in env_in cont_in {
-            <span class="kw">let </span>x: Cons = hash2(expr_in, env_in);
-            <span class="kw">let </span>y: Cons = hash3(expr_in, env_in, cont_in);
-            <span class="kw">let </span>z: Cons = hash4(expr_in, env_in, cont_in, cont_in);
-            <span class="kw">let </span>t: Terminal;
-            <span class="kw">let </span>p: Nil;
-            match_tag expr_in {
-                Num =&gt; {
-                    <span class="kw">let </span>m: Cons = hash2(env_in, expr_in);
-                    <span class="kw">let </span>n: Cons = hash3(cont_in, env_in, expr_in);
-                    <span class="kw">let </span>k: Cons = hash4(expr_in, cont_in, env_in, expr_in);
-                    <span class="kw">let </span>(m1, m2) = unhash2(m);
-                    <span class="kw">let </span>(n1, n2, n3) = unhash3(n);
-                    <span class="kw">let </span>(k1, k2, k3, k4) = unhash4(k);
-                    match_tag cont_in {
-                        Outermost =&gt; {
-                            <span class="kw">let </span>a: Cons = hash2(env_in, expr_in);
-                            <span class="kw">let </span>b: Cons = hash3(cont_in, env_in, expr_in);
-                            <span class="kw">let </span>c: Cons = hash4(expr_in, cont_in, env_in, expr_in);
-                            <span class="kw">return </span>(m, n, t);
-                        },
-                        Cons =&gt; {
-                            <span class="kw">let </span>d: Cons = hash2(env_in, expr_in);
-                            <span class="kw">let </span>e: Cons = hash3(cont_in, env_in, expr_in);
-                            <span class="kw">let </span>f: Cons = hash4(expr_in, cont_in, env_in, expr_in);
-                            <span class="kw">return </span>(m, n, t);
-                        }
-                    };
-                },
-                Char =&gt; {
-                    <span class="kw">return </span>(p, p, t);
-                },
-                Cons =&gt; {
-                    <span class="kw">return </span>(p, p, p);
-                },
-                Nil =&gt; {
-                    <span class="kw">return </span>(p, p, p);
-                }
-            };
-        })
-        .unwrap();
-
-        synthesize_test_helper(
-            <span class="kw-2">&amp;</span>lem,
-            <span class="kw-2">&amp;</span>[Ptr::num(Fr::from_u64(<span class="number">42</span>)), Ptr::char(<span class="string">&#39;c&#39;</span>)],
-            SlotsCounter::new((<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>)),
-        );
+    <span class="kw">fn </span>make_unique(<span class="kw-2">&amp;</span><span class="self">self</span>, uniq: <span class="kw-2">&amp;mut </span>usize) -&gt; Var {
+        <span class="kw-2">*</span>uniq += <span class="number">1</span>;
+        Var(<span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, <span class="self">self</span>.name(), uniq).into())
     }
 }
 </code></pre></div></section></main></body></html>

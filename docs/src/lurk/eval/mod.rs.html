@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/eval/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9bb858ba049f1f21.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.72.0-nightly (83964c156 2023-07-08)" data-channel="nightly" data-search-js="search-f6292fe389d70017.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ><script src="../../../static.files/storage-59fd9b8ccb335783.js"></script><script defer src="../../../static.files/source-script-106908c7a7964ba4.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../lurk/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/eval/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (e5cfc5547 2023-10-28)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -529,25 +529,66 @@
 <a href="#529" id="529">529</a>
 <a href="#530" id="530">530</a>
 <a href="#531" id="531">531</a>
+<a href="#532" id="532">532</a>
+<a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
+<a href="#544" id="544">544</a>
+<a href="#545" id="545">545</a>
+<a href="#546" id="546">546</a>
+<a href="#547" id="547">547</a>
+<a href="#548" id="548">548</a>
+<a href="#549" id="549">549</a>
+<a href="#550" id="550">550</a>
+<a href="#551" id="551">551</a>
+<a href="#552" id="552">552</a>
+<a href="#553" id="553">553</a>
+<a href="#554" id="554">554</a>
+<a href="#555" id="555">555</a>
+<a href="#556" id="556">556</a>
+<a href="#557" id="557">557</a>
+<a href="#558" id="558">558</a>
+<a href="#559" id="559">559</a>
+<a href="#560" id="560">560</a>
+<a href="#561" id="561">561</a>
+<a href="#562" id="562">562</a>
+<a href="#563" id="563">563</a>
+<a href="#564" id="564">564</a>
+<a href="#565" id="565">565</a>
+<a href="#566" id="566">566</a>
+<a href="#567" id="567">567</a>
+<a href="#568" id="568">568</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::coprocessor::Coprocessor;
 <span class="kw">use </span><span class="kw">crate</span>::error::ReductionError;
 <span class="kw">use </span><span class="kw">crate</span>::expr::Expression;
 <span class="kw">use </span><span class="kw">crate</span>::field::LurkField;
 <span class="kw">use </span><span class="kw">crate</span>::hash_witness::{ConsWitness, ContWitness};
 <span class="kw">use </span><span class="kw">crate</span>::ptr::{ContPtr, Ptr};
-<span class="kw">use </span><span class="kw">crate</span>::store;
+<span class="kw">use </span><span class="kw">crate</span>::state::{initial_lurk_state, State};
 <span class="kw">use </span><span class="kw">crate</span>::store::Store;
 <span class="kw">use </span><span class="kw">crate</span>::tag::ContTag;
 <span class="kw">use </span><span class="kw">crate</span>::writer::Write;
+<span class="kw">use </span><span class="kw">crate</span>::z_ptr::ZExprPtr;
+<span class="kw">use crate</span>::{lurk_sym_ptr, store};
 <span class="kw">use </span>lang::Lang;
 
-<span class="kw">use </span>log::info;
+<span class="attr">#[cfg(not(target_arch = <span class="string">&quot;wasm32&quot;</span>))]
+</span><span class="kw">use </span>lurk_macros::serde_test;
 <span class="attr">#[cfg(not(target_arch = <span class="string">&quot;wasm32&quot;</span>))]
 </span><span class="kw">use </span>proptest_derive::Arbitrary;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::cmp::PartialEq;
 <span class="kw">use </span>std::iter::{Iterator, Take};
 <span class="kw">use </span>std::marker::PhantomData;
+<span class="kw">use </span>tracing::info;
 
 <span class="kw">pub mod </span>lang;
 
@@ -564,33 +605,78 @@
 </span>}
 
 <span class="kw">impl</span>&lt;F: LurkField&gt; Write&lt;F&gt; <span class="kw">for </span>IO&lt;F&gt; {
-    <span class="kw">fn </span>fmt&lt;W: std::io::Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;</span>Store&lt;F&gt;, w: <span class="kw-2">&amp;mut </span>W) -&gt; std::io::Result&lt;()&gt; {
+    <span class="kw">fn </span>fmt&lt;W: std::io::Write&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        state: <span class="kw-2">&amp;</span>State,
+        w: <span class="kw-2">&amp;mut </span>W,
+    ) -&gt; std::io::Result&lt;()&gt; {
         <span class="macro">write!</span>(w, <span class="string">&quot;IO {{ expr: &quot;</span>)<span class="question-mark">?</span>;
-        <span class="self">self</span>.expr.fmt(store, w)<span class="question-mark">?</span>;
+        <span class="self">self</span>.expr.fmt(store, state, w)<span class="question-mark">?</span>;
         <span class="macro">write!</span>(w, <span class="string">&quot;, env: &quot;</span>)<span class="question-mark">?</span>;
-        <span class="self">self</span>.env.fmt(store, w)<span class="question-mark">?</span>;
+        <span class="self">self</span>.env.fmt(store, state, w)<span class="question-mark">?</span>;
         <span class="macro">write!</span>(w, <span class="string">&quot;, cont: &quot;</span>)<span class="question-mark">?</span>;
-        <span class="self">self</span>.cont.fmt(store, w)<span class="question-mark">?</span>;
+        <span class="self">self</span>.cont.fmt(store, state, w)<span class="question-mark">?</span>;
         <span class="macro">write!</span>(w, <span class="string">&quot; }}&quot;</span>)
     }
 }
 
 <span class="kw">impl</span>&lt;F: LurkField&gt; std::fmt::Display <span class="kw">for </span>IO&lt;F&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), std::fmt::Error&gt; {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>)
+        <span class="macro">write!</span>(f, <span class="string">&quot;{self:?}&quot;</span>)
     }
 }
 
-<span class="attr">#[derive(Clone, Debug, PartialEq, Eq)]
-</span><span class="kw">pub struct </span>Frame&lt;T: Copy, W: Copy, C&gt; {
+<span class="attr">#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+</span><span class="kw">pub enum </span>Meta&lt;F: LurkField&gt; {
+    <span class="attr">#[default]
+    </span>Lurk,
+    Coprocessor(ZExprPtr&lt;F&gt;),
+}
+
+<span class="kw">impl</span>&lt;F: LurkField&gt; Meta&lt;F&gt; {
+    <span class="kw">pub fn </span>is_lurk(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw-2">*</span><span class="self">self </span>== <span class="self">Self</span>::Lurk
+    }
+
+    <span class="kw">pub fn </span>is_coprocessor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span>::Coprocessor(<span class="kw">_</span>))
+    }
+
+    <span class="kw">pub fn </span>get_coprocessor_z_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ZExprPtr&lt;F&gt;&gt; {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Lurk =&gt; <span class="prelude-val">None</span>,
+            <span class="self">Self</span>::Coprocessor(z_ptr) =&gt; <span class="prelude-val">Some</span>(z_ptr),
+        }
+    }
+}
+
+<span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Frame&lt;T: Copy, W: Copy, F: LurkField, C&gt; {
     <span class="kw">pub </span>input: T,
     <span class="kw">pub </span>output: T,
     <span class="kw">pub </span>i: usize,
     <span class="kw">pub </span>witness: W,
+    <span class="kw">pub </span>meta: Meta&lt;F&gt;,
     <span class="kw">pub </span>_p: PhantomData&lt;C&gt;,
 }
 
+<span class="kw">impl</span>&lt;T: Copy, W: Copy, F: LurkField, C&gt; Frame&lt;T, W, F, C&gt; {
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>new(input: T, output: T, i: usize, witness: W, meta: Meta&lt;F&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            input,
+            output,
+            i,
+            witness,
+            meta,
+            _p: Default::default(),
+        }
+    }
+}
+
 <span class="attr">#[cfg_attr(not(target_arch = <span class="string">&quot;wasm32&quot;</span>), derive(Arbitrary))]
+#[cfg_attr(not(target_arch = <span class="string">&quot;wasm32&quot;</span>), serde_test)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 </span><span class="kw">pub enum </span>Status {
     Terminal,
@@ -625,6 +711,7 @@
             <span class="self">Self</span>::Terminal | <span class="self">Self</span>::Incomplete =&gt; <span class="bool-val">false</span>,
         }
     }
+
     <span class="kw">pub fn </span>is_incomplete(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Incomplete =&gt; <span class="bool-val">true</span>,
@@ -632,7 +719,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>to_cont&lt;F: LurkField&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;ContPtr&lt;F&gt;&gt; {
+    <span class="kw">pub fn </span>to_cont&lt;F: LurkField&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, s: <span class="kw-2">&amp;</span>Store&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;ContPtr&lt;F&gt;&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Terminal =&gt; <span class="prelude-val">Some</span>(s.intern_cont_terminal()),
             <span class="self">Self</span>::Error =&gt; <span class="prelude-val">Some</span>(s.intern_cont_error()),
@@ -651,7 +738,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;F: LurkField, W: Copy, C: Coprocessor&lt;F&gt;&gt; Frame&lt;IO&lt;F&gt;, W, C&gt; {
+<span class="kw">impl</span>&lt;F: LurkField, W: Copy, C: Coprocessor&lt;F&gt;&gt; Frame&lt;IO&lt;F&gt;, W, F, C&gt; {
     <span class="kw">pub fn </span>precedes(<span class="kw-2">&amp;</span><span class="self">self</span>, maybe_next: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
         <span class="kw">let </span>sequential = <span class="self">self</span>.i + <span class="number">1 </span>== maybe_next.i;
         <span class="kw">let </span>io_match = <span class="self">self</span>.output == maybe_next.input;
@@ -670,7 +757,7 @@
         </span>&lt;IO&lt;F&gt; <span class="kw">as </span>Evaluable&lt;F, Witness&lt;F&gt;, C&gt;&gt;::log(<span class="kw-2">&amp;</span><span class="self">self</span>.output, store, <span class="self">self</span>.i + <span class="number">1</span>);
     }
 
-    <span class="kw">pub fn </span>significant_frame_count(frames: <span class="kw-2">&amp;</span>[Frame&lt;IO&lt;F&gt;, W, C&gt;]) -&gt; usize {
+    <span class="kw">pub fn </span>significant_frame_count(frames: <span class="kw-2">&amp;</span>[Frame&lt;IO&lt;F&gt;, W, F, C&gt;]) -&gt; usize {
         frames
             .iter()
             .rev()
@@ -680,7 +767,11 @@
 }
 
 <span class="kw">pub trait </span>Evaluable&lt;F: LurkField, W, C: Coprocessor&lt;F&gt;&gt; {
-    <span class="kw">fn </span>reduce(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;, lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, W), ReductionError&gt;
+    <span class="kw">fn </span>reduce(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, W, Meta&lt;F&gt;), ReductionError&gt;
     <span class="kw">where
         </span><span class="self">Self</span>: Sized;
 
@@ -695,12 +786,12 @@
 <span class="kw">impl</span>&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt; Evaluable&lt;F, Witness&lt;F&gt;, C&gt; <span class="kw">for </span>IO&lt;F&gt; {
     <span class="kw">fn </span>reduce(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
         lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, Witness&lt;F&gt;), ReductionError&gt; {
-        <span class="kw">let </span>(expr, env, cont, witness) =
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, Witness&lt;F&gt;, Meta&lt;F&gt;), ReductionError&gt; {
+        <span class="kw">let </span>(expr, env, cont, witness, meta) =
             reduction::reduce(<span class="self">self</span>.expr, <span class="self">self</span>.env, <span class="self">self</span>.cont, store, lang)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>((<span class="self">Self </span>{ expr, env, cont }, witness))
+        <span class="prelude-val">Ok</span>((<span class="self">Self </span>{ expr, env, cont }, witness, meta))
     }
 
     <span class="kw">fn </span>status(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Status {
@@ -710,23 +801,27 @@
     <span class="kw">fn </span>is_complete(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         &lt;IO&lt;F&gt; <span class="kw">as </span>Evaluable&lt;F, Witness&lt;F&gt;, C&gt;&gt;::status(<span class="self">self</span>).is_complete()
     }
+
     <span class="kw">fn </span>is_terminal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        &lt;IO&lt;F&gt; <span class="kw">as </span>Evaluable&lt;F, Witness&lt;F&gt;, C&gt;&gt;::status(<span class="self">self</span>).is_complete()
+        &lt;IO&lt;F&gt; <span class="kw">as </span>Evaluable&lt;F, Witness&lt;F&gt;, C&gt;&gt;::status(<span class="self">self</span>).is_terminal()
     }
 
     <span class="kw">fn </span>is_error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        &lt;IO&lt;F&gt; <span class="kw">as </span>Evaluable&lt;F, Witness&lt;F&gt;, C&gt;&gt;::status(<span class="self">self</span>).is_complete()
+        &lt;IO&lt;F&gt; <span class="kw">as </span>Evaluable&lt;F, Witness&lt;F&gt;, C&gt;&gt;::status(<span class="self">self</span>).is_error()
     }
 
     <span class="kw">fn </span>log(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;</span>Store&lt;F&gt;, i: usize) {
         <span class="macro">info!</span>(
-            <span class="string">&quot;Frame: {}\n\tExpr: {}\n\tEnv: {}\n\tCont: {}{}\n&quot;</span>,
+            <span class="string">&quot;Frame: {}\n\tExpr: {}\n\tEnv: {}\n\tCont: {}{}&quot;</span>,
             i,
-            <span class="self">self</span>.expr.fmt_to_string(store),
-            <span class="self">self</span>.env.fmt_to_string(store),
-            <span class="self">self</span>.cont.fmt_to_string(store),
+            <span class="self">self</span>.expr.fmt_to_string(store, initial_lurk_state()),
+            <span class="self">self</span>.env.fmt_to_string(store, initial_lurk_state()),
+            <span class="self">self</span>.cont.fmt_to_string(store, initial_lurk_state()),
             <span class="kw">if let </span><span class="prelude-val">Some</span>(emitted) = <span class="self">self</span>.maybe_emitted_expression(store) {
-                <span class="macro">format!</span>(<span class="string">&quot;\n\tOutput: {}&quot;</span>, emitted.fmt_to_string(store))
+                <span class="macro">format!</span>(
+                    <span class="string">&quot;\n\tOutput: {}&quot;</span>,
+                    emitted.fmt_to_string(store, initial_lurk_state())
+                )
             } <span class="kw">else </span>{
                 <span class="string">&quot;&quot;</span>.to_string()
             }
@@ -773,19 +868,12 @@
     }
 }
 
-<span class="kw">impl</span>&lt;
-        F: LurkField,
-        T: Evaluable&lt;F, Witness&lt;F&gt;, C&gt; + Clone + PartialEq + Copy,
-        C: Coprocessor&lt;F&gt;,
-    &gt; Frame&lt;T, Witness&lt;F&gt;, C&gt;
+<span class="kw">impl</span>&lt;F: LurkField, T: Evaluable&lt;F, Witness&lt;F&gt;, C&gt; + Copy, C: Coprocessor&lt;F&gt;&gt;
+    Frame&lt;T, Witness&lt;F&gt;, F, C&gt;
 {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>next(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
-        lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ReductionError&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>next(<span class="kw-2">&amp;</span><span class="self">self</span>, store: <span class="kw-2">&amp;</span>Store&lt;F&gt;, lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ReductionError&gt; {
         <span class="kw">let </span>input = <span class="self">self</span>.output;
-        <span class="kw">let </span>(output, witness) = input.reduce(store, lang)<span class="question-mark">?</span>;
+        <span class="kw">let </span>(output, witness, meta) = input.reduce(store, lang)<span class="question-mark">?</span>;
 
         <span class="comment">// FIXME: Why isn&#39;t this method found?
         // self.log(store);
@@ -795,29 +883,28 @@
             output,
             i: <span class="self">self</span>.i + <span class="number">1</span>,
             witness,
+            meta,
             _p: Default::default(),
         })
     }
 }
 
-<span class="kw">impl</span>&lt;
-        F: LurkField,
-        T: Evaluable&lt;F, Witness&lt;F&gt;, C&gt; + Clone + PartialEq + Copy,
-        C: Coprocessor&lt;F&gt;,
-    &gt; Frame&lt;T, Witness&lt;F&gt;, C&gt;
+<span class="kw">impl</span>&lt;F: LurkField, T: Evaluable&lt;F, Witness&lt;F&gt;, C&gt; + Copy, C: Coprocessor&lt;F&gt; + Clone&gt;
+    Frame&lt;T, Witness&lt;F&gt;, F, C&gt;
 {
     <span class="kw">fn </span>from_initial_input(
         input: T,
-        store: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
         lang: <span class="kw-2">&amp;</span>Lang&lt;F, C&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ReductionError&gt; {
         input.log(store, <span class="number">0</span>);
-        <span class="kw">let </span>(output, witness) = input.reduce(store, lang)<span class="question-mark">?</span>;
+        <span class="kw">let </span>(output, witness, meta) = input.reduce(store, lang)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             input,
             output,
             i: <span class="number">0</span>,
             witness,
+            meta,
             _p: Default::default(),
         })
     }
@@ -826,15 +913,15 @@
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>FrameIt&lt;<span class="lifetime">&#39;a</span>, W: Copy, F: LurkField, C: Coprocessor&lt;F&gt;&gt; {
     first: bool,
-    frame: Frame&lt;IO&lt;F&gt;, W, C&gt;,
-    store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;F&gt;,
+    frame: Frame&lt;IO&lt;F&gt;, W, F, C&gt;,
+    store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;,
     lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, F: LurkField, C: Coprocessor&lt;F&gt;&gt; FrameIt&lt;<span class="lifetime">&#39;a</span>, Witness&lt;F&gt;, F, C&gt; {
     <span class="kw">fn </span>new(
         initial_input: IO&lt;F&gt;,
-        store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;,
         lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ReductionError&gt; {
         <span class="kw">let </span>frame = Frame::from_initial_input(initial_input, store, lang)<span class="question-mark">?</span>;
@@ -845,35 +932,6 @@
             lang,
         })
     }
-
-    <span class="doccomment">/// Like `.iter().take(n).last()`, but skips intermediary stages, to optimize
-    /// for evaluation.
-    </span><span class="kw">fn </span>next_n(
-        <span class="kw-2">mut </span><span class="self">self</span>,
-        n: usize,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;
-        (
-            Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, C&gt;,
-            Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, C&gt;,
-            Vec&lt;Ptr&lt;F&gt;&gt;,
-        ),
-        ReductionError,
-    &gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>previous_frame = <span class="self">self</span>.frame.clone();
-        <span class="kw">let </span><span class="kw-2">mut </span>emitted: Vec&lt;Ptr&lt;F&gt;&gt; = Vec::new();
-        <span class="kw">for _ in </span><span class="number">0</span>..n {
-            <span class="kw">if </span><span class="self">self</span>.frame.is_complete() {
-                <span class="kw">break</span>;
-            }
-            <span class="kw">let </span>new_frame = <span class="self">self</span>.frame.next(<span class="self">self</span>.store, <span class="self">self</span>.lang)<span class="question-mark">?</span>;
-
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(expr) = new_frame.output.maybe_emitted_expression(<span class="self">self</span>.store) {
-                emitted.push(expr);
-            }
-            previous_frame = std::mem::replace(<span class="kw-2">&amp;mut </span><span class="self">self</span>.frame, new_frame);
-        }
-        <span class="prelude-val">Ok</span>((<span class="self">self</span>.frame, previous_frame, emitted))
-    }
 }
 
 <span class="comment">// Wrapper struct to preserve errors that would otherwise be lost during iteration
@@ -883,7 +941,7 @@
 );
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, F: LurkField, C: Coprocessor&lt;F&gt;&gt; Iterator <span class="kw">for </span>ResultFrame&lt;<span class="lifetime">&#39;a</span>, F, C&gt; {
-    <span class="kw">type </span>Item = <span class="prelude-ty">Result</span>&lt;Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, C&gt;, ReductionError&gt;;
+    <span class="kw">type </span>Item = <span class="prelude-ty">Result</span>&lt;Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, F, C&gt;, ReductionError&gt;;
     <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;&lt;<span class="self">Self </span><span class="kw">as </span>Iterator&gt;::Item&gt; {
         <span class="kw">let </span>frame_it = <span class="kw">match </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.<span class="number">0 </span>{
             <span class="prelude-val">Ok</span>(f) =&gt; f,
@@ -909,7 +967,7 @@
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, F: LurkField, C: Coprocessor&lt;F&gt;&gt; Iterator <span class="kw">for </span>FrameIt&lt;<span class="lifetime">&#39;a</span>, Witness&lt;F&gt;, F, C&gt; {
-    <span class="kw">type </span>Item = Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, C&gt;;
+    <span class="kw">type </span>Item = Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, F, C&gt;;
     <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;&lt;<span class="self">Self </span><span class="kw">as </span>Iterator&gt;::Item&gt; {
         <span class="comment">// skip first iteration, as one evaluation happens on construction
         </span><span class="kw">if </span><span class="self">self</span>.first {
@@ -928,7 +986,7 @@
     }
 }
 
-<span class="attr">#[derive(Clone, Copy, Debug, PartialEq)]
+<span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 </span><span class="kw">pub struct </span>Witness&lt;F: LurkField&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) prethunk_output_expr: Ptr&lt;F&gt;,
     <span class="kw">pub</span>(<span class="kw">crate</span>) prethunk_output_env: Ptr&lt;F&gt;,
@@ -944,10 +1002,11 @@
 <span class="kw">where
     </span>IO&lt;F&gt;: Copy,
 {
-    <span class="kw">pub fn </span>new(
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>new(
         expr: Ptr&lt;F&gt;,
         env: Ptr&lt;F&gt;,
-        store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;,
         limit: usize,
         lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;,
     ) -&gt; <span class="self">Self </span>{
@@ -956,31 +1015,31 @@
             env,
             store,
             limit,
-            terminal_frame: <span class="prelude-val">None</span>,
             lang,
         }
     }
 
     <span class="kw">pub fn </span>eval(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(IO&lt;F&gt;, usize, Vec&lt;Ptr&lt;F&gt;&gt;), ReductionError&gt; {
-        <span class="kw">let </span>initial_input = <span class="self">self</span>.initial();
-        <span class="kw">let </span>frame_iterator = FrameIt::new(initial_input, <span class="self">self</span>.store, <span class="self">self</span>.lang)<span class="question-mark">?</span>;
-
-        <span class="comment">// Initial input performs one reduction, so we need limit - 1 more.
-        </span><span class="kw">let </span>(ultimate_frame, _penultimate_frame, emitted) =
-            frame_iterator.next_n(<span class="self">self</span>.limit - <span class="number">1</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>output = ultimate_frame.output;
-
-        <span class="kw">let </span>was_terminal = ultimate_frame.is_complete();
-        <span class="kw">let </span>i = ultimate_frame.i;
-        <span class="kw">if </span>was_terminal {
-            <span class="self">self</span>.terminal_frame = <span class="prelude-val">Some</span>(ultimate_frame);
+        <span class="kw">let </span><span class="kw-2">mut </span>io = <span class="self">self</span>.initial();
+        Evaluable::&lt;F, Witness&lt;F&gt;, C&gt;::log(<span class="kw-2">&amp;</span>io, <span class="self">self</span>.store, <span class="number">0</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>iterations = <span class="number">0</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>emitted_vec = <span class="macro">vec!</span>[];
+        <span class="kw">for _ in </span><span class="number">0</span>..<span class="self">self</span>.limit {
+            <span class="kw">if </span>Evaluable::&lt;F, Witness&lt;F&gt;, C&gt;::is_complete(<span class="kw-2">&amp;</span>io) {
+                <span class="kw">break</span>;
+            }
+            (io, <span class="kw">_</span>, <span class="kw">_</span>) = io.reduce(<span class="self">self</span>.store, <span class="self">self</span>.lang)<span class="question-mark">?</span>;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(emitted) = io.maybe_emitted_expression(<span class="self">self</span>.store) {
+                emitted_vec.push(emitted);
+            }
+            iterations += <span class="number">1</span>;
+            Evaluable::&lt;F, Witness&lt;F&gt;, C&gt;::log(<span class="kw-2">&amp;</span>io, <span class="self">self</span>.store, iterations);
         }
-        <span class="kw">let </span>iterations = <span class="kw">if </span>was_terminal { i } <span class="kw">else </span>{ i + <span class="number">1 </span>};
-        <span class="comment">// NOTE: We compute a terminal frame but don&#39;t include it in the iteration count.
-        </span><span class="prelude-val">Ok</span>((output, iterations, emitted))
+        <span class="prelude-val">Ok</span>((io, iterations, emitted_vec))
     }
 
-    <span class="kw">pub fn </span>initial(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; IO&lt;F&gt; {
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>initial(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; IO&lt;F&gt; {
         IO {
             expr: <span class="self">self</span>.expr,
             env: <span class="self">self</span>.env,
@@ -994,22 +1053,39 @@
         <span class="prelude-val">Ok</span>(FrameIt::new(initial_input, <span class="self">self</span>.store, <span class="self">self</span>.lang)<span class="question-mark">?</span>.take(<span class="self">self</span>.limit))
     }
 
-    <span class="comment">// Wraps frames in Result type in order to fail gracefully
-    </span><span class="kw">pub fn </span>get_frames(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, C&gt;&gt;, ReductionError&gt; {
-        <span class="kw">let </span>frame = FrameIt::new(<span class="self">self</span>.initial(), <span class="self">self</span>.store, <span class="self">self</span>.lang)<span class="question-mark">?</span>;
-        <span class="kw">let </span>result_frame = ResultFrame(<span class="prelude-val">Ok</span>(frame)).take(<span class="self">self</span>.limit);
-        <span class="kw">let </span>ret: <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw">_</span>&gt;, <span class="kw">_</span>&gt; = result_frame.collect();
-        ret
+    <span class="doccomment">/// Wraps frames in Result type in order to fail gracefully.
+    ///
+    /// Note: the output will have an identity frame at the end if there&#39;s still
+    /// room, that is, if `self.limit` hasn&#39;t been reached. This is useful for
+    /// proving when padding the last frame is necessary.
+    </span><span class="kw">pub fn </span>get_frames(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, F, C&gt;&gt;, ReductionError&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>input = <span class="self">self</span>.initial();
+        Evaluable::&lt;F, Witness&lt;F&gt;, C&gt;::log(<span class="kw-2">&amp;</span>input, <span class="self">self</span>.store, <span class="number">0</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>frames = <span class="macro">vec!</span>[];
+        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="self">self</span>.limit {
+            <span class="kw">let </span>(output, witness, meta) = input.reduce(<span class="self">self</span>.store, <span class="self">self</span>.lang)<span class="question-mark">?</span>;
+            <span class="kw">let </span>frame = Frame::new(input, output, i, witness, meta);
+            <span class="kw">let </span>is_complete = frame.is_complete();
+            frames.push(frame);
+            <span class="kw">if </span>is_complete {
+                <span class="kw">break</span>;
+            }
+            <span class="comment">// logging after `break` to ignore the identity frame
+            </span>Evaluable::&lt;F, Witness&lt;F&gt;, C&gt;::log(<span class="kw-2">&amp;</span>output, <span class="self">self</span>.store, i + <span class="number">1</span>);
+            input = output;
+        }
+        <span class="prelude-val">Ok</span>(frames)
     }
 
-    <span class="kw">pub fn </span>generate_frames&lt;Fp: Fn(usize) -&gt; bool&gt;(
+    <span class="attr">#[tracing::instrument(skip_all, name = <span class="string">&quot;Evaluator::generate_frames&quot;</span>)]
+    </span><span class="kw">pub fn </span>generate_frames&lt;Fp: Fn(usize) -&gt; bool&gt;(
         expr: Ptr&lt;F&gt;,
         env: Ptr&lt;F&gt;,
-        store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;,
         limit: usize,
         needs_frame_padding: Fp,
         lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, C&gt;&gt;, ReductionError&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, F, C&gt;&gt;, ReductionError&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>evaluator = <span class="self">Self</span>::new(expr, env, store, limit, lang);
 
         <span class="kw">let </span><span class="kw-2">mut </span>frames = evaluator.get_frames()<span class="question-mark">?</span>;
@@ -1017,10 +1093,7 @@
 
         <span class="comment">// TODO: We previously had an optimization here. If the limit was not reached, the final frame should be an
         // identity reduction suitable for padding. If it&#39;s not needed for that purpose, we can pop it from frames. In
-        // the worst case, this could save creating one multi-frame filled only with this identity padding. However,
-        // knowing when it is safe to do that is complicated, because for Groth16/SnarkPack+, we may need to pad the
-        // total number of proofs to a power of two. For now, we omit the optimization. With more thought and care, we
-        // could add it back later.
+        // the worst case, this could save creating one multi-frame filled only with this identity padding.
 
         </span><span class="kw">if </span>!frames.is_empty() {
             <span class="kw">let </span>padding_frame = frames[frames.len() - <span class="number">1</span>].clone();
@@ -1033,14 +1106,15 @@
     }
 }
 
-<span class="kw">pub fn </span>empty_sym_env&lt;F: LurkField&gt;(store: <span class="kw-2">&amp;</span>Store&lt;F&gt;) -&gt; Ptr&lt;F&gt; {
-    store.get_nil()
+<span class="attr">#[inline]
+</span><span class="kw">pub fn </span>empty_sym_env&lt;F: LurkField&gt;(store: <span class="kw-2">&amp;</span>Store&lt;F&gt;) -&gt; Ptr&lt;F&gt; {
+    <span class="macro">lurk_sym_ptr!</span>(store, nil)
 }
 
 <span class="comment">// Convenience functions, mostly for use in tests.
 
 </span><span class="kw">pub fn </span>eval_to_ptr&lt;F: LurkField, C: Coprocessor&lt;F&gt;&gt;(
-    s: <span class="kw-2">&amp;mut </span>Store&lt;F&gt;,
+    s: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
     src: <span class="kw-2">&amp;</span>str,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;, ReductionError&gt; {
     <span class="kw">let </span>expr = s.read(src).unwrap();
@@ -1052,12 +1126,12 @@
         </span>.expr)
 }
 
-<span class="kw">pub struct </span>Evaluator&lt;<span class="lifetime">&#39;a</span>, F: LurkField, C: Coprocessor&lt;F&gt;&gt; {
+<span class="attr">#[derive(Debug)]
+</span><span class="kw">pub struct </span>Evaluator&lt;<span class="lifetime">&#39;a</span>, F: LurkField, C: Coprocessor&lt;F&gt;&gt; {
     expr: Ptr&lt;F&gt;,
     env: Ptr&lt;F&gt;,
-    store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Store&lt;F&gt;,
+    store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Store&lt;F&gt;,
     limit: usize,
-    terminal_frame: <span class="prelude-ty">Option</span>&lt;Frame&lt;IO&lt;F&gt;, Witness&lt;F&gt;, C&gt;&gt;,
     lang: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lang&lt;F, C&gt;,
 }
 </code></pre></div></section></main></body></html>

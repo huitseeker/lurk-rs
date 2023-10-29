@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["LEMCTL","LEMOP"],"struct":["LEM","Var"],"type":["AString","AVec"]};
+window.SIDEBAR_ITEMS = {"enum":["Ctrl","Lit","Op","Tag"],"mod":["circuit","eval","interpreter","multiframe","pointers","store"],"struct":["Block","Func","Var"],"type":["AString"]};
