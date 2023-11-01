@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (e5cfc5547 2023-10-28)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (9d83ac217 2023-10-31)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -783,6 +783,11 @@
 <a href="#783" id="783">783</a>
 <a href="#784" id="784">784</a>
 <a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
+<a href="#788" id="788">788</a>
+<a href="#789" id="789">789</a>
+<a href="#790" id="790">790</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ## Lurk Evaluation Model (LEM)
 //!
 //! LEM is a simple, first order, referentially transparent language, designed to
@@ -854,6 +859,7 @@
 <span class="kw">mod </span>slot;
 <span class="kw">pub mod </span>store;
 <span class="kw">mod </span>var_map;
+
 <span class="kw">use </span>anyhow::{bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>indexmap::IndexMap;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
@@ -880,14 +886,14 @@
     <span class="kw">pub </span>input_params: Vec&lt;Var&gt;,
     <span class="kw">pub </span>output_size: usize,
     <span class="kw">pub </span>body: Block,
-    <span class="kw">pub </span>slot: SlotsCounter,
+    <span class="kw">pub </span>slots_count: SlotsCounter,
 }
 
 <span class="doccomment">/// LEM variables
 </span><span class="attr">#[derive(Debug, PartialEq, Clone, Eq, Hash)]
 </span><span class="kw">pub struct </span>Var(AString);
 
-<span class="doccomment">/// LEM tags
+<span class="doccomment">/// The LEM `Tag` is a wrapper around other types that are used as tags
 </span><span class="attr">#[derive(Copy, Debug, PartialEq, Clone, Eq, Hash, Serialize, Deserialize)]
 </span><span class="kw">pub enum </span>Tag {
     Expr(ExprTag),
@@ -958,8 +964,7 @@
 <span class="doccomment">/// LEM literals
 </span><span class="attr">#[derive(Debug, PartialEq, Clone, Eq, Hash)]
 </span><span class="kw">pub enum </span>Lit {
-    <span class="comment">// TODO maybe it should be a LurkField instead of u128
-    </span>Num(u128),
+    Num(u128),
     String(String),
     Symbol(Symbol),
 }
@@ -970,23 +975,6 @@
             <span class="self">Self</span>::Symbol(s) =&gt; store.intern_symbol(s),
             <span class="self">Self</span>::String(s) =&gt; store.intern_string(s),
             <span class="self">Self</span>::Num(num) =&gt; Ptr::num(F::from_u128(<span class="kw-2">*</span>num)),
-        }
-    }
-
-    <span class="kw">pub fn </span>from_ptr&lt;F: LurkField&gt;(ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;, store: <span class="kw-2">&amp;</span>Store&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">use </span>ExprTag::{Num, Str, Sym};
-        <span class="kw">use </span>Tag::Expr;
-        <span class="kw">match </span>ptr.tag() {
-            Expr(Num) =&gt; <span class="kw">match </span>ptr {
-                Ptr::Atom(<span class="kw">_</span>, f) =&gt; {
-                    <span class="kw">let </span>num = LurkField::to_u128_unchecked(f);
-                    <span class="prelude-val">Some</span>(<span class="self">Self</span>::Num(num))
-                }
-                <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
-            },
-            Expr(Str) =&gt; store.fetch_string(ptr).map(Lit::String),
-            Expr(Sym) =&gt; store.fetch_symbol(ptr).map(Lit::Symbol),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 }
@@ -1040,8 +1028,16 @@
     </span>Call(Vec&lt;Var&gt;, Box&lt;Func&gt;, Vec&lt;Var&gt;),
     <span class="doccomment">/// `Copy(x, y)` binds `x` to a copy of what `y` is bound to
     </span>Copy(Var, Var),
-    <span class="doccomment">/// `Null(x, t)` binds `x` to a `Ptr::Leaf(t, F::zero())`
-    </span>Null(Var, Tag),
+    <span class="doccomment">/// `Zero(x, t)` binds `x` to a `Ptr::zero(t)`
+    </span>Zero(Var, Tag),
+    <span class="doccomment">/// `Hash3Zeros(x, t)` binds `x` to a `Ptr::Atom(t, hash3(&amp;[F::zero(); 3]))`
+    </span>Hash3Zeros(Var, Tag),
+    <span class="doccomment">/// `Hash4Zeros(x, t)` binds `x` to a `Ptr::Atom(t, hash4(&amp;[F::zero(); 4]))`
+    </span>Hash4Zeros(Var, Tag),
+    <span class="doccomment">/// `Hash6Zeros(x, t)` binds `x` to a `Ptr::Atom(t, hash6(&amp;[F::zero(); 6]))`
+    </span>Hash6Zeros(Var, Tag),
+    <span class="doccomment">/// `Hash8Zeros(x, t)` binds `x` to a `Ptr::Atom(t, hash8(&amp;[F::zero(); 8]))`
+    </span>Hash8Zeros(Var, Tag),
     <span class="doccomment">/// `Lit(x, l)` binds `x` to the pointer representing that `Lit`
     </span>Lit(Var, Lit),
     <span class="doccomment">/// `Cast(y, t, x)` binds `y` to a pointer with tag `t` and the hash of `x`
@@ -1100,9 +1096,9 @@
         output_size: usize,
         body: Block,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Func&gt; {
-        <span class="kw">let </span>slot = body.count_slots();
+        <span class="kw">let </span>slots_count = body.count_slots();
         <span class="kw">let </span>func = Func {
-            slot,
+            slots_count,
             name,
             input_params,
             output_size,
@@ -1167,10 +1163,12 @@
                         is_bound(src, map)<span class="question-mark">?</span>;
                         is_unique(tgt, map);
                     }
-                    Op::Null(tgt, _tag) =&gt; {
-                        is_unique(tgt, map);
-                    }
-                    Op::Lit(tgt, _lit) =&gt; {
+                    Op::Zero(tgt, <span class="kw">_</span>)
+                    | Op::Hash3Zeros(tgt, <span class="kw">_</span>)
+                    | Op::Hash4Zeros(tgt, <span class="kw">_</span>)
+                    | Op::Hash6Zeros(tgt, <span class="kw">_</span>)
+                    | Op::Hash8Zeros(tgt, <span class="kw">_</span>)
+                    | Op::Lit(tgt, <span class="kw">_</span>) =&gt; {
                         is_unique(tgt, map);
                     }
                     Op::Cast(tgt, _tag, src) =&gt; {
@@ -1393,7 +1391,19 @@
                 Op::Copy(tgt, src) =&gt; {
                     ops.push(Op::Copy(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), map.get_cloned(<span class="kw-2">&amp;</span>src)<span class="question-mark">?</span>))
                 }
-                Op::Null(tgt, tag) =&gt; ops.push(Op::Null(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), tag)),
+                Op::Zero(tgt, tag) =&gt; ops.push(Op::Zero(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), tag)),
+                Op::Hash3Zeros(tgt, tag) =&gt; {
+                    ops.push(Op::Hash3Zeros(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), tag))
+                }
+                Op::Hash4Zeros(tgt, tag) =&gt; {
+                    ops.push(Op::Hash4Zeros(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), tag))
+                }
+                Op::Hash6Zeros(tgt, tag) =&gt; {
+                    ops.push(Op::Hash6Zeros(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), tag))
+                }
+                Op::Hash8Zeros(tgt, tag) =&gt; {
+                    ops.push(Op::Hash8Zeros(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), tag))
+                }
                 Op::Lit(tgt, lit) =&gt; ops.push(Op::Lit(insert_one(map, uniq, <span class="kw-2">&amp;</span>tgt), lit)),
                 Op::Cast(tgt, tag, src) =&gt; {
                     <span class="kw">let </span>src = map.get_cloned(<span class="kw-2">&amp;</span>src)<span class="question-mark">?</span>;
