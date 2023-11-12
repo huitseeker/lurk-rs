@@ -741,6 +741,8 @@ impl<F: LurkField> Store<F> {
         self.hash_ptr_unsafe(ptr)
     }
 
+    /// Constructs a vector of scalars that correspond to tags and hashes computed
+    /// from a slice of `Ptr`s turned into `ZPtr`s
     pub fn to_scalar_vector(&self, ptrs: &[Ptr<F>]) -> Vec<F> {
         ptrs.iter()
             .fold(Vec::with_capacity(2 * ptrs.len()), |mut acc, ptr| {
@@ -755,6 +757,15 @@ impl<F: LurkField> Store<F> {
     #[inline]
     pub fn ptr_eq(&self, a: &Ptr<F>, b: &Ptr<F>) -> bool {
         self.hash_ptr(a) == self.hash_ptr(b)
+    }
+
+    /// Returns an atom pointer whose tag and hash correspond to the `ZPtr` of a
+    /// given `Ptr`
+    #[inline]
+    #[allow(dead_code)]
+    fn mk_opaque(&self, ptr: &Ptr<F>) -> Ptr<F> {
+        let crate::z_ptr::ZPtr(t, v) = self.hash_ptr(ptr);
+        Ptr::Atom(t, v)
     }
 }
 
@@ -1070,8 +1081,9 @@ mod tests {
 
     use crate::{
         field::LurkField,
+        lem::Tag,
         state::initial_lurk_state,
-        tag::{ExprTag, Tag},
+        tag::{ExprTag, Tag as TagTrait},
         Symbol,
     };
 
@@ -1139,6 +1151,52 @@ mod tests {
         assert_eq!(elts.len(), 2);
         assert_eq!((&elts[0], &elts[1]), (&a, &b));
         assert_eq!(non_nil, Some(c));
+    }
+
+    #[test]
+    fn test_basic_hashing() {
+        let store = Store::<Fr>::default();
+        let zero = Fr::zero();
+        let zero_tag = Tag::try_from(0).unwrap();
+        let foo = Ptr::Atom(zero_tag, zero);
+
+        let z_foo = store.hash_ptr(&foo);
+        let o_foo = store.mk_opaque(&foo);
+        assert_eq!(z_foo.tag(), &zero_tag);
+        assert_eq!(z_foo.value(), &zero);
+        assert_eq!(z_foo.tag(), o_foo.tag());
+        assert_eq!(z_foo.value(), o_foo.get_atom().unwrap());
+
+        let comm = store.hide(zero, foo);
+        assert_eq!(comm.tag(), &Tag::Expr(ExprTag::Comm));
+        assert_eq!(
+            comm.get_atom().unwrap(),
+            &store.poseidon_cache.hash3(&[zero; 3])
+        );
+
+        let ptr2 = store.intern_2_ptrs(zero_tag, foo, foo);
+        let z_ptr2 = store.hash_ptr(&ptr2);
+        let o_ptr2 = store.mk_opaque(&ptr2);
+        assert_eq!(z_ptr2.tag(), &zero_tag);
+        assert_eq!(z_ptr2.value(), &store.poseidon_cache.hash4(&[zero; 4]));
+        assert_eq!(z_ptr2.tag(), o_ptr2.tag());
+        assert_eq!(z_ptr2.value(), o_ptr2.get_atom().unwrap());
+
+        let ptr3 = store.intern_3_ptrs(zero_tag, foo, foo, foo);
+        let z_ptr3 = store.hash_ptr(&ptr3);
+        let o_ptr3 = store.mk_opaque(&ptr3);
+        assert_eq!(z_ptr3.tag(), &zero_tag);
+        assert_eq!(z_ptr3.value(), &store.poseidon_cache.hash6(&[zero; 6]));
+        assert_eq!(z_ptr3.tag(), o_ptr3.tag());
+        assert_eq!(z_ptr3.value(), o_ptr3.get_atom().unwrap());
+
+        let ptr4 = store.intern_4_ptrs(zero_tag, foo, foo, foo, foo);
+        let z_ptr4 = store.hash_ptr(&ptr4);
+        let o_ptr4 = store.mk_opaque(&ptr4);
+        assert_eq!(z_ptr4.tag(), &zero_tag);
+        assert_eq!(z_ptr4.value(), &store.poseidon_cache.hash8(&[zero; 8]));
+        assert_eq!(z_ptr4.tag(), o_ptr4.tag());
+        assert_eq!(z_ptr4.value(), o_ptr4.get_atom().unwrap());
     }
 
     #[test]
