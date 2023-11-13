@@ -1645,7 +1645,7 @@ fn hide_opaque_open_available() {
     let expr = s.read_with_default_state("(hide 123 'x)").unwrap();
     let (output, ..) = evaluate_simple::<Fr, Coproc<Fr>>(None, expr, s, 10).unwrap();
 
-    let c = *s.hash_ptr(&output[0]).value();
+    let c = *s.mk_opaque(&output[0]).get_atom().unwrap();
     let comm = Ptr::comm(c);
 
     let open = s.intern_lurk_symbol("open");

@@ -763,7 +763,7 @@ impl<F: LurkField> Store<F> {
     /// given `Ptr`
     #[inline]
     #[allow(dead_code)]
-    fn mk_opaque(&self, ptr: &Ptr<F>) -> Ptr<F> {
+    pub(in crate::lem) fn mk_opaque(&self, ptr: &Ptr<F>) -> Ptr<F> {
         let crate::z_ptr::ZPtr(t, v) = self.hash_ptr(ptr);
         Ptr::Atom(t, v)
     }
