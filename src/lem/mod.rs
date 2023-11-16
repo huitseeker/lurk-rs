@@ -63,11 +63,11 @@ pub mod circuit; // ok
 pub mod eval; // ok
 pub(crate) mod interpreter;
 mod macros;
-pub mod multiframe;
+pub mod multiframe; // ok
 mod path;
-pub mod pointers;
+pub mod pointers; //ok 
 mod slot;
-pub mod store;
+pub mod store; // ok
 mod var_map;
 
 use anyhow::{bail, Result};

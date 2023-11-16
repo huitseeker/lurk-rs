@@ -2,9 +2,9 @@
 #![deny(unreachable_pub)]
 
 #[macro_use]
-pub mod circuit;
-pub mod cli;
-pub mod config;
+pub mod circuit; // ok
+pub mod cli; // ok 
+pub mod config; // ok
 pub mod cont;
 pub mod coprocessor;
 pub mod error;
