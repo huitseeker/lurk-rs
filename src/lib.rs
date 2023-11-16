@@ -5,7 +5,7 @@
 pub mod circuit; // ok
 pub mod cli; // ok 
 pub mod config; // ok
-pub mod cont;
+mod cont;
 pub mod coprocessor;
 pub mod error;
 pub mod eval;
