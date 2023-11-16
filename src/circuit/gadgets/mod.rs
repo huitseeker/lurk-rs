@@ -6,4 +6,4 @@ pub mod circom; // ok
 pub mod constraints; // ok
 pub(crate) mod data;
 pub(crate) mod hashes;
-pub mod pointer;
+pub mod pointer; //ok
