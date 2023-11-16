@@ -8,7 +8,7 @@ use crate::{
     lem::{circuit::GlobalAllocator, pointers::Ptr, store::Store},
 };
 
-pub mod circom;
+pub mod circom; // ok
 pub mod gadgets;
 pub mod sha256;
 pub mod trie;

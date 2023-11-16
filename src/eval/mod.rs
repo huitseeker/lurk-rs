@@ -8,7 +8,7 @@ use crate::z_ptr::ZExprPtr;
 use std::cmp::PartialEq;
 use std::marker::PhantomData;
 
-pub mod lang;
+pub mod lang; // ok
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum Meta<F: LurkField> {

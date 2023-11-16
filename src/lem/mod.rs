@@ -59,7 +59,7 @@
 //! 6. We also check for variables that are not used. If intended they should
 //!    be prefixed by "_"
 
-pub mod circuit;
+pub mod circuit; // ok
 pub mod eval;
 pub mod interpreter;
 mod macros;
