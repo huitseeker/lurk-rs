@@ -10,8 +10,8 @@ use crate::{
 
 pub mod circom; // ok
 pub(crate) mod gadgets;
-pub mod sha256;
-pub mod trie;
+pub mod sha256; // ok
+pub mod trie; // ok
 
 /// `Coprocessor` is a trait that represents a generalized interface for coprocessors.
 /// Coprocessors augment the Lurk circuit and evaluation with additional built-in functionality.

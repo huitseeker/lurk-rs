@@ -60,7 +60,7 @@
 //!    be prefixed by "_"
 
 pub mod circuit; // ok
-pub mod eval;
+pub mod eval; // ok
 pub mod interpreter;
 mod macros;
 pub mod multiframe;
