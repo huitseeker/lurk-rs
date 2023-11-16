@@ -61,7 +61,7 @@
 
 pub mod circuit; // ok
 pub mod eval; // ok
-pub mod interpreter;
+pub(crate) mod interpreter;
 mod macros;
 pub mod multiframe;
 mod path;
