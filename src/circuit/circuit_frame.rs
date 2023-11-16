@@ -1,8 +1,6 @@
 use bellpepper::util_cs::Comparable;
 
-use crate::{
-    field::LurkField,
-};
+use crate::field::LurkField;
 
 /// Prints out the full CS for debugging purposes
 #[allow(dead_code)]
