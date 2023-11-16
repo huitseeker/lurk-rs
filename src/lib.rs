@@ -6,11 +6,11 @@ pub mod circuit; // ok
 pub mod cli; // ok 
 pub mod config; // ok
 mod cont;
-pub mod coprocessor;
-pub mod error;
-pub mod eval;
+pub mod coprocessor; // ok
+pub mod error; // ok
+pub mod eval; // ok
 pub mod expr;
-pub mod field;
+pub mod field; // ok
 pub mod hash;
 pub mod hash_witness;
 pub mod lem;
