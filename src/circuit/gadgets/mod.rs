@@ -2,7 +2,7 @@
 pub(crate) mod macros;
 
 pub(crate) mod case;
-pub mod circom;
+pub mod circom; // ok
 pub mod constraints;
 pub mod data;
 pub(crate) mod hashes;

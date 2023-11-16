@@ -1,4 +1,4 @@
 #[macro_use]
-pub mod gadgets;
+pub mod gadgets; // ok
 
 pub mod circuit_frame;
