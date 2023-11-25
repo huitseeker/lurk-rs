@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (9d83ac217 2023-10-31)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lem/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (37b2813a7 2023-11-24)" data-channel="nightly" data-search-js="search-f4028ef4dd0903c7.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -788,6 +788,32 @@
 <a href="#788" id="788">788</a>
 <a href="#789" id="789">789</a>
 <a href="#790" id="790">790</a>
+<a href="#791" id="791">791</a>
+<a href="#792" id="792">792</a>
+<a href="#793" id="793">793</a>
+<a href="#794" id="794">794</a>
+<a href="#795" id="795">795</a>
+<a href="#796" id="796">796</a>
+<a href="#797" id="797">797</a>
+<a href="#798" id="798">798</a>
+<a href="#799" id="799">799</a>
+<a href="#800" id="800">800</a>
+<a href="#801" id="801">801</a>
+<a href="#802" id="802">802</a>
+<a href="#803" id="803">803</a>
+<a href="#804" id="804">804</a>
+<a href="#805" id="805">805</a>
+<a href="#806" id="806">806</a>
+<a href="#807" id="807">807</a>
+<a href="#808" id="808">808</a>
+<a href="#809" id="809">809</a>
+<a href="#810" id="810">810</a>
+<a href="#811" id="811">811</a>
+<a href="#812" id="812">812</a>
+<a href="#813" id="813">813</a>
+<a href="#814" id="814">814</a>
+<a href="#815" id="815">815</a>
+<a href="#816" id="816">816</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ## Lurk Evaluation Model (LEM)
 //!
 //! LEM is a simple, first order, referentially transparent language, designed to
@@ -851,7 +877,7 @@
 
 </span><span class="kw">pub mod </span>circuit;
 <span class="kw">pub mod </span>eval;
-<span class="kw">pub mod </span>interpreter;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>interpreter;
 <span class="kw">mod </span>macros;
 <span class="kw">pub mod </span>multiframe;
 <span class="kw">mod </span>path;
@@ -990,6 +1016,16 @@
     </span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>AString {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
     </span>}
+
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>new(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>(name.into())
+    }
+
+    <span class="kw">fn </span>make_unique(<span class="kw-2">&amp;</span><span class="self">self</span>, uniq: <span class="kw-2">&amp;mut </span>usize) -&gt; Var {
+        <span class="kw-2">*</span>uniq += <span class="number">1</span>;
+        Var(<span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, <span class="self">self</span>.name(), uniq).into())
+    }
 }
 
 <span class="doccomment">/// A block is a sequence of operations followed by a control. Each block
@@ -1086,6 +1122,7 @@
     <span class="doccomment">/// `Open(s, p, h)` binds `s` and `p` to the secret and payload (respectively)
     /// of the commitment that resulted on (num or comm) `h`
     </span>Open(Var, Var, Var),
+    Unit(<span class="kw">fn</span>()),
 }
 
 <span class="kw">impl </span>Func {
@@ -1241,6 +1278,7 @@
                         is_unique(tgt_secret, map);
                         is_unique(tgt_ptr, map);
                     }
+                    Op::Unit(<span class="kw">_</span>) =&gt; (),
                 }
             }
             <span class="kw">match </span><span class="kw-2">&amp;</span>block.ctrl {
@@ -1526,6 +1564,9 @@
                     <span class="kw">let </span>pay = insert_one(map, uniq, <span class="kw-2">&amp;</span>pay);
                     ops.push(Op::Open(sec, pay, comm_or_num))
                 }
+                Op::Unit(x) =&gt; {
+                    ops.push(Op::Unit(x));
+                }
             }
         }
         <span class="kw">let </span>ctrl = <span class="kw">match </span><span class="self">self</span>.ctrl {
@@ -1565,17 +1606,28 @@
         };
         <span class="prelude-val">Ok</span>(Block { ops, ctrl })
     }
+
+    <span class="doccomment">/// Creates a `Block` with an empty vector of `Op`s
+    </span><span class="attr">#[inline]
+    </span><span class="kw">fn </span>ctrl(ctrl: Ctrl) -&gt; Block {
+        Block { ops: <span class="macro">vec!</span>[], ctrl }
+    }
 }
 
-<span class="kw">impl </span>Var {
+<span class="kw">impl </span>Ctrl {
     <span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>new(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>(name.into())
+    </span><span class="kw">fn </span>if_(v: Var, true_block: Block, false_block: Block) -&gt; Ctrl {
+        Ctrl::If(v, true_block.into(), false_block.into())
     }
 
-    <span class="kw">fn </span>make_unique(<span class="kw-2">&amp;</span><span class="self">self</span>, uniq: <span class="kw-2">&amp;mut </span>usize) -&gt; Var {
-        <span class="kw-2">*</span>uniq += <span class="number">1</span>;
-        Var(<span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, <span class="self">self</span>.name(), uniq).into())
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>match_tag(v: Var, cases: Vec&lt;(Tag, Block)&gt;, def: <span class="prelude-ty">Option</span>&lt;Block&gt;) -&gt; Ctrl {
+        Ctrl::MatchTag(v, IndexMap::from_iter(cases), def.map(|b| b.into()))
+    }
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>match_symbol(v: Var, cases: Vec&lt;(Symbol, Block)&gt;, def: <span class="prelude-ty">Option</span>&lt;Block&gt;) -&gt; Ctrl {
+        Ctrl::MatchSymbol(v, IndexMap::from_iter(cases), def.map(|b| b.into()))
     }
 }
 </code></pre></div></section></main></body></html>

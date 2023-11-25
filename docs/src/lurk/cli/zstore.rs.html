@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/cli/zstore.rs`."><title>zstore.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (9d83ac217 2023-10-31)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/cli/zstore.rs`."><title>zstore.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="lurk" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (37b2813a7 2023-11-24)" data-channel="nightly" data-search-js="search-f4028ef4dd0903c7.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -179,23 +179,395 @@
 <a href="#179" id="179">179</a>
 <a href="#180" id="180">180</a>
 <a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a>
+<a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+<a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::{bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
-<span class="kw">use </span>std::collections::{BTreeMap, HashMap};
+<span class="kw">use </span>std::collections::{BTreeMap, HashMap, HashSet};
 
 <span class="kw">use crate</span>::{
     field::{FWrap, LurkField},
     lem::{
-        pointers::{Ptr, ZChildren, ZPtr},
+        pointers::{Ptr, ZPtr},
         store::Store,
     },
 };
 
 <span class="kw">use </span><span class="kw">super</span>::field_data::HasFieldModulus;
 
-<span class="attr">#[derive(Debug, Default, Serialize, Deserialize)]
+<span class="doccomment">/// `ZPtrType` holds information about the `Ptr` that originated a certain `ZPtr`.
+/// If the `Ptr` was not atomic, `ZPtrType` can refer to its children once they
+/// have already been turned into `ZPtr`s.
+</span><span class="attr">#[derive(Debug, Serialize, Deserialize)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>ZPtrType&lt;F: LurkField&gt; {
+    Atom,
+    Tuple2(ZPtr&lt;F&gt;, ZPtr&lt;F&gt;),
+    Tuple3(ZPtr&lt;F&gt;, ZPtr&lt;F&gt;, ZPtr&lt;F&gt;),
+    Tuple4(ZPtr&lt;F&gt;, ZPtr&lt;F&gt;, ZPtr&lt;F&gt;, ZPtr&lt;F&gt;),
+}
+
+<span class="doccomment">/// Holds a mapping from `ZPtr`s to their `ZPtrType`s
+</span><span class="attr">#[derive(Debug, Default, Serialize, Deserialize)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ZDag&lt;F: LurkField&gt;(BTreeMap&lt;ZPtr&lt;F&gt;, ZPtrType&lt;F&gt;&gt;);
+
+<span class="kw">impl</span>&lt;F: LurkField&gt; ZDag&lt;F&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>populate_with(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        cache: <span class="kw-2">&amp;mut </span>HashMap&lt;Ptr&lt;F&gt;, ZPtr&lt;F&gt;&gt;,
+    ) -&gt; ZPtr&lt;F&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>recurse = |ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;| -&gt; ZPtr&lt;F&gt; {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(z_ptr) = cache.get(ptr) {
+                <span class="kw-2">*</span>z_ptr
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>z_ptr = <span class="kw">match </span>ptr {
+                    Ptr::Atom(tag, f) =&gt; {
+                        <span class="kw">let </span>z_ptr = ZPtr::from_parts(<span class="kw-2">*</span>tag, <span class="kw-2">*</span>f);
+                        <span class="self">self</span>.<span class="number">0</span>.insert(z_ptr, ZPtrType::Atom);
+                        z_ptr
+                    }
+                    Ptr::Tuple2(tag, idx) =&gt; {
+                        <span class="kw">let </span>(a, b) = store.expect_2_ptrs(<span class="kw-2">*</span>idx);
+                        <span class="kw">let </span>a = <span class="self">self</span>.populate_with(a, store, cache);
+                        <span class="kw">let </span>b = <span class="self">self</span>.populate_with(b, store, cache);
+                        <span class="kw">let </span>z_ptr = ZPtr::from_parts(
+                            <span class="kw-2">*</span>tag,
+                            store.poseidon_cache.hash4(<span class="kw-2">&amp;</span>[
+                                a.tag_field(),
+                                <span class="kw-2">*</span>a.value(),
+                                b.tag_field(),
+                                <span class="kw-2">*</span>b.value(),
+                            ]),
+                        );
+                        <span class="self">self</span>.<span class="number">0</span>.insert(z_ptr, ZPtrType::Tuple2(a, b));
+                        z_ptr
+                    }
+                    Ptr::Tuple3(tag, idx) =&gt; {
+                        <span class="kw">let </span>(a, b, c) = store.expect_3_ptrs(<span class="kw-2">*</span>idx);
+                        <span class="kw">let </span>a = <span class="self">self</span>.populate_with(a, store, cache);
+                        <span class="kw">let </span>b = <span class="self">self</span>.populate_with(b, store, cache);
+                        <span class="kw">let </span>c = <span class="self">self</span>.populate_with(c, store, cache);
+                        <span class="kw">let </span>z_ptr = ZPtr::from_parts(
+                            <span class="kw-2">*</span>tag,
+                            store.poseidon_cache.hash6(<span class="kw-2">&amp;</span>[
+                                a.tag_field(),
+                                <span class="kw-2">*</span>a.value(),
+                                b.tag_field(),
+                                <span class="kw-2">*</span>b.value(),
+                                c.tag_field(),
+                                <span class="kw-2">*</span>c.value(),
+                            ]),
+                        );
+                        <span class="self">self</span>.<span class="number">0</span>.insert(z_ptr, ZPtrType::Tuple3(a, b, c));
+                        z_ptr
+                    }
+                    Ptr::Tuple4(tag, idx) =&gt; {
+                        <span class="kw">let </span>(a, b, c, d) = store.expect_4_ptrs(<span class="kw-2">*</span>idx);
+                        <span class="kw">let </span>a = <span class="self">self</span>.populate_with(a, store, cache);
+                        <span class="kw">let </span>b = <span class="self">self</span>.populate_with(b, store, cache);
+                        <span class="kw">let </span>c = <span class="self">self</span>.populate_with(c, store, cache);
+                        <span class="kw">let </span>d = <span class="self">self</span>.populate_with(d, store, cache);
+                        <span class="kw">let </span>z_ptr = ZPtr::from_parts(
+                            <span class="kw-2">*</span>tag,
+                            store.poseidon_cache.hash8(<span class="kw-2">&amp;</span>[
+                                a.tag_field(),
+                                <span class="kw-2">*</span>a.value(),
+                                b.tag_field(),
+                                <span class="kw-2">*</span>b.value(),
+                                c.tag_field(),
+                                <span class="kw-2">*</span>c.value(),
+                                d.tag_field(),
+                                <span class="kw-2">*</span>d.value(),
+                            ]),
+                        );
+                        <span class="self">self</span>.<span class="number">0</span>.insert(z_ptr, ZPtrType::Tuple4(a, b, c, d));
+                        z_ptr
+                    }
+                };
+                cache.insert(<span class="kw-2">*</span>ptr, z_ptr);
+                z_ptr
+            }
+        };
+        recurse(ptr)
+    }
+
+    <span class="kw">fn </span>get_type(<span class="kw-2">&amp;</span><span class="self">self</span>, z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ZPtrType&lt;F&gt;&gt; {
+        <span class="self">self</span>.<span class="number">0</span>.get(z_ptr)
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>populate_store(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        cache: <span class="kw-2">&amp;mut </span>HashMap&lt;ZPtr&lt;F&gt;, Ptr&lt;F&gt;&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>recurse = |z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;| -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;&gt; {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(z_ptr) = cache.get(z_ptr) {
+                <span class="prelude-val">Ok</span>(<span class="kw-2">*</span>z_ptr)
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>ptr = <span class="kw">match </span><span class="self">self</span>.get_type(z_ptr) {
+                    <span class="prelude-val">None </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t find ZPtr on ZStore&quot;</span>),
+                    <span class="prelude-val">Some</span>(ZPtrType::Atom) =&gt; Ptr::Atom(<span class="kw-2">*</span>z_ptr.tag(), <span class="kw-2">*</span>z_ptr.value()),
+                    <span class="prelude-val">Some</span>(ZPtrType::Tuple2(z1, z2)) =&gt; {
+                        <span class="kw">let </span>ptr1 = <span class="self">self</span>.populate_store(z1, store, cache)<span class="question-mark">?</span>;
+                        <span class="kw">let </span>ptr2 = <span class="self">self</span>.populate_store(z2, store, cache)<span class="question-mark">?</span>;
+                        store.intern_2_ptrs_hydrated(<span class="kw-2">*</span>z_ptr.tag(), ptr1, ptr2, <span class="kw-2">*</span>z_ptr)
+                    }
+                    <span class="prelude-val">Some</span>(ZPtrType::Tuple3(z1, z2, z3)) =&gt; {
+                        <span class="kw">let </span>ptr1 = <span class="self">self</span>.populate_store(z1, store, cache)<span class="question-mark">?</span>;
+                        <span class="kw">let </span>ptr2 = <span class="self">self</span>.populate_store(z2, store, cache)<span class="question-mark">?</span>;
+                        <span class="kw">let </span>ptr3 = <span class="self">self</span>.populate_store(z3, store, cache)<span class="question-mark">?</span>;
+                        store.intern_3_ptrs_hydrated(<span class="kw-2">*</span>z_ptr.tag(), ptr1, ptr2, ptr3, <span class="kw-2">*</span>z_ptr)
+                    }
+                    <span class="prelude-val">Some</span>(ZPtrType::Tuple4(z1, z2, z3, z4)) =&gt; {
+                        <span class="kw">let </span>ptr1 = <span class="self">self</span>.populate_store(z1, store, cache)<span class="question-mark">?</span>;
+                        <span class="kw">let </span>ptr2 = <span class="self">self</span>.populate_store(z2, store, cache)<span class="question-mark">?</span>;
+                        <span class="kw">let </span>ptr3 = <span class="self">self</span>.populate_store(z3, store, cache)<span class="question-mark">?</span>;
+                        <span class="kw">let </span>ptr4 = <span class="self">self</span>.populate_store(z4, store, cache)<span class="question-mark">?</span>;
+                        store.intern_4_ptrs_hydrated(<span class="kw-2">*</span>z_ptr.tag(), ptr1, ptr2, ptr3, ptr4, <span class="kw-2">*</span>z_ptr)
+                    }
+                };
+                cache.insert(<span class="kw-2">*</span>z_ptr, ptr);
+                <span class="prelude-val">Ok</span>(ptr)
+            }
+        };
+        recurse(z_ptr)
+    }
+
+    <span class="doccomment">/// Populates a `ZDag` with data from self
+    </span><span class="kw">fn </span>populate_z_dag(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;,
+        z_dag: <span class="kw-2">&amp;mut </span>ZDag&lt;F&gt;,
+        cache: <span class="kw-2">&amp;mut </span>HashSet&lt;ZPtr&lt;F&gt;&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>recurse = |z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;| -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+            <span class="kw">if </span>!cache.contains(z_ptr) {
+                <span class="kw">match </span><span class="self">self</span>.get_type(z_ptr) {
+                    <span class="prelude-val">None </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t find ZPtr on ZStore&quot;</span>),
+                    <span class="prelude-val">Some</span>(ZPtrType::Atom) =&gt; {
+                        z_dag.<span class="number">0</span>.insert(<span class="kw-2">*</span>z_ptr, ZPtrType::Atom);
+                    }
+                    <span class="prelude-val">Some</span>(ZPtrType::Tuple2(z1, z2)) =&gt; {
+                        <span class="self">self</span>.populate_z_dag(z1, z_dag, cache)<span class="question-mark">?</span>;
+                        <span class="self">self</span>.populate_z_dag(z2, z_dag, cache)<span class="question-mark">?</span>;
+                        z_dag.<span class="number">0</span>.insert(<span class="kw-2">*</span>z_ptr, ZPtrType::Tuple2(<span class="kw-2">*</span>z1, <span class="kw-2">*</span>z2));
+                    }
+                    <span class="prelude-val">Some</span>(ZPtrType::Tuple3(z1, z2, z3)) =&gt; {
+                        <span class="self">self</span>.populate_z_dag(z1, z_dag, cache)<span class="question-mark">?</span>;
+                        <span class="self">self</span>.populate_z_dag(z2, z_dag, cache)<span class="question-mark">?</span>;
+                        <span class="self">self</span>.populate_z_dag(z3, z_dag, cache)<span class="question-mark">?</span>;
+                        z_dag.<span class="number">0</span>.insert(<span class="kw-2">*</span>z_ptr, ZPtrType::Tuple3(<span class="kw-2">*</span>z1, <span class="kw-2">*</span>z2, <span class="kw-2">*</span>z3));
+                    }
+                    <span class="prelude-val">Some</span>(ZPtrType::Tuple4(z1, z2, z3, z4)) =&gt; {
+                        <span class="self">self</span>.populate_z_dag(z1, z_dag, cache)<span class="question-mark">?</span>;
+                        <span class="self">self</span>.populate_z_dag(z2, z_dag, cache)<span class="question-mark">?</span>;
+                        <span class="self">self</span>.populate_z_dag(z3, z_dag, cache)<span class="question-mark">?</span>;
+                        <span class="self">self</span>.populate_z_dag(z4, z_dag, cache)<span class="question-mark">?</span>;
+                        z_dag.<span class="number">0</span>.insert(<span class="kw-2">*</span>z_ptr, ZPtrType::Tuple4(<span class="kw-2">*</span>z1, <span class="kw-2">*</span>z2, <span class="kw-2">*</span>z3, <span class="kw-2">*</span>z4));
+                    }
+                };
+                cache.insert(<span class="kw-2">*</span>z_ptr);
+            }
+            <span class="prelude-val">Ok</span>(())
+        };
+        recurse(z_ptr)
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>filtered(<span class="kw-2">&amp;</span><span class="self">self</span>, z_ptrs: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>ZPtr&lt;F&gt;]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>z_dag_new = ZDag::default();
+        <span class="kw">let </span><span class="kw-2">mut </span>cache = HashSet::default();
+        <span class="kw">for </span>z_ptr <span class="kw">in </span>z_ptrs {
+            <span class="self">self</span>.populate_z_dag(z_ptr, <span class="kw-2">&amp;mut </span>z_dag_new, <span class="kw-2">&amp;mut </span>cache)<span class="question-mark">?</span>;
+        }
+        <span class="prelude-val">Ok</span>(z_dag_new)
+    }
+}
+
+<span class="doccomment">/// A `ZStore` is a stable IO format for `Store`, without index-based references
+</span><span class="attr">#[derive(Debug, Default, Serialize, Deserialize)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ZStore&lt;F: LurkField&gt; {
-    dag: BTreeMap&lt;ZPtr&lt;F&gt;, ZChildren&lt;F&gt;&gt;,
+    z_dag: ZDag&lt;F&gt;,
     comms: BTreeMap&lt;FWrap&lt;F&gt;, (F, ZPtr&lt;F&gt;)&gt;,
 }
 
@@ -216,148 +588,138 @@
         <span class="self">self</span>.comms.get(<span class="kw-2">&amp;</span>FWrap(hash))
     }
 
-    <span class="attr">#[inline]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>get_children(<span class="kw-2">&amp;</span><span class="self">self</span>, z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ZChildren&lt;F&gt;&gt; {
-        <span class="self">self</span>.dag.get(z_ptr)
-    }
-
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>to_store(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Store&lt;F&gt;&gt; {
         <span class="kw">let </span>store = Store::default();
         <span class="kw">let </span><span class="kw-2">mut </span>cache = HashMap::default();
-        <span class="kw">for </span>z_ptr <span class="kw">in </span><span class="self">self</span>.dag.keys() {
-            populate_store(<span class="kw-2">&amp;</span>store, z_ptr, <span class="self">self</span>, <span class="kw-2">&amp;mut </span>cache)<span class="question-mark">?</span>;
+        <span class="kw">for </span>z_ptr <span class="kw">in </span><span class="self">self</span>.z_dag.<span class="number">0</span>.keys() {
+            <span class="self">self</span>.populate_store(z_ptr, <span class="kw-2">&amp;</span>store, <span class="kw-2">&amp;mut </span>cache)<span class="question-mark">?</span>;
         }
         <span class="kw">for </span>(hash, (secret, z_payload)) <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.comms {
-            <span class="kw">let </span>payload = populate_store(<span class="kw-2">&amp;</span>store, z_payload, <span class="self">self</span>, <span class="kw-2">&amp;mut </span>cache)<span class="question-mark">?</span>;
+            <span class="kw">let </span>payload = <span class="self">self</span>.populate_store(z_payload, <span class="kw-2">&amp;</span>store, <span class="kw-2">&amp;mut </span>cache)<span class="question-mark">?</span>;
             store.add_comm(hash.<span class="number">0</span>, <span class="kw-2">*</span>secret, payload);
         }
         <span class="prelude-val">Ok</span>(store)
     }
+
+    <span class="attr">#[inline]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>populate_with(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        cache: <span class="kw-2">&amp;mut </span>HashMap&lt;Ptr&lt;F&gt;, ZPtr&lt;F&gt;&gt;,
+    ) -&gt; ZPtr&lt;F&gt; {
+        <span class="self">self</span>.z_dag.populate_with(ptr, store, cache)
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>populate_store(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;,
+        store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
+        cache: <span class="kw-2">&amp;mut </span>HashMap&lt;ZPtr&lt;F&gt;, Ptr&lt;F&gt;&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;&gt; {
+        <span class="self">self</span>.z_dag.populate_store(z_ptr, store, cache)
+    }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>populate_z_store&lt;F: LurkField&gt;(
-    z_store: <span class="kw-2">&amp;mut </span>ZStore&lt;F&gt;,
-    ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;,
-    store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
-    cache: <span class="kw-2">&amp;mut </span>HashMap&lt;Ptr&lt;F&gt;, ZPtr&lt;F&gt;&gt;,
-) -&gt; <span class="prelude-ty">Result</span>&lt;ZPtr&lt;F&gt;&gt; {
-    <span class="kw">let </span><span class="kw-2">mut </span>recurse = |ptr: <span class="kw-2">&amp;</span>Ptr&lt;F&gt;| -&gt; <span class="prelude-ty">Result</span>&lt;ZPtr&lt;F&gt;&gt; {
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(z_ptr) = cache.get(ptr) {
-            <span class="prelude-val">Ok</span>(<span class="kw-2">*</span>z_ptr)
-        } <span class="kw">else </span>{
-            <span class="kw">let </span>z_ptr = <span class="kw">match </span>ptr {
-                Ptr::Atom(tag, f) =&gt; {
-                    <span class="kw">let </span>z_ptr = ZPtr::from_parts(<span class="kw-2">*</span>tag, <span class="kw-2">*</span>f);
-                    z_store.dag.insert(z_ptr, ZChildren::Atom);
-                    z_ptr
-                }
-                Ptr::Tuple2(tag, idx) =&gt; {
-                    <span class="kw">let </span><span class="prelude-val">Some</span>((a, b)) = store.fetch_2_ptrs(<span class="kw-2">*</span>idx) <span class="kw">else </span>{
-                        <span class="macro">bail!</span>(<span class="string">&quot;Index {idx} not found on tuple2&quot;</span>)
-                    };
-                    <span class="kw">let </span>a = populate_z_store(z_store, a, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>b = populate_z_store(z_store, b, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>z_ptr = ZPtr::from_parts(
-                        <span class="kw-2">*</span>tag,
-                        store.poseidon_cache.hash4(<span class="kw-2">&amp;</span>[
-                            a.tag_field(),
-                            <span class="kw-2">*</span>a.value(),
-                            b.tag_field(),
-                            <span class="kw-2">*</span>b.value(),
-                        ]),
-                    );
-                    z_store.dag.insert(z_ptr, ZChildren::Tuple2(a, b));
-                    z_ptr
-                }
-                Ptr::Tuple3(tag, idx) =&gt; {
-                    <span class="kw">let </span><span class="prelude-val">Some</span>((a, b, c)) = store.fetch_3_ptrs(<span class="kw-2">*</span>idx) <span class="kw">else </span>{
-                        <span class="macro">bail!</span>(<span class="string">&quot;Index {idx} not found on tuple3&quot;</span>)
-                    };
-                    <span class="kw">let </span>a = populate_z_store(z_store, a, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>b = populate_z_store(z_store, b, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>c = populate_z_store(z_store, c, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>z_ptr = ZPtr::from_parts(
-                        <span class="kw-2">*</span>tag,
-                        store.poseidon_cache.hash6(<span class="kw-2">&amp;</span>[
-                            a.tag_field(),
-                            <span class="kw-2">*</span>a.value(),
-                            b.tag_field(),
-                            <span class="kw-2">*</span>b.value(),
-                            c.tag_field(),
-                            <span class="kw-2">*</span>c.value(),
-                        ]),
-                    );
-                    z_store.dag.insert(z_ptr, ZChildren::Tuple3(a, b, c));
-                    z_ptr
-                }
-                Ptr::Tuple4(tag, idx) =&gt; {
-                    <span class="kw">let </span><span class="prelude-val">Some</span>((a, b, c, d)) = store.fetch_4_ptrs(<span class="kw-2">*</span>idx) <span class="kw">else </span>{
-                        <span class="macro">bail!</span>(<span class="string">&quot;Index {idx} not found on tuple4&quot;</span>)
-                    };
-                    <span class="kw">let </span>a = populate_z_store(z_store, a, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>b = populate_z_store(z_store, b, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>c = populate_z_store(z_store, c, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>d = populate_z_store(z_store, d, store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>z_ptr = ZPtr::from_parts(
-                        <span class="kw-2">*</span>tag,
-                        store.poseidon_cache.hash8(<span class="kw-2">&amp;</span>[
-                            a.tag_field(),
-                            <span class="kw-2">*</span>a.value(),
-                            b.tag_field(),
-                            <span class="kw-2">*</span>b.value(),
-                            c.tag_field(),
-                            <span class="kw-2">*</span>c.value(),
-                            d.tag_field(),
-                            <span class="kw-2">*</span>d.value(),
-                        ]),
-                    );
-                    z_store.dag.insert(z_ptr, ZChildren::Tuple4(a, b, c, d));
-                    z_ptr
-                }
-            };
-            cache.insert(<span class="kw-2">*</span>ptr, z_ptr);
-            <span class="prelude-val">Ok</span>(z_ptr)
-        }
-    };
-    recurse(ptr)
-}
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>pasta_curves::Fp;
+    <span class="kw">use </span>rand::{rngs::StdRng, Rng};
+    <span class="kw">use </span>rand_core::SeedableRng;
+    <span class="kw">use </span>rayon::prelude::{IntoParallelIterator, ParallelIterator};
+    <span class="kw">use </span>std::collections::HashMap;
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>populate_store&lt;F: LurkField&gt;(
-    store: <span class="kw-2">&amp;</span>Store&lt;F&gt;,
-    z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;,
-    z_store: <span class="kw-2">&amp;</span>ZStore&lt;F&gt;,
-    cache: <span class="kw-2">&amp;mut </span>HashMap&lt;ZPtr&lt;F&gt;, Ptr&lt;F&gt;&gt;,
-) -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;&gt; {
-    <span class="kw">let </span><span class="kw-2">mut </span>recurse = |z_ptr: <span class="kw-2">&amp;</span>ZPtr&lt;F&gt;| -&gt; <span class="prelude-ty">Result</span>&lt;Ptr&lt;F&gt;&gt; {
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(z_ptr) = cache.get(z_ptr) {
-            <span class="prelude-val">Ok</span>(<span class="kw-2">*</span>z_ptr)
-        } <span class="kw">else </span>{
-            <span class="kw">let </span>ptr = <span class="kw">match </span>z_store.get_children(z_ptr) {
-                <span class="prelude-val">None </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Couldn&#39;t find ZPtr&quot;</span>),
-                <span class="prelude-val">Some</span>(ZChildren::Atom) =&gt; Ptr::Atom(z_ptr.tag(), <span class="kw-2">*</span>z_ptr.value()),
-                <span class="prelude-val">Some</span>(ZChildren::Tuple2(z1, z2)) =&gt; {
-                    <span class="kw">let </span>ptr1 = populate_store(store, z1, z_store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>ptr2 = populate_store(store, z2, z_store, cache)<span class="question-mark">?</span>;
-                    store.intern_2_ptrs_hydrated(z_ptr.tag(), ptr1, ptr2, <span class="kw-2">*</span>z_ptr)
-                }
-                <span class="prelude-val">Some</span>(ZChildren::Tuple3(z1, z2, z3)) =&gt; {
-                    <span class="kw">let </span>ptr1 = populate_store(store, z1, z_store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>ptr2 = populate_store(store, z2, z_store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>ptr3 = populate_store(store, z3, z_store, cache)<span class="question-mark">?</span>;
-                    store.intern_3_ptrs_hydrated(z_ptr.tag(), ptr1, ptr2, ptr3, <span class="kw-2">*</span>z_ptr)
-                }
-                <span class="prelude-val">Some</span>(ZChildren::Tuple4(z1, z2, z3, z4)) =&gt; {
-                    <span class="kw">let </span>ptr1 = populate_store(store, z1, z_store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>ptr2 = populate_store(store, z2, z_store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>ptr3 = populate_store(store, z3, z_store, cache)<span class="question-mark">?</span>;
-                    <span class="kw">let </span>ptr4 = populate_store(store, z4, z_store, cache)<span class="question-mark">?</span>;
-                    store.intern_4_ptrs_hydrated(z_ptr.tag(), ptr1, ptr2, ptr3, ptr4, <span class="kw-2">*</span>z_ptr)
-                }
-            };
-            cache.insert(<span class="kw-2">*</span>z_ptr, ptr);
-            <span class="prelude-val">Ok</span>(ptr)
-        }
+    <span class="kw">use crate</span>::{
+        field::LurkField,
+        lem::{pointers::Ptr, store::Store, Tag},
+        tag::{ContTag, ExprTag, Op1, Op2},
     };
-    recurse(z_ptr)
+
+    <span class="kw">use super</span>::{ZDag, ZStore};
+
+    <span class="doccomment">/// helper function that interns random data into a store
+    </span><span class="kw">fn </span>rng_interner(rng: <span class="kw-2">&amp;mut </span>StdRng, max_depth: usize, store: <span class="kw-2">&amp;</span>Store&lt;Fp&gt;) -&gt; Ptr&lt;Fp&gt; {
+        <span class="kw">let </span>rnd = rng.gen::&lt;u64&gt;();
+        <span class="kw">let </span>tag = <span class="kw">match </span>rnd % <span class="number">4 </span>{
+            <span class="number">0 </span>=&gt; Tag::Expr(ExprTag::try_from((rnd % <span class="number">11</span>) <span class="kw">as </span>u16).unwrap()),
+            <span class="number">1 </span>=&gt; Tag::Cont(ContTag::try_from((rnd % <span class="number">17</span>) <span class="kw">as </span>u16 + <span class="number">4096</span>).unwrap()),
+            <span class="number">2 </span>=&gt; Tag::Op1(Op1::try_from((rnd % <span class="number">12</span>) <span class="kw">as </span>u16 + <span class="number">8192</span>).unwrap()),
+            <span class="number">3 </span>=&gt; Tag::Op2(Op2::try_from((rnd % <span class="number">16</span>) <span class="kw">as </span>u16 + <span class="number">12288</span>).unwrap()),
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
+        };
+        <span class="kw">if </span>max_depth == <span class="number">0 </span>{
+            Ptr::Atom(tag, Fp::from_u64(rnd))
+        } <span class="kw">else </span>{
+            <span class="kw">match </span>rnd % <span class="number">4 </span>{
+                <span class="number">0 </span>=&gt; Ptr::Atom(tag, Fp::from_u64(rnd)),
+                <span class="number">1 </span>=&gt; store.intern_2_ptrs(
+                    tag,
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                ),
+                <span class="number">2 </span>=&gt; store.intern_3_ptrs(
+                    tag,
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                ),
+                <span class="number">3 </span>=&gt; store.intern_4_ptrs(
+                    tag,
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                    rng_interner(rng, max_depth - <span class="number">1</span>, store),
+                ),
+                <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
+            }
+        }
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_z_store_roundtrip() {
+        <span class="kw">const </span>NUM_TESTS: u64 = <span class="number">192</span>;
+        <span class="kw">const </span>MAX_DEPTH: usize = <span class="number">10</span>;
+
+        (<span class="number">0</span>..NUM_TESTS).into_par_iter().for_each(|seed| {
+            <span class="kw">let </span><span class="kw-2">mut </span>rng = StdRng::seed_from_u64(seed);
+            <span class="kw">let </span>store1 = Store::default();
+            <span class="kw">let </span>ptr1 = rng_interner(<span class="kw-2">&amp;mut </span>rng, MAX_DEPTH, <span class="kw-2">&amp;</span>store1);
+
+            <span class="kw">let </span><span class="kw-2">mut </span>z_store = ZStore::default();
+            <span class="kw">let </span><span class="kw-2">mut </span>cache_into = HashMap::default();
+            <span class="kw">let </span>z_ptr = z_store.populate_with(<span class="kw-2">&amp;</span>ptr1, <span class="kw-2">&amp;</span>store1, <span class="kw-2">&amp;mut </span>cache_into);
+
+            <span class="kw">let </span><span class="kw-2">mut </span>cache_from = HashMap::default();
+            <span class="kw">let </span>store2 = Store::default();
+            <span class="kw">let </span>ptr2 = z_store
+                .populate_store(<span class="kw-2">&amp;</span>z_ptr, <span class="kw-2">&amp;</span>store2, <span class="kw-2">&amp;mut </span>cache_from)
+                .unwrap();
+
+            <span class="macro">assert_eq!</span>(store1.hash_ptr(<span class="kw-2">&amp;</span>ptr1), store2.hash_ptr(<span class="kw-2">&amp;</span>ptr2))
+        });
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_filtered_dag() {
+        <span class="kw">let </span>store = Store::&lt;Fp&gt;::default();
+        <span class="kw">let </span>one = Ptr::num_u64(<span class="number">1</span>);
+        <span class="kw">let </span>two = Ptr::num_u64(<span class="number">2</span>);
+        <span class="kw">let </span>thr = Ptr::num_u64(<span class="number">3</span>);
+        <span class="kw">let </span>one_two = store.cons(one, two);
+        <span class="kw">let </span>two_thr = store.cons(two, thr);
+        <span class="kw">let </span><span class="kw-2">mut </span>z_dag = ZDag::default();
+        <span class="kw">let </span><span class="kw-2">mut </span>cache = HashMap::default();
+        z_dag.populate_with(<span class="kw-2">&amp;</span>one_two, <span class="kw-2">&amp;</span>store, <span class="kw-2">&amp;mut </span>cache);
+        z_dag.populate_with(<span class="kw-2">&amp;</span>two_thr, <span class="kw-2">&amp;</span>store, <span class="kw-2">&amp;mut </span>cache);
+
+        <span class="kw">let </span>z_one_two = store.hash_ptr(<span class="kw-2">&amp;</span>one_two);
+        <span class="kw">let </span>z_two_thr = store.hash_ptr(<span class="kw-2">&amp;</span>two_thr);
+        <span class="kw">let </span>z_dag_new = z_dag.filtered(<span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>z_one_two]).unwrap();
+
+        <span class="comment">// data for `z_two_thr` exists in `z_dag`
+        </span><span class="macro">assert!</span>(z_dag.get_type(<span class="kw-2">&amp;</span>z_two_thr).is_some());
+        <span class="comment">// but not in `z_dag_new`
+        </span><span class="macro">assert!</span>(z_dag_new.get_type(<span class="kw-2">&amp;</span>z_two_thr).is_none());
+    }
 }
 </code></pre></div></section></main></body></html>
