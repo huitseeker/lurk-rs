@@ -248,6 +248,25 @@ pub(crate) fn debug_step<F: LurkField, C: Coprocessor<F>>(
     Ok(())
 }
 
+#[tracing::instrument(skip_all, name = "lurk::prove_step")]
+fn prove_step<'a, F: CurveCycleEquipped, C: Coprocessor<F>>(pp: &PublicParams<F>, z0: &[F], i: usize, step: &C1LEM<'a, F, C>, rs: &mut Option<RecursiveSNARK<E1<F>>>) {
+    use ff::Field;
+    let mut recursive_snark = rs.take().unwrap_or_else(|| {
+        tracing::info_span!("lurk::RecursiveSNARK::new").in_scope(|| {
+        RecursiveSNARK::new(&pp.pp, step, &TrivialCircuit::default(), z0, &vec![Dual::<F>::ZERO])
+            .expect("failed to construct initial recursive SNARK")
+        })
+    });
+    info!("prove_step {i}");
+    tracing::info_span!("lurk::RecursiveSNARK::prove_step").in_scope(|| {
+        recursive_snark
+        .prove_step(&pp.pp, step, &TrivialCircuit::default())
+        .unwrap();
+    });
+    *rs = Some(recursive_snark);
+}
+
+
 impl<'a, F: CurveCycleEquipped, C: Coprocessor<F>> RecursiveSNARKTrait<F, C1LEM<'a, F, C>>
     for Proof<F, C1LEM<'a, F, C>>
 {
@@ -265,39 +284,26 @@ impl<'a, F: CurveCycleEquipped, C: Coprocessor<F>> RecursiveSNARKTrait<F, C1LEM<
         let debug = false;
         assert_eq!(steps[0].arity(), z0.len());
 
-        let secondary_circuit = TrivialCircuit::default();
+        // let secondary_circuit = TrivialCircuit::default();
 
         let num_steps = steps.len();
         info!("proving {num_steps} steps");
 
         let mut recursive_snark_option: Option<RecursiveSNARK<E1<F>>> = None;
 
-        let prove_step =
-            |i: usize, step: &C1LEM<'a, F, C>, rs: &mut Option<RecursiveSNARK<E1<F>>>| {
-                if debug {
-                    debug_step(step, store).unwrap();
-                }
-                let mut recursive_snark = rs.take().unwrap_or_else(|| {
-                    RecursiveSNARK::new(&pp.pp, step, &secondary_circuit, z0, &Self::z0_secondary())
-                        .expect("failed to construct initial recursive SNARK")
-                });
-                info!("prove_step {i}");
-                recursive_snark
-                    .prove_step(&pp.pp, step, &secondary_circuit)
-                    .unwrap();
-                *rs = Some(recursive_snark);
-            };
-
-        recursive_snark_option = if lurk_config(None, None)
+        recursive_snark_option = 
+        /*
+          if lurk_config(None, None)
             .perf
             .parallelism
             .wit_gen_vs_folding
             .is_parallel()
+            */
         {
             let cc = steps.into_iter().map(Mutex::new).collect::<Vec<_>>();
 
-            std::thread::scope(|s| {
-                s.spawn(|| {
+            //std::thread::scope(|s| {
+                //s.spawn(|| {
                     // Skip the very first circuit's witness, so `prove_step` can begin immediately.
                     // That circuit's witness will not be cached and will just be computed on-demand.
                     cc.iter().skip(1).for_each(|mf| {
@@ -306,21 +312,23 @@ impl<'a, F: CurveCycleEquipped, C: Coprocessor<F>> RecursiveSNARKTrait<F, C1LEM<
                             .cache_witness(store)
                             .expect("witness caching failed");
                     });
-                });
+                //});
 
                 for (i, step) in cc.iter().enumerate() {
                     let mut step = step.lock().unwrap();
-                    prove_step(i, &step, &mut recursive_snark_option);
+                    prove_step(pp, z0, i, &step, &mut recursive_snark_option);
                     step.clear_cached_witness();
                 }
                 recursive_snark_option
-            })
-        } else {
+            };
+            // })
+        /* } else {
             for (i, step) in steps.iter().enumerate() {
                 prove_step(i, step, &mut recursive_snark_option);
             }
             recursive_snark_option
         };
+        */
 
         Ok(Self::Recursive(
             Box::new(recursive_snark_option.expect("RecursiveSNARK missing")),

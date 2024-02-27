@@ -112,6 +112,7 @@ impl<'a, F: LurkField, C: Coprocessor<F>> MultiFrame<'a, F, C> {
         eval_frame.emitted.clone()
     }
 
+    #[tracing::instrument(skip_all, name = "cache_witness")]
     pub fn cache_witness(&mut self, s: &Store<F>) -> Result<(), SynthesisError> {
         let _ = self.cached_witness.get_or_try_init(|| {
             let mut wcs = WitnessCS::new();
@@ -218,6 +219,7 @@ impl<'a, F: LurkField, C: Coprocessor<F>> MultiFrame<'a, F, C> {
         }
     }
 
+    #[tracing::instrument(skip_all, name = "from_frames")]
     pub fn from_frames(
         frames: &[Frame],
         store: &'a Store<F>,
